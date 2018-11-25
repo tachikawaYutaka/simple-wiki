@@ -1,0 +1,12 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/simple_wiki
+    username: wiki
+    password: hoge00
+    driverClassName: com.mysql.jdbc.Driver
+    thymeleaf:
+      cache: false
+      mode: HTML
+mybatis.configuration.mapUnderscoreToCamelCase: true

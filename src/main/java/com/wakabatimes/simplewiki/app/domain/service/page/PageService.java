@@ -1,0 +1,63 @@
+package com.wakabatimes.simplewiki.app.domain.service.page;
+
+import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
+import com.wakabatimes.simplewiki.app.domain.model.page.Page;
+import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
+import com.wakabatimes.simplewiki.app.domain.model.page.Pages;
+
+public interface PageService {
+    /**
+     * メニュー直下のページ保存
+     * @param page
+     * @param menuId
+     */
+    void save(Page page, MenuId menuId);
+
+    /**
+     * ページ配下にページ保存
+     * @param child
+     * @param parentId
+     */
+    void save(Page child, PageId parentId);
+
+    /**
+     * メニュー直下のページ情報の更新
+     * @param page
+     * @param menuId
+     */
+    void update(Page page, MenuId menuId);
+
+    /**
+     * ページ直下のページ情報の更新
+     * @param page
+     * @param parentId
+     */
+    void update(Page page, PageId parentId);
+
+    /**
+     * ページ情報の削除
+     * @param page
+     */
+    void delete(Page page);
+
+    /**
+     * メニュー直下のページのリスト
+     * @param menuId
+     * @return
+     */
+    Pages list(MenuId menuId);
+
+    /**
+     * 親ページ直下のページのリスト
+     * @param parentId
+     * @return
+     */
+    Pages list(PageId parentId);
+
+    /**
+     *
+     * @param pageId
+     * @return
+     */
+    Page get(PageId pageId);
+}

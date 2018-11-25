@@ -1,0 +1,1 @@
+package com.wakabatimes.simplewiki.app.interfaces;
