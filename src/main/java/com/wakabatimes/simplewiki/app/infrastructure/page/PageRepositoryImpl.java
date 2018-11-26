@@ -30,6 +30,7 @@ public class PageRepositoryImpl implements PageRepository {
         RelatePageToMenuDto pageToMenuDto = new RelatePageToMenuDto(page, menuId);
         List<PageDto> pageDtoList = pageMapper.listByMenuId(menuId.getValue());
         Pages pages = new Pages();
+        int i = 0;
         for(PageDto pageDto : pageDtoList) {
             PageId pageId = new PageId(pageDto.getId());
             PageName pageName = new PageName(pageDto.getName());
@@ -37,8 +38,10 @@ public class PageRepositoryImpl implements PageRepository {
             Pages children = new Pages();
             Page thisPage = new Page(pageId,pageName,pageType,children);
             pages.add(thisPage);
+            i++;
         }
         if(!pages.containsName(page)) {
+            input.setSortNumber(i + 1);
             pageMapper.save(input);
             relatePageTpMenuMapper.save(pageToMenuDto);
         }else {
@@ -52,6 +55,7 @@ public class PageRepositoryImpl implements PageRepository {
         RelateChildPageToParentPageDto relateChildPageToParentPageDto = new RelateChildPageToParentPageDto(child,parentId);
         List<PageDto> pageDtoList = pageMapper.listByParentPageId(parentId.getValue());
         Pages pages = new Pages();
+        int i = 0;
         for(PageDto pageDto : pageDtoList) {
             PageId pageId = new PageId(pageDto.getId());
             PageName pageName = new PageName(pageDto.getName());
@@ -59,8 +63,10 @@ public class PageRepositoryImpl implements PageRepository {
             Pages children = new Pages();
             Page thisPage = new Page(pageId,pageName,pageType,children);
             pages.add(thisPage);
+            i++;
         }
         if(!pages.containsName(child)) {
+            input.setSortNumber(i + 1);
             pageMapper.save(input);
             relateChildPageToParentPageMapper.save(relateChildPageToParentPageDto);
         }else {

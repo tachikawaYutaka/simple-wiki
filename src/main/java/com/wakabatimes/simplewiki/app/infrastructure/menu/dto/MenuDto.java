@@ -8,6 +8,7 @@ public class MenuDto {
     String id;
     String name;
     Integer viewLimit;
+    Integer sortNumber;
 
     public MenuDto() {
 

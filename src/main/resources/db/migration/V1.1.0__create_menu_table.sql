@@ -1,6 +1,7 @@
-CREATE TABLE page (
+CREATE TABLE menu (
   id VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  type int(1) NOT NULL,
+  view_limit int(1) NOT NULL,
+  sort_number int(11) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

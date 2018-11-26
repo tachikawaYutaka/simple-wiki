@@ -8,12 +8,12 @@ import java.util.List;
 
 @Mapper
 public interface MenuMapper {
-    @Select("select * from menu;")
+    @Select("select * from menu ORDER BY sort_number;")
     List<MenuDto> list();
 
     @Insert("INSERT \n" +
-            "INTO menu(id, name, view_limit) \n" +
-            "VALUES (#{id}, #{name}, #{viewLimit})")
+            "INTO menu(id, name, view_limit, sort_number) \n" +
+            "VALUES (#{id}, #{name}, #{viewLimit}, #{sortNumber})")
     void save(MenuDto input);
 
     @Update("UPDATE menu \n" +

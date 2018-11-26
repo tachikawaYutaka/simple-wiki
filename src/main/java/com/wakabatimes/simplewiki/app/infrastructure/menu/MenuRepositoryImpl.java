@@ -18,15 +18,18 @@ public class MenuRepositoryImpl implements MenuRepository {
         MenuDto input = new MenuDto(menu);
         List<MenuDto> menuDtoList = menuMapper.list();
         Menus menus = new Menus();
+        int i = 0;
         for(MenuDto menuDto : menuDtoList) {
             MenuId menuId = new MenuId(menuDto.getId());
             MenuName menuName = new MenuName(menuDto.getName());
             MenuLimit menuLimit = MenuLimit.getById(menuDto.getViewLimit());
             Menu thisMenu = new Menu(menuId,menuName,menuLimit);
             menus.add(thisMenu);
+            i++;
         }
 
         if(!menus.containsName(menu)) {
+            input.setSortNumber(i + 1);
             menuMapper.save(input);
         }else {
             throw new RuntimeException("メニューが既に登録されています。");

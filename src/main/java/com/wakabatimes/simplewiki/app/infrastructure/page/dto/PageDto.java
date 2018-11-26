@@ -8,6 +8,7 @@ public class PageDto {
     String id;
     String name;
     Integer type;
+    Integer sortNumber;
 
     public PageDto(){
 
