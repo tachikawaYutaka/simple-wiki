@@ -6,7 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public enum UserRole {
     ROLE_ADMIN(0),
-    ROLE_USER(1);
+    ROLE_EDITOR(1),
+    ROLE_USER(2);
 
     @Getter
     private Integer id;

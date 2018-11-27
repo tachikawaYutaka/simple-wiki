@@ -17,6 +17,12 @@ public class UserPasswordTest {
         UserPassword userPassword = new UserPassword("a",bCryptPasswordEncoder);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void createInstance_fail2() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        UserPassword userPassword = new UserPassword("あああ",bCryptPasswordEncoder);
+    }
+
     @Test
     public void getValue() {
         UserPassword userPassword = new UserPassword("hogehoge");

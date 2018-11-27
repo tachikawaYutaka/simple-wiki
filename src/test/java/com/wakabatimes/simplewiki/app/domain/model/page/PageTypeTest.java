@@ -11,6 +11,7 @@ public class PageTypeTest {
     public void testGetById() {
         assertThat(PageType.getById(0), theInstance(PageType.ROOT));
         assertThat(PageType.getById(1), theInstance(PageType.BRANCH));
+        assertThat(PageType.getById(2), theInstance(PageType.BRANCH));
     }
 
     @Test

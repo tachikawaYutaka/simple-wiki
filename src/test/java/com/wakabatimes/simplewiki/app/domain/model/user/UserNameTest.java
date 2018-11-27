@@ -14,6 +14,11 @@ public class UserNameTest {
         UserName userName = new UserName("a");
     }
 
+    @Test(expected = RuntimeException.class)
+    public void createInstance_fail2() {
+        UserName userName = new UserName("ああああ");
+    }
+
     @Test
     public void getValue() {
         UserName userName = new UserName("hogehoge");

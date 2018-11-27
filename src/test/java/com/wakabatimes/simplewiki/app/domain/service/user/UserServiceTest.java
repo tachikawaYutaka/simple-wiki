@@ -86,4 +86,5 @@ public class UserServiceTest {
         User getUser = userService.get(userName);
         assertNotNull(getUser);
     }
+
 }

@@ -40,4 +40,22 @@ public class BodyTest {
 
         Assert.assertEquals("hogehoge", body.getBodyContent().getValue());
     }
+
+    @Test
+    public void isCurrent(){
+        BodyContent bodyContent = new BodyContent("hogehoge");
+        Body body = BodyFactory.create(bodyContent);
+        boolean isCurrent = body.isCurrent(body);
+        Assert.assertTrue(isCurrent);
+    }
+
+    @Test
+    public void isNotCurrent(){
+        BodyContent bodyContent = new BodyContent("hogehoge");
+        Body body = BodyFactory.create(bodyContent);
+        BodyId bodyId = body.getBodyId();
+        Body newBody = new Body(bodyId,bodyContent,BodyType.ARCHIVE);
+        boolean isCurrent = body.isCurrent(newBody);
+        Assert.assertFalse(isCurrent);
+    }
 }

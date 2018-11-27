@@ -11,6 +11,7 @@ public class MenuLimitTest {
     public void testGetById() {
         assertThat(MenuLimit.getById(0), theInstance(MenuLimit.PUBLIC));
         assertThat(MenuLimit.getById(1), theInstance(MenuLimit.PRIVATE));
+        assertThat(MenuLimit.getById(2), theInstance(MenuLimit.PUBLIC));
     }
 
     @Test

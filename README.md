@@ -13,3 +13,9 @@ mvn flyway:clean -Dflyway.user=wiki -Dflyway.password=hoge00 -Dflyway.url=jdbc:m
 ```
 mvn flyway:migrate -Dflyway.user=wiki -Dflyway.password=hoge00 -Dflyway.url=jdbc:mysql://localhost:3306/simple_wiki?serverTimezone=JST -Dflyway.driver=com.mysql.cj.jdbc.Driver -Dflyway.placeholderReplacement=false
 ```
+
+## clover
+
+```
+mvn clean clover:setup test clover:aggregate clover:clover
+```

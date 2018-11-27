@@ -10,16 +10,19 @@ public class UserRoleTest {
     @Test
     public void testGetById() {
         assertThat(UserRole.getById(0), theInstance(UserRole.ROLE_ADMIN));
-        assertThat(UserRole.getById(1), theInstance(UserRole.ROLE_USER));
+        assertThat(UserRole.getById(1), theInstance(UserRole.ROLE_EDITOR));
+        assertThat(UserRole.getById(2), theInstance(UserRole.ROLE_USER));
+        assertThat(UserRole.getById(3), theInstance(UserRole.ROLE_USER));
     }
 
     @Test
     public void testValues() {
-        assertThat(UserRole.values(), is(new UserRole[] {  UserRole.ROLE_ADMIN ,UserRole.ROLE_USER}));
+        assertThat(UserRole.values(), is(new UserRole[] {  UserRole.ROLE_ADMIN ,UserRole.ROLE_EDITOR,UserRole.ROLE_USER}));
     }
 
     @Test
     public void testValueOf() {
+        assertThat(UserRole.valueOf("ROLE_EDITOR"), theInstance(UserRole.ROLE_EDITOR));
         assertThat(UserRole.valueOf("ROLE_USER"), theInstance(UserRole.ROLE_USER));
         assertThat(UserRole.valueOf("ROLE_ADMIN"), theInstance(UserRole.ROLE_ADMIN));
     }

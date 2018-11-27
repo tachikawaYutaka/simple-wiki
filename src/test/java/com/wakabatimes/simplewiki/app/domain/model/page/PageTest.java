@@ -46,4 +46,22 @@ public class PageTest {
 
         Assert.assertEquals("hogehoge", page.getPageName().getValue());
     }
+
+    @Test
+    public void isRoot() {
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        boolean isRoot = page.isRoot(page);
+        Assert.assertTrue(isRoot);
+    }
+
+    @Test
+    public void isNotRoot() {
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.BRANCH;
+        Page page = PageFactory.create(pageName,pageType);
+        boolean isRoot = page.isRoot(page);
+        Assert.assertFalse(isRoot);
+    }
 }
