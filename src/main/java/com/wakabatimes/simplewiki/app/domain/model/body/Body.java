@@ -26,4 +26,11 @@ public class Body {
         this.bodyContent = bodyContent;
         this.bodyType = bodyType;
     }
+
+    public boolean isCurrent(Body body) {
+        if(body.getBodyType().equals(BodyType.CURRENT)){
+            return true;
+        }
+        return false;
+    }
 }

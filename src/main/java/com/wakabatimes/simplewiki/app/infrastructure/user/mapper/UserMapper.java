@@ -7,10 +7,10 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Select("select * from login_user where name = #{name}")
+    @Select("select * from wiki_user where name = #{name}")
     UserDto getUserByUserName(UserDto userDto);
 
-    @Insert("INSERT INTO wiki_user (id,name,password) VALUES (#{id},#{name},#{password})")
+    @Insert("INSERT INTO wiki_user (id,name,password,role) VALUES (#{id},#{name},#{password},#{role})")
     void save(UserDto input);
 
     @Select("SELECT * from wiki_user")

@@ -8,28 +8,30 @@ import com.wakabatimes.simplewiki.app.domain.model.page.PageRepository;
 import com.wakabatimes.simplewiki.app.domain.model.page.Pages;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PageServiceImpl implements PageService {
     @Autowired
     PageRepository pageRepository;
 
     @Override
-    public void save(Page page, MenuId menuId) {
+    public void saveRoot(Page page, MenuId menuId) {
         pageRepository.save(page,menuId);
     }
 
     @Override
-    public void save(Page child, PageId parentId) {
+    public void saveBranch(Page child, PageId parentId) {
         pageRepository.save(child,parentId);
     }
 
     @Override
-    public void update(Page page, MenuId menuId) {
+    public void updateRoot(Page page, MenuId menuId) {
         pageRepository.update(page, menuId);
     }
 
     @Override
-    public void update(Page page, PageId parentId) {
+    public void updateBranch(Page page, PageId parentId) {
         pageRepository.update(page, parentId);
     }
 
@@ -39,17 +41,17 @@ public class PageServiceImpl implements PageService {
     }
 
     @Override
-    public Pages list(MenuId menuId) {
+    public Pages listRoot(MenuId menuId) {
         return pageRepository.listByMenuId(menuId);
     }
 
     @Override
-    public Pages list(PageId parentId) {
-        return null;
+    public Pages listBranch(PageId parentId) {
+        return pageRepository.listByParentPageId(parentId);
     }
 
     @Override
     public Page get(PageId pageId) {
-        return null;
+        return pageRepository.getByPageId(pageId);
     }
 }

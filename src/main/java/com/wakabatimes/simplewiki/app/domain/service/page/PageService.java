@@ -11,28 +11,28 @@ public interface PageService {
      * @param page
      * @param menuId
      */
-    void save(Page page, MenuId menuId);
+    void saveRoot(Page page, MenuId menuId);
 
     /**
      * ページ配下にページ保存
      * @param child
      * @param parentId
      */
-    void save(Page child, PageId parentId);
+    void saveBranch(Page child, PageId parentId);
 
     /**
      * メニュー直下のページ情報の更新
      * @param page
      * @param menuId
      */
-    void update(Page page, MenuId menuId);
+    void updateRoot(Page page, MenuId menuId);
 
     /**
      * ページ直下のページ情報の更新
      * @param page
      * @param parentId
      */
-    void update(Page page, PageId parentId);
+    void updateBranch(Page page, PageId parentId);
 
     /**
      * ページ情報の削除
@@ -45,14 +45,14 @@ public interface PageService {
      * @param menuId
      * @return
      */
-    Pages list(MenuId menuId);
+    Pages listRoot(MenuId menuId);
 
     /**
      * 親ページ直下のページのリスト
      * @param parentId
      * @return
      */
-    Pages list(PageId parentId);
+    Pages listBranch(PageId parentId);
 
     /**
      *

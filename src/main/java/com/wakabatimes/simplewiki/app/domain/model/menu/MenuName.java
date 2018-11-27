@@ -17,8 +17,8 @@ public class MenuName {
 
     private void validateUserName(String value) {
         Integer count = value.length();
-        if(count < 8 || count > 255) {
-            throw new RuntimeException("Menu name is incorrect. 8 or more characters 255 characters within");
+        if(count < 4 || count > 255) {
+            throw new RuntimeException("Menu name is incorrect. 4 or more characters 255 characters within");
         }
     }
 }

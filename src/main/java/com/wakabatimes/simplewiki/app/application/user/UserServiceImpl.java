@@ -3,7 +3,9 @@ package com.wakabatimes.simplewiki.app.application.user;
 import com.wakabatimes.simplewiki.app.domain.model.user.*;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;

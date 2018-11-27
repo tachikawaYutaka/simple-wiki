@@ -1,0 +1,6 @@
+CREATE TABLE body (
+  id VARCHAR(255) NOT NULL,
+  content VARCHAR(255) NOT NULL,
+  type int(1) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -5,6 +5,7 @@ import java.util.UUID;
 public class UserFactory {
     public static User create(UserName userName, UserPassword userPassword){
         UserId userId = new UserId(UUID.randomUUID().toString());
-        return new User(userId, userName, userPassword);
+        UserRole userRole = UserRole.ROLE_USER;
+        return new User(userId, userName, userPassword, userRole);
     }
 }

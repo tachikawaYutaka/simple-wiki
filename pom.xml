@@ -76,12 +76,35 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+	<reporting>
+		<plugins>
+			<!-- open clover -->
+			<plugin>
+				<groupId>org.openclover</groupId>
+				<artifactId>clover-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- open clover -->
+			<plugin>
+				<groupId>org.openclover</groupId>
+				<artifactId>clover-maven-plugin</artifactId>
+				<version>4.2.0</version>
+				<configuration>
+					<generateXml>true</generateXml>
+					<generateHtml>true</generateHtml>
+					<generateJson>false</generateJson>
+					<jdk>1.8</jdk>
+					<includes>
+						<include>**/com/wakabatimes/simplewiki/app/**</include>
+					</includes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

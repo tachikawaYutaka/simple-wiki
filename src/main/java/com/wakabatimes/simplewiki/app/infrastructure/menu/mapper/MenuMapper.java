@@ -19,7 +19,7 @@ public interface MenuMapper {
     @Update("UPDATE menu \n" +
             "SET\n" +
             "  name = #{name}\n" +
-            "  , view_limit = #{view_limit}\n" +
+            "  , view_limit = #{viewLimit}\n" +
             "WHERE\n" +
             "  id = #{id}")
     void update(MenuDto input);
@@ -32,5 +32,5 @@ public interface MenuMapper {
     void delete(MenuDto input);
 
     @Select("select * from menu where name = #{name}")
-    Menu getByMenuName(MenuDto input);
+    MenuDto getByMenuName(MenuDto input);
 }

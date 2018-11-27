@@ -8,6 +8,7 @@ public class UserDto {
     private String id;
     private String name;
     private String password;
+    private Integer role;
 
     public UserDto (){
 
@@ -17,5 +18,6 @@ public class UserDto {
         this.id = user.getUserId().getValue();
         this.name = user.getUserName().getValue();
         this.password = user.getUserPassword().getValue();
+        this.role = user.getUserRole().getId();
     }
 }

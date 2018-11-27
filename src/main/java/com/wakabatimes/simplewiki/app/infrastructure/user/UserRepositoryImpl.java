@@ -23,24 +23,22 @@ public class UserRepositoryImpl implements UserRepository {
         UserId userId = new UserId(userDto.getId());
         UserName userName1 = new UserName(userDto.getName());
         UserPassword userPassword = new UserPassword(userDto.getPassword());
-        User user = new User(userId,userName1,userPassword);
+        UserRole userRole = UserRole.ROLE_USER;
+        User user = new User(userId,userName1,userPassword,userRole);
         return user;
     }
 
     @Override
     public void save(User user) {
-        UserDto input = new UserDto();
-        input.setId(user.getUserId().getValue());
-        input.setName(user.getUserName().getValue());
-        input.setPassword(user.getUserPassword().getValue());
-
+        UserDto input = new UserDto(user);
         List<UserDto> userList = userMapper.list();
         Users users = new Users();
         for(UserDto userDto : userList) {
             UserId userId = new UserId(userDto.getId());
             UserName userName = new UserName(userDto.getName());
             UserPassword userPassword = new UserPassword(userDto.getPassword());
-            User thisUser = new User(userId,userName,userPassword);
+            UserRole userRole = UserRole.ROLE_USER;
+            User thisUser = new User(userId,userName,userPassword,userRole);
             users.add(thisUser);
         }
 
@@ -82,14 +80,16 @@ public class UserRepositoryImpl implements UserRepository {
             UserId userId = new UserId(userDto.getId());
             UserName userName = new UserName(userDto.getName());
             UserPassword userPassword = new UserPassword(userDto.getPassword());
-            User user1 = new User(userId,userName,userPassword);
+            UserRole userRole = UserRole.ROLE_USER;
+            User user1 = new User(userId,userName,userPassword,userRole);
             users.add(user1);
         }
 
         UserId userId = new UserId(user.getUserId().getValue());
         UserName userName = new UserName(newUserName.getValue());
         UserPassword userPassword = new UserPassword(user.getUserPassword().getValue());
-        User updatedUser = new User(userId,userName,userPassword);
+        UserRole userRole = UserRole.ROLE_USER;
+        User updatedUser = new User(userId,userName,userPassword,userRole);
 
         if(!users.containsName(updatedUser)) {
             UserDto userDto = new UserDto();

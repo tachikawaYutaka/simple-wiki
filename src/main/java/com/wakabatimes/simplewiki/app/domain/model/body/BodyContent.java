@@ -18,8 +18,8 @@ public class BodyContent {
 
     private void validateBodyContent(String value) {
         Integer count = value.length();
-        if(count < 0 || count > 100000) {
-            throw new RuntimeException("BodyContent is incorrect. 0 or more characters 100000 characters within");
+        if(count <= 0 || count > 10000) {
+            throw new RuntimeException("BodyContent is incorrect. 0 or more characters 10000 characters within");
         }
     }
 }

@@ -2,10 +2,10 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:mysql://localhost/simple_wiki
+    url: jdbc:mysql://localhost/simple_wiki?serverTimezone=JST
     username: wiki
     password: hoge00
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     thymeleaf:
       cache: false
       mode: HTML

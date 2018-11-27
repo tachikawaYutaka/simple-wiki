@@ -80,6 +80,11 @@ public class MenuRepositoryImpl implements MenuRepository {
     public Menu getByMenuName(MenuName menuName) {
         MenuDto input = new MenuDto();
         input.setName(menuName.getValue());
-        return menuMapper.getByMenuName(input);
+        MenuDto result = menuMapper.getByMenuName(input);
+        MenuId menuId = new MenuId(result.getId());
+        MenuName menuName1 = new MenuName(result.getName());
+        MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
+        Menu menu = new Menu(menuId,menuName1,menuLimit);
+        return menu;
     }
 }
