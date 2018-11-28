@@ -9,10 +9,6 @@ public class RelatePageToMenuDto {
     String pageId;
     String menuId;
 
-    public RelatePageToMenuDto(){
-
-    }
-
     public RelatePageToMenuDto(Page page, MenuId menuId) {
         this.pageId = page.getPageId().getValue();
         this.menuId = menuId.getValue();

@@ -9,10 +9,6 @@ public class RelateChildPageToParentPageDto {
     String childPageId;
     String parentPageId;
 
-    public RelateChildPageToParentPageDto(){
-
-    }
-
     public RelateChildPageToParentPageDto(Page childPage, PageId parentId) {
         this.childPageId = childPage.getPageId().getValue();
         this.parentPageId = parentId.getValue();

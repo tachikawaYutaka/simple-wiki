@@ -21,7 +21,7 @@ public class BodyRepositoryImpl implements BodyRepository{
     @Override
     public void save(Body body, PageId pageId) {
         BodyDto input = new BodyDto(body);
-        bodyMapper.removeCurrent(pageId);
+        bodyMapper.removeCurrent(pageId.getValue());
         bodyMapper.save(input);
 
         RelateBodyToPageDto input2 = new RelateBodyToPageDto(body.getBodyId(), pageId);
@@ -57,6 +57,8 @@ public class BodyRepositoryImpl implements BodyRepository{
         BodyDto input = new BodyDto(body);
         if(!body.isCurrent(body)){
             bodyMapper.delete(input);
+        }else {
+            throw new RuntimeException("最新のボディは削除できません。");
         }
     }
 

@@ -168,6 +168,33 @@ public class BodyServiceTest {
         Body body = BodyFactory.create(bodyContent);
         bodyService.save(body,page.getPageId());
 
-        bodyService.delete(body);
+        BodyContent bodyContent2 = new BodyContent("hogehoge2");
+        Body body2 = BodyFactory.create(bodyContent2);
+        bodyService.save(body2,page.getPageId());
+
+        Body getBody = bodyService.get(body.getBodyId());
+
+        bodyService.delete(getBody);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void delete_fail(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        BodyContent bodyContent = new BodyContent("hogehoge");
+        Body body = BodyFactory.create(bodyContent);
+        bodyService.save(body,page.getPageId());
+
+        Body getBody = bodyService.get(body.getBodyId());
+
+        bodyService.delete(getBody);
     }
 }

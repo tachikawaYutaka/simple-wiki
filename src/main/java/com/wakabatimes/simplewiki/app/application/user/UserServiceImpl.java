@@ -17,22 +17,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(UserId userId, UserName userName) {
-        try {
-            Long count = userRepository.countUserByIdAndName(userId,userName);
-            if(count > 0) {
-                userRepository.delete(userId);
-            }
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
+        Long count = userRepository.countUserByIdAndName(userName);
+        if(count > 0) {
+            userRepository.delete(userId);
+        }else {
+            throw new RuntimeException("指定したユーザーは存在しません。");
         }
     }
 
     @Override
     public void passwordUpdate(UserName userName, UserPassword userPassword) {
-        User user = userRepository.getUserByUserName(userName.getValue());
-        UserId userId = user.getUserId();
-        Long count = userRepository.countUserByIdAndName(userId,userName);
+        Long count = userRepository.countUserByIdAndName(userName);
         if(count > 0) {
+            User user = userRepository.getUserByUserName(userName.getValue());
+            UserId userId = user.getUserId();
             userRepository.updatePassword(userId, userPassword);
         }else {
             throw new RuntimeException("不正なアクセスです。");
@@ -41,10 +39,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void nameUpdate(UserName userName, UserName newUserName) {
-        User user = userRepository.getUserByUserName(userName.getValue());
-        UserId userId = user.getUserId();
-        Long count = userRepository.countUserByIdAndName(userId,userName);
+        Long count = userRepository.countUserByIdAndName(userName);
         if(count > 0) {
+            User user = userRepository.getUserByUserName(userName.getValue());
+            UserId userId = user.getUserId();
             userRepository.updateUserName(user, newUserName);
         }else {
             throw new RuntimeException("不正なアクセスです。");

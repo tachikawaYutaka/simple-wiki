@@ -17,6 +17,7 @@ import java.util.List;
  * root entity
  */
 @Slf4j
+@EqualsAndHashCode(callSuper = false)
 public class User extends org.springframework.security.core.userdetails.User{
     @Getter
     @NonNull
@@ -39,24 +40,5 @@ public class User extends org.springframework.security.core.userdetails.User{
         this.userName = userName;
         this.userPassword = userPassword;
         this.userRole = userRole;
-    }
-
-    private Collection<GrantedAuthority> getAdminAuthorities() {
-        List<String> roles = new ArrayList<>();
-        switch(userRole.getId()){
-            case(0) :
-                roles.add(UserRole.ROLE_ADMIN.name());
-                roles.add(UserRole.ROLE_EDITOR.name());
-                roles.add(UserRole.ROLE_USER.name());
-                break;
-            case(1) :
-                roles.add(UserRole.ROLE_EDITOR.name());
-                roles.add(UserRole.ROLE_USER.name());
-                break;
-            case(2) :
-                roles.add(UserRole.ROLE_USER.name());
-                break;
-        }
-        return AuthorityUtils.createAuthorityList(roles.toArray(new String[]{}));
     }
 }

@@ -22,7 +22,7 @@ public interface UserMapper {
     @Delete("DELETE from wiki_user where id = #{id}")
     void delete(UserDto userDto);
 
-    @Select("SELECT COUNT(*) from wiki_user where id = #{id} and name = #{name}")
+    @Select("SELECT COUNT(*) from wiki_user where name = #{name}")
     Long countUserByIdAndName(UserDto userDto);
 
     @Update("UPDATE wiki_user SET name=#{name} where id = #{id}")

@@ -29,10 +29,9 @@ public interface UserRepository {
 
     /**
      *
-     * @param userId
      * @param userName
      */
-    Long countUserByIdAndName(UserId userId, UserName userName);
+    Long countUserByIdAndName(UserName userName);
 
     /**
      *

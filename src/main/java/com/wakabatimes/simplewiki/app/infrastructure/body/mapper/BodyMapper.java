@@ -11,9 +11,12 @@ import java.util.List;
 
 @Mapper
 public interface BodyMapper {
-    @Update("UPDATE body SET type = 1\n" +
-            "WHERE type = 0")
-    void removeCurrent(PageId pageId);
+    @Update("UPDATE body b \n" +
+            "LEFT JOIN relate_body_to_page rbtp on b.id = rbtp.body_id\n" +
+            "SET b.type = 1\n" +
+            "WHERE rbtp.page_id = #{pageId}\n" +
+            "AND b.type = 0")
+    void removeCurrent(String pageId);
 
     @Insert("INSERT \n" +
             "INTO body(id, content, type) \n" +

@@ -51,12 +51,43 @@ public class MenuServiceTest {
         menuService.save(menu);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void save_fail(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        MenuName menuName2 = new MenuName("hogehoge");
+        MenuLimit menuLimit2 = MenuLimit.PUBLIC;
+        Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
+        menuService.save(menu2);
+    }
+
     @Test
     public void update(){
         MenuName menuName = new MenuName("hogehoge");
         MenuLimit menuLimit = MenuLimit.PUBLIC;
         Menu menu = MenuFactory.create(menuName,menuLimit);
         menuService.save(menu);
+
+        MenuName newName = new MenuName("hogehoge2");
+        MenuLimit newLimit = MenuLimit.PRIVATE;
+        Menu newMenu = new Menu(menu.getMenuId(),newName,newLimit);
+        menuService.update(newMenu);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void update_fail(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        MenuName menuName2 = new MenuName("hogehoge2");
+        MenuLimit menuLimit2 = MenuLimit.PUBLIC;
+        Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
+        menuService.save(menu2);
 
         MenuName newName = new MenuName("hogehoge2");
         MenuLimit newLimit = MenuLimit.PRIVATE;

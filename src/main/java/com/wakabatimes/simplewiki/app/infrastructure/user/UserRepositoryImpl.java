@@ -65,9 +65,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Long countUserByIdAndName(UserId userId, UserName userName) {
+    public Long countUserByIdAndName(UserName userName) {
         UserDto userDto = new UserDto();
-        userDto.setId(userId.getValue());
         userDto.setName(userName.getValue());
         return userMapper.countUserByIdAndName(userDto);
     }

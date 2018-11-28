@@ -9,10 +9,6 @@ public class RelateBodyToPageDto {
     String bodyId;
     String pageId;
 
-    public RelateBodyToPageDto() {
-
-    }
-
     public RelateBodyToPageDto(BodyId bodyId, PageId pageId) {
         this.bodyId = bodyId.getValue();
         this.pageId = pageId.getValue();

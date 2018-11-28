@@ -66,6 +66,24 @@ public class PageServiceTest {
         pageService.saveRoot(page,menu.getMenuId());
     }
 
+    @Test(expected = RuntimeException.class)
+    public void saveRoot_fail(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge");
+        PageType pageType2 = PageType.ROOT;
+        Page page2 = PageFactory.create(pageName2,pageType2);
+        pageService.saveRoot(page2,menu.getMenuId());
+    }
+
     @Test
     public void saveBranch(){
         MenuName menuName = new MenuName("menu");
@@ -84,6 +102,29 @@ public class PageServiceTest {
         pageService.saveBranch(page2,page.getPageId());
     }
 
+    @Test(expected = RuntimeException.class)
+    public void saveBranch_fail(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge");
+        PageType pageType2 = PageType.BRANCH;
+        Page page2 = PageFactory.create(pageName2,pageType2);
+        pageService.saveBranch(page2,page.getPageId());
+
+        PageName pageName3 = new PageName("hogehoge");
+        PageType pageType3 = PageType.BRANCH;
+        Page page3 = PageFactory.create(pageName3,pageType3);
+        pageService.saveBranch(page3,page.getPageId());
+    }
+
     @Test
     public void updateRoot(){
         MenuName menuName = new MenuName("menu");
@@ -95,6 +136,28 @@ public class PageServiceTest {
         PageType pageType = PageType.ROOT;
         Page page = PageFactory.create(pageName,pageType);
         pageService.saveRoot(page,menu.getMenuId());
+
+        PageName newName = new PageName("hogehoge2");
+        Page newPage = new Page(page.getPageId(),newName,page.getPageType(),new Pages());
+        pageService.updateRoot(newPage,menu.getMenuId());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void updateRoot_fail(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge2");
+        PageType pageType2 = PageType.ROOT;
+        Page page2 = PageFactory.create(pageName2,pageType2);
+        pageService.saveRoot(page2,menu.getMenuId());
 
         PageName newName = new PageName("hogehoge2");
         Page newPage = new Page(page.getPageId(),newName,page.getPageType(),new Pages());
@@ -117,6 +180,33 @@ public class PageServiceTest {
         PageType pageType2 = PageType.BRANCH;
         Page page2 = PageFactory.create(pageName2,pageType2);
         pageService.saveBranch(page2,page.getPageId());
+
+        PageName newName = new PageName("hogehoge3");
+        Page newPage = new Page(page2.getPageId(),newName,page2.getPageType(),new Pages());
+        pageService.updateBranch(newPage,page.getPageId());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void updateBranch_fail(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge2");
+        PageType pageType2 = PageType.BRANCH;
+        Page page2 = PageFactory.create(pageName2,pageType2);
+        pageService.saveBranch(page2,page.getPageId());
+
+        PageName pageName3 = new PageName("hogehoge3");
+        PageType pageType3 = PageType.BRANCH;
+        Page page3 = PageFactory.create(pageName3,pageType3);
+        pageService.saveBranch(page3,page.getPageId());
 
         PageName newName = new PageName("hogehoge3");
         Page newPage = new Page(page2.getPageId(),newName,page2.getPageType(),new Pages());
