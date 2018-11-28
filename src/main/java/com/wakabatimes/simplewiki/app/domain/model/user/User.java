@@ -41,4 +41,24 @@ public class User extends org.springframework.security.core.userdetails.User{
         this.userPassword = userPassword;
         this.userRole = userRole;
     }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
+        List<String> roles = new ArrayList<>();
+        switch(userRole.getId()){
+            case(0) :
+                roles.add(UserRole.ROLE_ADMIN.name());
+                roles.add(UserRole.ROLE_EDITOR.name());
+                roles.add(UserRole.ROLE_USER.name());
+                break;
+            case(1) :
+                roles.add(UserRole.ROLE_EDITOR.name());
+                roles.add(UserRole.ROLE_USER.name());
+                break;
+            case(2) :
+                roles.add(UserRole.ROLE_USER.name());
+                break;
+        }
+        return AuthorityUtils.createAuthorityList(roles.toArray(new String[]{}));
+    }
 }
