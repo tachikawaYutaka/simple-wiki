@@ -1,1 +1,0 @@
-package com.wakabatimes.simplewiki.app.infrastructure;
