@@ -1,6 +1,5 @@
-CREATE TABLE body (
+CREATE TABLE system (
   id VARCHAR(255) NOT NULL,
-  content LONGTEXT NOT NULL,
-  type int(1) NOT NULL,
+  name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

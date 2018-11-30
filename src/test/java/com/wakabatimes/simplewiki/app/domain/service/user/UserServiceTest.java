@@ -1,12 +1,10 @@
 package com.wakabatimes.simplewiki.app.domain.service.user;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
-import com.wakabatimes.simplewiki.app.domain.model.user.User;
-import com.wakabatimes.simplewiki.app.domain.model.user.UserFactory;
-import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
-import com.wakabatimes.simplewiki.app.domain.model.user.UserPassword;
+import com.wakabatimes.simplewiki.app.domain.model.user.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.hamcrest.core.Is.is;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 @Slf4j
@@ -140,6 +139,22 @@ public class UserServiceTest {
         userService.save(user);
         User getUser = userService.get(userName);
         assertNotNull(getUser);
+    }
+
+    @Test
+    public  void list() {
+        UserName userName = new UserName("hogehoge");
+        UserPassword userPassword = new UserPassword("hogehoge");
+        User user = UserFactory.create(userName, userPassword);
+        userService.save(user);
+
+        UserName userName2 = new UserName("hogehoge2");
+        UserPassword userPassword2 = new UserPassword("hogehoge2");
+        User user2 = UserFactory.create(userName2, userPassword2);
+        userService.save(user2);
+
+        Users users = userService.list();
+        Assert.assertThat(users.size(),is(2));
     }
 
 }

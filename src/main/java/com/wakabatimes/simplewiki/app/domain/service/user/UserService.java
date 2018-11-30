@@ -1,9 +1,6 @@
 package com.wakabatimes.simplewiki.app.domain.service.user;
 
-import com.wakabatimes.simplewiki.app.domain.model.user.User;
-import com.wakabatimes.simplewiki.app.domain.model.user.UserId;
-import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
-import com.wakabatimes.simplewiki.app.domain.model.user.UserPassword;
+import com.wakabatimes.simplewiki.app.domain.model.user.*;
 
 public interface UserService {
     /**
@@ -38,4 +35,10 @@ public interface UserService {
      * @return
      */
     User get(UserName userName);
+
+    /**
+     * ユーザー一覧の取得
+     * @return
+     */
+    Users list();
 }

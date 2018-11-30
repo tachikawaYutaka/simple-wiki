@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
     public User get(UserName userName) {
         return userRepository.getUserByUserName(userName.getValue());
     }
+
+    @Override
+    public Users list() {
+        return userRepository.list();
+    }
 }

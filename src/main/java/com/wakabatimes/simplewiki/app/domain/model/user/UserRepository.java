@@ -39,4 +39,10 @@ public interface UserRepository {
      * @param newUserName
      */
     void updateUserName(User user, UserName newUserName);
+
+    /**
+     *
+     * @return
+     */
+    Users list();
 }

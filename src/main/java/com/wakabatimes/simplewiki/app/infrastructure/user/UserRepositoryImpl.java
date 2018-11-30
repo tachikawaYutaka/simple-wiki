@@ -99,5 +99,20 @@ public class UserRepositoryImpl implements UserRepository {
             throw new RuntimeException("ユーザー名が既に登録されています。");
         }
     }
+
+    @Override
+    public Users list() {
+        Users users = new Users();
+        List<UserDto> userDtoList = userMapper.list();
+        for(UserDto userDto : userDtoList) {
+            UserId userId = new UserId(userDto.getId());
+            UserName userName = new UserName(userDto.getName());
+            UserPassword userPassword = new UserPassword(userDto.getPassword());
+            UserRole userRole = UserRole.ROLE_USER;
+            User user1 = new User(userId,userName,userPassword,userRole);
+            users.add(user1);
+        }
+        return users;
+    }
 }
 
