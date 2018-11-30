@@ -12,14 +12,15 @@ public interface MenuMapper {
     List<MenuDto> list();
 
     @Insert("INSERT \n" +
-            "INTO menu(id, name, view_limit, sort_number) \n" +
-            "VALUES (#{id}, #{name}, #{viewLimit}, #{sortNumber})")
+            "INTO menu(id, name, view_limit, sort_number,created,updated) \n" +
+            "VALUES (#{id}, #{name}, #{viewLimit}, #{sortNumber},now(),now())")
     void save(MenuDto input);
 
     @Update("UPDATE menu \n" +
             "SET\n" +
             "  name = #{name}\n" +
             "  , view_limit = #{viewLimit}\n" +
+            "  , updated = now()\n" +
             "WHERE\n" +
             "  id = #{id}")
     void update(MenuDto input);

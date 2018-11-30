@@ -3,5 +3,7 @@ CREATE TABLE wiki_user (
   name VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   role int(1) NOT NULL,
+  created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

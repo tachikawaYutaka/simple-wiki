@@ -13,14 +13,14 @@ import java.util.List;
 public interface BodyMapper {
     @Update("UPDATE body b \n" +
             "LEFT JOIN relate_body_to_page rbtp on b.id = rbtp.body_id\n" +
-            "SET b.type = 1\n" +
+            "SET b.type = 1, b.updated = now()\n" +
             "WHERE rbtp.page_id = #{pageId}\n" +
             "AND b.type = 0")
     void removeCurrent(String pageId);
 
     @Insert("INSERT \n" +
-            "INTO body(id, content, type) \n" +
-            "VALUES (#{id}, #{content}, #{type})\n")
+            "INTO body(id, content, type, created, updated) \n" +
+            "VALUES (#{id}, #{content}, #{type}, now(),now())\n")
     void save(BodyDto input);
 
     @Select("SELECT * FROM body b \n" +

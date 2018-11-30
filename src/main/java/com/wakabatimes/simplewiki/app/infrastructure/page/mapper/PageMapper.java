@@ -14,8 +14,8 @@ public interface PageMapper {
     List<PageDto> listByMenuId(String value);
 
     @Insert("INSERT \n" +
-            "INTO page(id, name, type, sort_number) \n" +
-            "VALUES (#{id}, #{name}, #{type}, #{sortNumber})")
+            "INTO page(id, name, type, sort_number,created,updated) \n" +
+            "VALUES (#{id}, #{name}, #{type}, #{sortNumber}, now(),now())")
     void save(PageDto input);
 
     @Select("SELECT * FROM page p\n" +
@@ -28,6 +28,7 @@ public interface PageMapper {
             "SET\n" +
             "   name = #{name}\n" +
             "  , type = #{type}\n" +
+            "  , updated = now()\n" +
             "WHERE\n" +
             "  id = #{id}\n")
     void update(PageDto input);

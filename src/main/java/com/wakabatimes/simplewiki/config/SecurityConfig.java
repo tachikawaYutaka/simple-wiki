@@ -37,9 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 認可の設定
         http.authorizeRequests()
-                .antMatchers("/", "/index","/login","/home","/public/**").permitAll() // indexは全ユーザーアクセス許可
+                .antMatchers("/", "/index","/login","/start","/home","/public_content/**").permitAll() // indexは全ユーザーアクセス許可
                 // ロールが必要なURL
-                .antMatchers("/privates/**").hasRole("USER")
+                .antMatchers("/private_content/**").hasRole("USER")
                 .anyRequest().authenticated();  // それ以外は全て認証無しの場合アクセス不許可
 
         // ログイン設定
