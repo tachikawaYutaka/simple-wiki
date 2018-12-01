@@ -1,0 +1,40 @@
+@import 'var';
+
+.base-header {
+    background-color: $black-0;
+    height: 60px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.base-header-left {
+    width: calc(100% - 151px);
+    display: flex;
+    justify-content: flex-start;
+}
+
+.base-header-right {
+    width: 150px;
+}
+
+.base-main {
+}
+
+.base-menu {
+}
+
+.base-content-body {}
+
+.base-content-body-head {}
+
+.base-content-article {}
+
+.base-content-head-menu {}
+
+.base-article-body {}
+
+.base-content-side {}
+
+.base-footer {}
+

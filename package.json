@@ -1,0 +1,30 @@
+{
+  "name": "simple-wiki",
+  "version": "1.0.0",
+  "description": "```\r mvn flyway:baseline -Dflyway.baselineVersion=0.0.1 -Dflyway.user=wiki -Dflyway.password=hoge00 -Dflyway.url=jdbc:mysql://localhost:3306/simple_wiki?serverTimezone=JST -Dflyway.driver=com.mysql.cj.jdbc.Driver\r ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp",
+    "watch": "gulp watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tachikawaYutaka/simple-wiki.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tachikawaYutaka/simple-wiki/issues"
+  },
+  "homepage": "https://github.com/tachikawaYutaka/simple-wiki#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1"
+  }
+}
