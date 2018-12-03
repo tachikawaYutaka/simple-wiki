@@ -12,11 +12,16 @@
 <body>
     <header class="base-header">
         <div class="base-header-left">
-            <div class="module-logo">Simple Wiki</div>
+            <div class="module-sp-menu-button ">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
             <div class="module-search"><form><input type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
         </div>
         <div class="base-header-right">
-            <div class="module-button bg-white"><a href="">Login</a></div>
+            <div class="module-button bg-black border-white"><a href="">Login</a></div>
         </div>
     </header>
     <main class="base-main">
@@ -24,10 +29,10 @@
             <nav class="module-menu-lists">
                 <ul>
                     <li>
-                        <p><a class="active" href="">ホーム</a></p>
+                        <p><a class="active" href=""><i class="fas fa-angle-right"></i>ホーム</a></p>
                         <ul>
                             <li>
-                                <p><a class="active" href="">自由ページ</a></p>
+                                <p><a class="active" href=""><i class="fas fa-angle-right"></i>自由ページ</a></p>
                             </li>
                             <li>
                                 <p><a href="">自由ページ２</a></p>
@@ -86,7 +91,7 @@
                         </ul>
                     </li>
                 </ul>
-                <div class="module-button bg-white">
+                <div class="module-button bg-gray">
                     <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
                 </div>
             </nav>
@@ -184,10 +189,10 @@
                 <nav class="module-side-menu">
                     <ul>
                         <li>
-                            <a href="">メインページ</a>
+                            <a class="active" href=""><i class="fas fa-angle-right"></i>メインページ</a>
                             <ul>
                                 <li>
-                                    <a href="">はじめに</a>
+                                    <a class="active" href=""><i class="fas fa-angle-right"></i>はじめに</a>
                                     <ul>
                                         <li>
                                             <a href="">ああああああ</a>
@@ -242,7 +247,7 @@
         </div>
     </main>
     <footer class="base-footer">
-        <small class="module-copy"></small>
+        <small class="module-copy">Simple Wiki</small>
     </footer>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"

@@ -24,3 +24,24 @@
     @content;
   }
 }
+
+//media query
+@mixin mq($value){
+  @if $value == pclg {
+    @media all and (max-width: $breakpoint-pc-lg) {
+      @content;
+    }
+  }
+
+  @if $value == pc {
+    @media all and (max-width: $breakpoint-pc) {
+      @content;
+    }
+  }
+
+  @if $value == tb {
+    @media all and (max-width: $breakpoint-tb) {
+      @content;
+    }
+  }
+}

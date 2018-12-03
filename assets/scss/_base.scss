@@ -1,40 +1,95 @@
 @import 'var';
 
 .base-header {
+    padding: 0 15px;
     background-color: $black-0;
     height: 60px;
     display: flex;
     width: 100%;
     justify-content: space-between;
+    position: relative;
+    a {
+        color: $white;
+        text-decoration: none;
+    }
 }
 
 .base-header-left {
     width: calc(100% - 151px);
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    @include mq(pc) {
+        width: 100%;
+    }
 }
 
 .base-header-right {
-    width: 150px;
+    width: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    @include mq(pc) {
+        width: 45px;
+        position: absolute;
+        right: 10px;
+        top: 12px;
+    }
 }
 
 .base-main {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .base-menu {
+    width: 200px;
+    background-color: $black-4;
+    a {
+        color: $white;
+    }
 }
 
-.base-content-body {}
+.base-content-body {
+    width: calc(100% - 200px);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
 
-.base-content-body-head {}
+.base-content-body-head {
+    width: 100%;
+    padding: 0 30px 40px ;
+    background-color: $black-4;
+    color: $white;
+    a {
+        color: $white;
+    }
+}
 
-.base-content-article {}
+.base-content-article {
+    width: calc(100% - 350px);
+    padding: 50px;
+    position: relative;
+}
 
-.base-content-head-menu {}
+.base-content-head-menu {
+    position: absolute;
+    top: -37px;
+    left: 0;
+    width: 100%;
+}
 
 .base-article-body {}
 
-.base-content-side {}
+.base-content-side {
+    width: 350px;
+    background-color: $gray-0;
+}
 
-.base-footer {}
+.base-footer {
+    background-color: $black;
+    text-align: center;
+}
 
