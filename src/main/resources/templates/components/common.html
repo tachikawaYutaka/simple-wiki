@@ -1,0 +1,107 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="common-head">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+
+<header th:fragment="no-login-header" class="base-header">
+    <div class="base-header-left">
+        <div class="module-sp-menu-button script-toggle-base-menu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
+        <div class="module-search"><form><input type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
+    </div>
+    <div class="base-header-right">
+        <div class="module-button bg-black border-white"><a href="">Login</a></div>
+    </div>
+</header>
+
+<div th:fragment="no-login-base-menu" class="base-menu">
+    <nav class="module-menu-lists">
+        <ul>
+            <li>
+                <p><a class="active" href=""><i class="fas fa-angle-right"></i>ホーム</a></p>
+                <ul>
+                    <li>
+                        <p><a class="active" href=""><i class="fas fa-angle-right"></i>自由ページ</a></p>
+                    </li>
+                    <li>
+                        <p><a href="">自由ページ２</a></p>
+                    </li>
+                    <li>
+                        <p><a href="">自由ページ３</a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <p><a class="active" href="">設計書</a></p>
+                <ul>
+                    <li>
+                        <p><a class="active" href="">自由ページ</a></p>
+                    </li>
+                    <li>
+                        <p><a href="">自由ページ２</a></p>
+                    </li>
+                    <li>
+                        <p><a href="">自由ページ３</a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <p><a class="active" href="">UI</a></p>
+                <ul>
+                    <li>
+                        <p><a class="active" href="">自由ページ</a></p>
+                    </li>
+                    <li>
+                        <p><a href="">自由ページ２</a></p>
+                    </li>
+                    <li>
+                        <p><a href="">自由ページ３</a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <p><a class="active" href="">UI</a></p>
+                <ul>
+                    <li>
+                        <p><a class="active" href="">自由ページ</a></p>
+                    </li>
+                    <li>
+                        <p><a href="">自由ページ２</a></p>
+                    </li>
+                    <li>
+                        <p><a href="">自由ページ３</a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="module-button bg-gray">
+            <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
+        </div>
+    </nav>
+</div>
+
+
+<footer th:fragment="common-footer" class="base-footer">
+    <small class="module-copy">Simple Wiki</small>
+</footer>
+
+</body>
+
+</html>

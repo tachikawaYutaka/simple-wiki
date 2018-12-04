@@ -1,5 +1,13 @@
 @import 'var';
 
+.base-body {
+    overflow-x: hidden;
+    &.overflow-hidden {
+        overflow: hidden;
+
+    }
+}
+
 .base-header {
     padding: 0 15px;
     background-color: $black-0;
@@ -49,6 +57,22 @@
     a {
         color: $white;
     }
+    @include mq(tb) {
+        overflow-y: scroll;
+        height: 100vh;
+        z-index: 3;
+        padding-bottom: 80px;
+        position: absolute;
+        top: 60px;
+        left: -200px;
+        transition: .2s;
+    }
+    &.active {
+        @include mq(tb) {
+            left: 0;
+            transition: .2s;
+        }
+    }
 }
 
 .base-content-body {
@@ -56,6 +80,9 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    @include mq(tb) {
+        width: 100%;
+    }
 }
 
 .base-content-body-head {
@@ -66,12 +93,21 @@
     a {
         color: $white;
     }
+    @include mq(tb) {
+        padding-left: 20px;
+    }
 }
 
 .base-content-article {
-    width: calc(100% - 350px);
+    width: calc(100% - 300px);
     padding: 50px;
     position: relative;
+    @include mq(pc) {
+        width: 100%;
+    }
+    @include mq(tb) {
+        padding: 20px;
+    }
 }
 
 .base-content-head-menu {
@@ -79,13 +115,31 @@
     top: -37px;
     left: 0;
     width: 100%;
+    @include mq(pc) {
+        top: -35px;
+        padding-right: 50px;
+    }
 }
 
 .base-article-body {}
 
 .base-content-side {
-    width: 350px;
+    width: 300px;
     background-color: $gray-0;
+    @include mq(pc) {
+        position: absolute;
+        right: -300px;
+        transition: .2s;
+        height: 100%;
+    }
+    &.active {
+        @include mq(pc) {
+            right: 0;
+            transition: .2s;
+            overflow-y: scroll;
+            z-index: 3;
+        }
+    }
 }
 
 .base-footer {
