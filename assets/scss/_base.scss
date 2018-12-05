@@ -49,6 +49,9 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    &.bg-black-4 {
+        background-color:  $black-4;
+    }
 }
 
 .base-menu {
@@ -108,6 +111,9 @@
     @include mq(tb) {
         padding: 20px;
     }
+    &.max {
+        width: 100%;
+    }
 }
 
 .base-content-head-menu {
@@ -119,9 +125,14 @@
         top: -35px;
         padding-right: 50px;
     }
+    &.max {
+        padding-right: 15px;
+    }
 }
 
-.base-article-body {}
+.base-article-body {
+    min-height: 780px;
+}
 
 .base-content-side {
     width: 300px;

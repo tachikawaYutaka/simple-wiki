@@ -179,7 +179,7 @@ select,
 optgroup,
 textarea {
   margin: 0;
-  font-family: inherit;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Noto Sans Japanese", YuGothic, "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
   font-size: inherit;
   line-height: inherit; }
 
@@ -310,6 +310,8 @@ template {
   display: flex;
   width: 100%;
   justify-content: space-between; }
+  .base-main.bg-black-4 {
+    background-color: #444; }
 
 .base-menu {
   width: 200px;
@@ -361,6 +363,8 @@ template {
   @media all and (max-width: 640px) {
     .base-content-article {
       padding: 20px; } }
+  .base-content-article.max {
+    width: 100%; }
 
 .base-content-head-menu {
   position: absolute;
@@ -371,6 +375,11 @@ template {
     .base-content-head-menu {
       top: -35px;
       padding-right: 50px; } }
+  .base-content-head-menu.max {
+    padding-right: 15px; }
+
+.base-article-body {
+  min-height: 780px; }
 
 .base-content-side {
   width: 300px;
@@ -475,6 +484,8 @@ template {
     .module-button.bg-white a:hover {
       background-color: #000;
       color: #fff; }
+  .module-button.small a {
+    font-size: 0.7rem; }
 
 .module-menu-lists {
   overflow: hidden; }
@@ -565,7 +576,7 @@ template {
   margin-bottom: 0; }
   .module-head-menu li {
     margin-right: 1px; }
-    .module-head-menu li:nth-child(2) {
+    .module-head-menu li:last-child {
       margin-right: 0; }
 
 .module-article-index {
@@ -686,3 +697,183 @@ template {
   z-index: 2;
   top: 0;
   left: 0; }
+
+.module-login {
+  width: 100%;
+  height: 80vh;
+  margin: auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-top: 14vh; }
+  @media all and (max-width: 640px) {
+    .module-login {
+      margin-top: 0; } }
+  .module-login form {
+    padding: 50px 50px 40px;
+    max-width: 420px;
+    width: 100%;
+    background-color: #fff;
+    text-align: center; }
+    @media all and (max-width: 640px) {
+      .module-login form {
+        height: 100%; } }
+  .module-login h1 {
+    font-family: "Fjalla One", sans-serif;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 30px; }
+  .module-login p {
+    margin-bottom: 20px; }
+    .module-login p label {
+      text-align: left;
+      font-size: 0.7rem;
+      display: block; }
+  .module-login button {
+    margin-top: 30px; }
+
+.module-input-text {
+  padding: 15px 10px;
+  background-color: #eee;
+  font-size: 0.9rem;
+  border: none;
+  display: block;
+  width: 100%; }
+
+.module-submit-button {
+  border: none;
+  background-color: #000;
+  color: #fff;
+  display: inline-block;
+  width: 160px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 10px;
+  transition: .2s; }
+  .module-submit-button:hover {
+    background-color: #eee;
+    color: #000;
+    transition: .2s; }
+  .module-submit-button.bg-black-2 {
+    background-color: #222; }
+    .module-submit-button.bg-black-2:hover {
+      background-color: #fff; }
+  .module-submit-button.bg-gray {
+    background-color: #999;
+    color: #fff; }
+    .module-submit-button.bg-gray:hover {
+      background-color: #ccc; }
+
+.module-popup {
+  display: none;
+  position: fixed;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  padding: 50px 50px 40px;
+  z-index: 3;
+  top: 10%;
+  left: calc(50% - 210px); }
+  .module-popup h1 {
+    text-align: center;
+    margin-bottom: 30px; }
+  .module-popup p {
+    margin-bottom: 20px; }
+  .module-popup button {
+    margin-top: 30px; }
+  .module-popup.active {
+    display: block; }
+
+.module-input-radio {
+  display: block;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 0.9rem;
+  padding-left: 5px; }
+  .module-input-radio input {
+    position: relative;
+    top: 2px;
+    left: -5px; }
+
+.module-add-root-page {
+  display: none;
+  margin-bottom: 10px; }
+  .module-add-root-page.active {
+    display: block; }
+  .module-add-root-page form {
+    background-color: #333;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; }
+    .module-add-root-page form input {
+      max-width: 257px;
+      padding: 7px 10px;
+      margin-right: 5px; }
+    .module-add-root-page form button {
+      max-width: 80px;
+      margin-right: 5px;
+      font-size: 0.7rem; }
+
+.module-menu-index-list ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  padding-left: 20px; }
+  .module-menu-index-list ul li > div {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1px; }
+    @media all and (max-width: 640px) {
+      .module-menu-index-list ul li > div {
+        flex-direction: column;
+        align-items: flex-start; } }
+    .module-menu-index-list ul li > div .text-area p {
+      margin-bottom: 0;
+      font-size: 0.8rem; }
+      @media all and (max-width: 640px) {
+        .module-menu-index-list ul li > div .text-area p {
+          margin-bottom: 10px; } }
+    .module-menu-index-list ul li > div .menu-area {
+      width: 178px;
+      display: flex;
+      padding-left: 0; }
+      .module-menu-index-list ul li > div .menu-area li {
+        margin-right: 1px; }
+        .module-menu-index-list ul li > div .menu-area li:last-child {
+          margin-right: 0; }
+        .module-menu-index-list ul li > div .menu-area li > div {
+          background-color: transparent;
+          padding: 0;
+          margin-bottom: 0; }
+  .module-menu-index-list ul .add-under-page {
+    display: none; }
+    .module-menu-index-list ul .add-under-page.active {
+      display: block; }
+    .module-menu-index-list ul .add-under-page form {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%; }
+      .module-menu-index-list ul .add-under-page form input {
+        max-width: 257px;
+        padding: 7px 10px;
+        margin-right: 5px; }
+      .module-menu-index-list ul .add-under-page form button {
+        max-width: 80px;
+        margin-right: 5px;
+        font-size: 0.7rem; }
+
+.module-menu-index-list > ul {
+  padding-left: 0; }
+  .module-menu-index-list > ul > li > div {
+    background-color: #333;
+    color: #fff; }

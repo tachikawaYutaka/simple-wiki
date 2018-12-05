@@ -332,7 +332,7 @@ select,
 optgroup,
 textarea {
   margin: 0; // Remove the margin in Firefox and Safari
-  font-family: inherit;
+  font-family: $font-family-base;
   font-size: inherit;
   line-height: inherit;
 }

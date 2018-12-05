@@ -1,6 +1,6 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="components/common :: common-head"></head>
+<head th:replace="components/common :: common-head('ホーム')"></head>
 <body class="base-body">
     <header th:replace="components/common :: no-login-header"></header>
     <main class="base-main">
@@ -22,12 +22,12 @@
                     <ul class="module-head-menu">
                        <li><div class="module-button bg-gray"><a href=""><i class="fas fa-edit"></i>ページ編集</a></div></li>
                        <li><div class="module-button bg-gray"><a href=""><i class="fas fa-plus"></i>ページ追加</a></div></li>
-                        <div class="module-sp-menu-button break-point-pc position-right script-toggle-side-menu">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
                     </ul>
+                    <div class="module-sp-menu-button break-point-pc position-right script-toggle-side-menu">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
                 <div class="base-article-body">
                     <div class="module-article-index">
@@ -160,6 +160,17 @@
             </aside>
         </div>
     </main>
+    <div class="module-popup script-add-menu-popup">
+        <form action="" method="post">
+            <h1>メニュー追加</h1>
+            <p><input type="text" class="module-input-text" placeholder="メニュー名" /></p>
+            <label class="module-input-radio" for="public"><input id="public" type="radio" />全員に公開</label>
+            <label class="module-input-radio" for="private"><input id="private" type="radio" />ログインユーザーにのみ公開</label>
+            <button class="module-submit-button bg-black-2">
+                保存
+            </button>
+        </form>
+    </div>
     <footer th:replace="components/common :: common-footer"></footer>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"

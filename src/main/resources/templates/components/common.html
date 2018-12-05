@@ -1,11 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="common-head">
+<head th:fragment="common-head (title)">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title th:text="${title}"></title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
 </head>
@@ -22,6 +22,15 @@
     </div>
     <div class="base-header-right">
         <div class="module-button bg-black border-white"><a href="">Login</a></div>
+    </div>
+</header>
+
+<header th:fragment="login-header" class="base-header">
+    <div class="base-header-left">
+        <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
+    </div>
+    <div class="base-header-right">
+
     </div>
 </header>
 

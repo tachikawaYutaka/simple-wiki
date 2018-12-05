@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('初期設定')"></head>
+<body class="base-body">
+<header th:replace="components/common :: login-header"></header>
+<main class="base-main bg-black-4">
+    <div class="module-login">
+        <form action="" method="post">
+            <h1>Get Started!</h1>
+            <p>
+                <label for="systemName">システム名称</label>
+                <input id="systemName" placeholder="Simple Wiki" type="text" class="module-input-text" value="Simple Wiki" /></p>
+            <p>
+                <label for="userId">管理者ユーザーID</label>
+                <input id="userId" placeholder="userId" type="text" class="module-input-text" />
+            </p>
+            <p>
+                <label for="userPassword">管理者ユーザーID</label>
+                <input id="userPassword" placeholder="password" type="password" class="module-input-text" />
+            </p>
+            <button class="module-submit-button">
+                スタート
+            </button>
+        </form>
+    </div>
+</main>
+<footer th:replace="components/common :: common-footer"></footer>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/script_min.js}"></script>
+</body>
+</html>

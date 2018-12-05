@@ -1,0 +1,371 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('メニュー')"></head>
+<body class="base-body">
+<header th:replace="components/common :: no-login-header"></header>
+<main class="base-main">
+    <div th:replace="components/common :: no-login-base-menu"></div>
+    <div class="base-content-body">
+        <div class="base-content-body-head">
+            <div class="module-bread">
+                <ul>
+                    <li><a href="">ホーム</a></li>
+                </ul>
+            </div>
+            <h1 class="module-title">
+                ホーム
+            </h1>
+        </div>
+        <div class="base-content-article max">
+            <div class="base-content-head-menu max">
+                <ul class="module-head-menu">
+                    <li><div class="module-button bg-gray"><a href="" class="script-add-root-page-show"><i class="fas fa-plus"></i>ページ追加</a></div></li>
+                    <li><div class="module-button bg-gray"><a class="script-edit-menu" href=""><i class="fas fa-cog"></i>メニュー編集</a></div></li>
+                    <li><div class="module-button bg-gray"><a href="" class="script-menu-delete"><i class="fas fa-minus"></i></i>メニュー削除</a></div></li>
+                </ul>
+            </div>
+            <div class="base-article-body">
+                <div class="module-add-root-page">
+                    <form action=""><input type="text" class="module-input-text" />
+                    <button class="module-submit-button">保存</button><button class="module-submit-button bg-gray script-add-root-page-hidden">キャンセル</button></form>
+                </div>
+                <div class="module-menu-index-list">
+                    <ul>
+                        <li>
+                            <div>
+                                <div class="text-area">
+                                    <p>メインページ</p>
+                                </div>
+                                <ul class="menu-area">
+                                    <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                    <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                    <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                </ul>
+                            </div>
+                            <ul>
+                                <li class="add-under-page">
+                                    <div>
+                                        <div class="text-area">
+                                            <form action=""><input type="text" class="module-input-text" />
+                                                <button class="module-submit-button">保存</button>
+                                                <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <div class="text-area">
+                                            <p>はじめに</p>
+                                        </div>
+                                        <ul class="menu-area">
+                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                            <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                            <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                        </ul>
+                                    </div>
+                                    <ul>
+                                        <li class="add-under-page">
+                                            <div>
+                                                <div class="text-area">
+                                                    <form action=""><input type="text" class="module-input-text" />
+                                                        <button class="module-submit-button">保存</button>
+                                                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <div>
+                                        <div class="text-area">
+                                            <p>はじめに</p>
+                                        </div>
+                                        <ul class="menu-area">
+                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                            <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                            <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                        </ul>
+                                    </div>
+                                    <ul>
+                                        <li class="add-under-page">
+                                            <div>
+                                                <div class="text-area">
+                                                    <form action=""><input type="text" class="module-input-text" />
+                                                        <button class="module-submit-button">保存</button>
+                                                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <div class="text-area">
+                                                    <p>メインページ</p>
+                                                </div>
+                                                <ul class="menu-area">
+                                                    <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                                    <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                                    <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                                </ul>
+                                            </div>
+                                            <ul>
+                                                <li class="add-under-page">
+                                                    <div>
+                                                        <div class="text-area">
+                                                            <form action=""><input type="text" class="module-input-text" />
+                                                                <button class="module-submit-button">保存</button>
+                                                                <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <div class="text-area">
+                                                            <p>はじめに</p>
+                                                        </div>
+                                                        <ul class="menu-area">
+                                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                                            <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                                            <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                                        </ul>
+                                                    </div>
+                                                    <ul>
+                                                        <li class="add-under-page">
+                                                            <div>
+                                                                <div class="text-area">
+                                                                    <form action=""><input type="text" class="module-input-text" />
+                                                                        <button class="module-submit-button">保存</button>
+                                                                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <div class="text-area">
+                                                            <p>はじめに</p>
+                                                        </div>
+                                                        <ul class="menu-area">
+                                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                                            <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                                        </ul>
+                                                    </div>
+                                                    <ul>
+                                                        <li class="add-under-page">
+                                                            <div>
+                                                                <div class="text-area">
+                                                                    <form action=""><input type="text" class="module-input-text" />
+                                                                        <button class="module-submit-button">保存</button>
+                                                                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <div>
+                                <div class="text-area">
+                                    <p>メインページ</p>
+                                </div>
+                                <ul class="menu-area">
+                                    <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                    <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                    <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                </ul>
+                            </div>
+                            <ul>
+                                <li class="add-under-page">
+                                    <div>
+                                        <div class="text-area">
+                                            <form action=""><input type="text" class="module-input-text" />
+                                                <button class="module-submit-button">保存</button>
+                                                <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <div class="text-area">
+                                            <p>はじめに</p>
+                                        </div>
+                                        <ul class="menu-area">
+                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                            <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                            <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                        </ul>
+                                    </div>
+                                    <ul>
+                                        <li class="add-under-page">
+                                            <div>
+                                                <div class="text-area">
+                                                    <form action=""><input type="text" class="module-input-text" />
+                                                        <button class="module-submit-button">保存</button>
+                                                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <div>
+                                        <div class="text-area">
+                                            <p>はじめに</p>
+                                        </div>
+                                        <ul class="menu-area">
+                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                            <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                            <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                        </ul>
+                                    </div>
+                                    <ul>
+                                        <li class="add-under-page">
+                                            <div>
+                                                <div class="text-area">
+                                                    <form action=""><input type="text" class="module-input-text" />
+                                                        <button class="module-submit-button">保存</button>
+                                                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <div class="text-area">
+                                                    <p>メインページ</p>
+                                                </div>
+                                                <ul class="menu-area">
+                                                    <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                                    <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                                    <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                                </ul>
+                                            </div>
+                                            <ul>
+                                                <li class="add-under-page">
+                                                    <div>
+                                                        <div class="text-area">
+                                                            <form action=""><input type="text" class="module-input-text" />
+                                                                <button class="module-submit-button">保存</button>
+                                                                <button class="module-submit-button bg-gray">キャンセル</button></form>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <div class="text-area">
+                                                            <p>はじめに</p>
+                                                        </div>
+                                                        <ul class="menu-area">
+                                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                                            <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                                            <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                                        </ul>
+                                                    </div>
+                                                    <ul>
+                                                        <li class="add-under-page">
+                                                            <div>
+                                                                <div class="text-area">
+                                                                    <form action=""><input type="text" class="module-input-text" />
+                                                                        <button class="module-submit-button">保存</button>
+                                                                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div>
+                                                        <div class="text-area">
+                                                            <p>はじめに</p>
+                                                        </div>
+                                                        <ul class="menu-area">
+                                                            <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                                                            <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                                                            <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                                                        </ul>
+                                                    </div>
+                                                    <ul>
+                                                        <li class="add-under-page">
+                                                            <div>
+                                                                <div class="text-area">
+                                                                    <form action=""><input type="text" class="module-input-text" />
+                                                                        <button class="module-submit-button">保存</button>
+                                                                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="module-popup script-add-menu-popup">
+    <form action="" method="post">
+        <h1>メニュー追加</h1>
+        <p><input type="text" class="module-input-text" placeholder="メニュー名" /></p>
+        <label class="module-input-radio" for="public"><input id="public" type="radio" />全員に公開</label>
+        <label class="module-input-radio" for="private"><input id="private" type="radio" />ログインユーザーにのみ公開</label>
+        <button class="module-submit-button bg-black-2">
+            保存
+        </button>
+    </form>
+</div>
+<div class="module-popup script-edit-menu-popup">
+    <form action="" method="post">
+        <h1>メニュー編集</h1>
+        <p><input type="text" class="module-input-text" placeholder="メニュー名" /></p>
+        <label class="module-input-radio" for="editPublic"><input id="editPublic" type="radio" />全員に公開</label>
+        <label class="module-input-radio" for="editPrivate"><input id="editPrivate" type="radio" />ログインユーザーにのみ公開</label>
+        <button class="module-submit-button bg-black-2">
+            保存
+        </button>
+    </form>
+</div>
+<div class="module-popup script-menu-delete-popup">
+    <form action="" method="post">
+        <h1>メニュー削除</h1>
+        <p>「」を削除してもよろしいですか？</p>
+        <button class="module-submit-button bg-black-2">
+            はい
+        </button>
+        <button class="module-submit-button bg-gray script-popup-cancel">
+            いいえ
+        </button>
+    </form>
+</div>
+<div class="module-popup script-page-delete-popup">
+    <form action="" method="post">
+        <h1>ページ削除</h1>
+        <p>「」を削除してもよろしいですか？</p>
+        <button class="module-submit-button bg-black-2">
+            はい
+        </button>
+        <button class="module-submit-button bg-gray script-popup-cancel">
+            いいえ
+        </button>
+    </form>
+</div>
+<footer th:replace="components/common :: common-footer"></footer>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/script_min.js}"></script>
+</body>
+</html>
