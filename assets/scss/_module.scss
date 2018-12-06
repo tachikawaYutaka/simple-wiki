@@ -618,3 +618,34 @@
     }
 }
 
+.module-user-menu {
+    color: $white;
+    width: 100%;
+    .user-name {
+        cursor: pointer;
+        font-size: .9rem;
+        position: relative;
+        &:after {
+            content: ' ';
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            top: 4px;
+            right: 5px;
+            border-bottom: 1px solid $white;
+            border-right: 1px solid $white;
+            transform: rotate(45deg);
+        }
+    }
+    &.active {
+        .user-name {
+            &:after {
+                transform: rotate(-45deg);
+            }
+        }
+    }
+    .user-list {
+        display: none;
+    }
+
+}

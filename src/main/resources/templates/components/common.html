@@ -25,6 +25,30 @@
     </div>
 </header>
 
+<header th:fragment="user-header" class="base-header">
+    <div class="base-header-left">
+        <div class="module-sp-menu-button script-toggle-base-menu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
+        <div class="module-search"><form><input type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
+    </div>
+    <div class="base-header-right">
+        <div class="module-user-menu">
+            <div class="user-name">admin</div>
+            <ul class="user-list">
+                <li><a href="">システム設定</a></li>
+                <li><a href="">ユーザー管理</a></li>
+                <li><a href="">ユーザー名変更</a></li>
+                <li><a href="">パスワード変更</a></li>
+                <li><a href="">ログアウト</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
 <header th:fragment="login-header" class="base-header">
     <div class="base-header-left">
         <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
