@@ -33,7 +33,7 @@
 }
 
 .base-header-right {
-    width: 80px;
+    width: 136px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -51,6 +51,9 @@
     justify-content: space-between;
     &.bg-black-4 {
         background-color:  $black-4;
+    }
+    &.bg-gray {
+        background-color:  $gray-0;
     }
 }
 
@@ -84,6 +87,9 @@
     justify-content: space-between;
     flex-wrap: wrap;
     @include mq(tb) {
+        width: 100%;
+    }
+    &.max {
         width: 100%;
     }
 }

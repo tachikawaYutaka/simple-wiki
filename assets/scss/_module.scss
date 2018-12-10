@@ -625,6 +625,15 @@
         cursor: pointer;
         font-size: .9rem;
         position: relative;
+        @include mq(pc) {
+            font-size: 1.6rem;
+        }
+        span {
+            padding-left: 10px;
+            @include mq(pc) {
+                display: none;
+            }
+        }
         &:after {
             content: ' ';
             width: 8px;
@@ -635,17 +644,72 @@
             border-bottom: 1px solid $white;
             border-right: 1px solid $white;
             transform: rotate(45deg);
+            transition: .2s;
+            @include mq(pc) {
+                top: 14px;
+            }
         }
+
     }
     &.active {
         .user-name {
             &:after {
-                transform: rotate(-45deg);
+                transform: rotate(225deg);
+                top: 8px;
+                transition: .2s;
+                @include mq(pc) {
+                    top: 18px;
+                }
             }
+        }
+        .user-list {
+            display: block;
         }
     }
     .user-list {
         display: none;
+        position: absolute;
+        top: 60px;
+        right: 15px;
+        background-color: #fff;
+        width: 136px;
+        padding: 10px;
+        list-style-type: none;
+        z-index: 3;
+        font-size: .9rem;
+        border: 1px solid $gray-2;
+        @include mq(pc) {
+            right: 0;
+        }
+        a {
+            color: $black;
+            display: block;
+            padding-bottom: 5px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        li {
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+        &:before {
+            content: ' ';
+            position: absolute;
+            top: -7px;
+            left: calc(50% - 6px);
+            width: 12px;
+            height: 12px;
+            transform: rotate(-45deg);
+            z-index: 4;
+            border-top: 1px solid $gray-2;
+            border-right: 1px solid $gray-2;
+            background-color: #fff;
+            @include mq(pc) {
+                left: auto;
+                right: 15px;
+            }
+        }
     }
-
 }

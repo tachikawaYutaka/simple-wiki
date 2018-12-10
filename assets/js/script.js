@@ -131,6 +131,15 @@ $(function(){
         $('.module-add-root-page').removeClass('active');
     });
 
+    $('.script-user-menu-toggle').on('click',function(e){
+        e.preventDefault();
+        if(!$(this).hasClass('active')) {
+            $(this).addClass('active')
+        }else {
+            $(this).removeClass('active')
+        }
+    });
+
 
 
 

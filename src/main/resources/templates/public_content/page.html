@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('ページ編集')"></head>
+<body class="base-body">
+<header th:replace="components/common :: user-header"></header>
+<main class="base-main bg-gray">
+    <div class="base-content-body max">
+        <div class="base-content-body-head">
+            <div class="module-bread">
+                <ul>
+                    <li><a href="">ホーム</a></li>
+                </ul>
+            </div>
+            <h1 class="module-title">
+                ホーム
+            </h1>
+        </div>
+        <div class="base-content-edit-body">
+            <div class="module-edit-body">
+                <div class="editor-side"></div>
+                <div class="preview-side"></div>
+            </div>
+            <div class="module-button-lists">
+                <button class="module-submit-button bg-black-2">
+                    保存
+                </button>
+                <button class="module-submit-button bg-gray script-popup-cancel">
+                    キャンセル
+                </button>
+            </div>
+        </div>
+        <div class="base-content-article max">
+            ss
+        </div>
+    </div>
+</main>
+<div class="module-popup script-add-menu-popup">
+    <form action="" method="post">
+        <h1>メニュー追加</h1>
+        <p><input type="text" class="module-input-text" placeholder="メニュー名" /></p>
+        <label class="module-input-radio" for="public"><input id="public" type="radio" />全員に公開</label>
+        <label class="module-input-radio" for="private"><input id="private" type="radio" />ログインユーザーにのみ公開</label>
+        <button class="module-submit-button bg-black-2">
+            保存
+        </button>
+    </form>
+</div>
+<div class="module-popup script-edit-menu-popup">
+    <form action="" method="post">
+        <h1>メニュー編集</h1>
+        <p><input type="text" class="module-input-text" placeholder="メニュー名" /></p>
+        <label class="module-input-radio" for="editPublic"><input id="editPublic" type="radio" />全員に公開</label>
+        <label class="module-input-radio" for="editPrivate"><input id="editPrivate" type="radio" />ログインユーザーにのみ公開</label>
+        <button class="module-submit-button bg-black-2">
+            保存
+        </button>
+    </form>
+</div>
+<div class="module-popup script-menu-delete-popup">
+    <form action="" method="post">
+        <h1>メニュー削除</h1>
+        <p>「」を削除してもよろしいですか？</p>
+        <button class="module-submit-button bg-black-2">
+            はい
+        </button>
+        <button class="module-submit-button bg-gray script-popup-cancel">
+            いいえ
+        </button>
+    </form>
+</div>
+<div class="module-popup script-page-delete-popup">
+    <form action="" method="post">
+        <h1>ページ削除</h1>
+        <p>「」を削除してもよろしいですか？</p>
+        <button class="module-submit-button bg-black-2">
+            はい
+        </button>
+        <button class="module-submit-button bg-gray script-popup-cancel">
+            いいえ
+        </button>
+    </form>
+</div>
+<footer th:replace="components/common :: common-footer"></footer>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/script_min.js}"></script>
+</body>
+</html>
