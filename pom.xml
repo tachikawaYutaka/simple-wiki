@@ -75,6 +75,12 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.plantuml/plantuml -->
+		<dependency>
+			<groupId>net.sourceforge.plantuml</groupId>
+			<artifactId>plantuml</artifactId>
+			<version>8059</version>
+		</dependency>
 	</dependencies>
 	<reporting>
 		<plugins>
