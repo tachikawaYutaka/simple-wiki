@@ -18,11 +18,16 @@
         <div class="base-content-edit-body">
             <div class="module-edit-body">
                 <div class="editor-side">
-                    <div class="menu"></div>
+                    <div class="menu">
+                        <a href="#" class="script-sample-screen">サンプル</a>
+                    </div>
                     <div class="body" id="editor"></div>
                 </div>
                 <div class="preview-side">
-                    <div class="body base-article-body"  id="preview"></div>
+                    <div class="menu">
+                        <button class="module-icon-button script-preview-load"><i class="fas fa-sync"></i></button>
+                    </div>
+                    <div class="body base-article-body article"  id="preview"></div>
                 </div>
             </div>
             <div class="module-button-lists">
@@ -35,7 +40,301 @@
             </div>
         </div>
         <div class="base-content-article max">
-            ss
+            <div class="module-body-history">
+                <div class="head">改訂履歴</div>
+                <ul>
+                    <li>
+                        <div class="name">
+                            admin:2018/xx/xx xx:xx
+                        </div>
+                        <div class="menu">
+                            <div class="module-button bg-gray small">
+                                <a href="#">プレビュー</a>
+                            </div>
+                            <div class="module-button bg-gray small">
+                                <a href="#">復元</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            admin:2018/xx/xx xx:xx
+                        </div>
+                        <div class="menu">
+                            <div class="module-button bg-gray small">
+                                <a href="#">プレビュー</a>
+                            </div>
+                            <div class="module-button bg-gray small">
+                                <a href="#">復元</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            admin:2018/xx/xx xx:xx
+                        </div>
+                        <div class="menu">
+                            <div class="module-button bg-gray small">
+                                <a href="#">プレビュー</a>
+                            </div>
+                            <div class="module-button bg-gray small">
+                                <a href="#">復元</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            admin:2018/xx/xx xx:xx
+                        </div>
+                        <div class="menu">
+                            <div class="module-button bg-gray small">
+                                <a href="#">プレビュー</a>
+                            </div>
+                            <div class="module-button bg-gray small">
+                                <a href="#">復元</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            admin:2018/xx/xx xx:xx
+                        </div>
+                        <div class="menu">
+                            <div class="module-button bg-gray small">
+                                <a href="#">プレビュー</a>
+                            </div>
+                            <div class="module-button bg-gray small">
+                                <a href="#">復元</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            admin:2018/xx/xx xx:xx
+                        </div>
+                        <div class="menu">
+                            <div class="module-button bg-gray small">
+                                <a href="#">プレビュー</a>
+                            </div>
+                            <div class="module-button bg-gray small">
+                                <a href="#">復元</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            admin:2018/xx/xx xx:xx
+                        </div>
+                        <div class="menu">
+                            <div class="module-button bg-gray small">
+                                <a href="#">プレビュー</a>
+                            </div>
+                            <div class="module-button bg-gray small">
+                                <a href="#">復元</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="name">
+                            admin:2018/xx/xx xx:xx
+                        </div>
+                        <div class="menu">
+                            <div class="module-button bg-gray small">
+                                <a href="#">プレビュー</a>
+                            </div>
+                            <div class="module-button bg-gray small">
+                                <a href="#">復元</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="module-sample-screen script-sample-load">
+        <div class="editor-side">
+<pre>
+目次の作成
+
+*index*
+
+# 見出し1
+## 見出し2
+### 見出し3
+#### 見出し4
+##### 見出し5
+###### 見出し6
+
+**強調（太字）**
+
+~~打ち消し~~
+
+- リスト1
+- リスト2
+- リスト3
+- リスト4
+
+* * *
+
+1. リスト1
+1. リスト2
+1. リスト3
+1. リスト4
+
+
+[Googleはこちら](https://www.google.co.jp)
+
+
+> ハワイ語の Wiki Wiki という表示。ここではホノルル国際空港（ハワイ・ホノルル）のシャトルバスの名前。
+
+
+* * *
+
+水平線
+
+* * *
+
+
+| Left align | Right align | Center align |
+|:-----------|------------:|:------------:|
+| This       | This        | This         |
+| column     | column      | column       |
+| will       | will        | will         |
+| be         | be          | be           |
+| left       | right       | center       |
+| aligned    | aligned     | aligned      |
+
+
+* * *
+
+```java
+@Getter
+@NonNull
+PageId pageId;
+
+@Getter
+@NonNull
+PageName pageName;
+
+@Getter
+@NonNull
+PageType pageType;
+```
+
+* * *
+
+PlantUML
+
+```puml
+@startuml
+
+actor Promoter
+actor Entrant
+
+Promoter --> (Create Event)
+Promoter -> (Attend Event)
+
+Entrant --> (Find Event)
+(Attend Event) <- Entrant
+
+(Attend Event) <.. (Create Member)  : <>
+
+@enduml
+```
+
+* * *
+
+mermaid.js
+
+```mermaid
+graph TD
+A[Christmas] -->|Get money| B(Go shopping)
+B --> C{Let me think}
+C -->|One| D[Laptop]
+C -->|Two| E[iPhone]
+C -->|Three| F[fa:fa-car Car]
+```
+</pre>
+        </div>
+        <div class="preview-side base-article-body article">
+            <p>目次の作成</p>
+            <p></p><div class="module-article-index"><ul><li><a href="#見出し1">見出し1</a></li><li><a href="#見出し2">見出し2</a></li><li><a href="#見出し3">見出し3</a></li><li><a href="#見出し4">見出し4</a></li><li><a href="#見出し5">見出し5</a></li><li><a href="#見出し6">見出し6</a></li></ul></div><p></p>
+            <h1><a name="-1" class="anchor" href="#-1"><span class="header-link"></span></a>見出し1</h1><h2><a name="-2" class="anchor" href="#-2"><span class="header-link"></span></a>見出し2</h2><h3><a name="-3" class="anchor" href="#-3"><span class="header-link"></span></a>見出し3</h3><h4><a name="-4" class="anchor" href="#-4"><span class="header-link"></span></a>見出し4</h4><h5><a name="-5" class="anchor" href="#-5"><span class="header-link"></span></a>見出し5</h5><h6><a name="-6" class="anchor" href="#-6"><span class="header-link"></span></a>見出し6</h6><p><strong>強調（太字）</strong></p>
+            <p><del>打ち消し</del></p>
+            <ul>
+                <li>リスト1</li>
+                <li>リスト2</li>
+                <li>リスト3</li>
+                <li>リスト4</li>
+            </ul>
+            <hr>
+            <ol>
+                <li>リスト1</li>
+                <li>リスト2</li>
+                <li>リスト3</li>
+                <li>リスト4</li>
+            </ol>
+            <p><a href="https://www.google.co.jp">Googleはこちら</a></p>
+            <blockquote>
+                <p>ハワイ語の Wiki Wiki という表示。ここではホノルル国際空港（ハワイ・ホノルル）のシャトルバスの名前。</p>
+            </blockquote>
+            <hr>
+            <p>水平線</p>
+            <hr>
+            <table class="table table-hover"><thead><tr>
+                <th align="left">Left align</th>
+                <th align="right">Right align</th>
+                <th align="center">Center align</th>
+            </tr>
+            </thead><tbody><tr>
+                <td align="left">This</td>
+                <td align="right">This</td>
+                <td align="center">This</td>
+            </tr>
+            <tr>
+                <td align="left">column</td>
+                <td align="right">column</td>
+                <td align="center">column</td>
+            </tr>
+            <tr>
+                <td align="left">will</td>
+                <td align="right">will</td>
+                <td align="center">will</td>
+            </tr>
+            <tr>
+                <td align="left">be</td>
+                <td align="right">be</td>
+                <td align="center">be</td>
+            </tr>
+            <tr>
+                <td align="left">left</td>
+                <td align="right">right</td>
+                <td align="center">center</td>
+            </tr>
+            <tr>
+                <td align="left">aligned</td>
+                <td align="right">aligned</td>
+                <td align="center">aligned</td>
+            </tr>
+            </tbody></table><hr>
+            <pre><code class="hljs"><span class="hljs-variable">@Getter</span>
+<span class="hljs-variable">@NonNull</span>
+PageId pageId;
+
+<span class="hljs-variable">@Getter</span>
+<span class="hljs-variable">@NonNull</span>
+PageName pageName;
+
+<span class="hljs-variable">@Getter</span>
+<span class="hljs-variable">@NonNull</span>
+PageType pageType;</code></pre><hr>
+            <p>PlantUML</p>
+            <a target="_blank" href="/puml_image?url=@startuml%0A%0Aactor%20Promoter%0Aactor%20Entrant%0A%0APromoter%20--%3E%20(Create%20Event)%0APromoter%20-%3E%20(Attend%20Event)%0A%0AEntrant%20--%3E%20(Find%20Event)%0A(Attend%20Event)%20%3C-%20Entrant%0A%0A(Attend%20Event)%20%3C..%20(Create%20Member)%20%20:%20%3C%3E%0A%0A@enduml"><img src="/puml_image?url=@startuml%0A%0Aactor%20Promoter%0Aactor%20Entrant%0A%0APromoter%20--%3E%20(Create%20Event)%0APromoter%20-%3E%20(Attend%20Event)%0A%0AEntrant%20--%3E%20(Find%20Event)%0A(Attend%20Event)%20%3C-%20Entrant%0A%0A(Attend%20Event)%20%3C..%20(Create%20Member)%20%20:%20%3C%3E%0A%0A@enduml"></a><hr>
+            <p>mermaid.js</p>
+            <div class="mermaid" data-processed="true"><svg id="mermaid-1544710505139" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 317.8125px;" viewBox="0 0 317.8125 509.3531188964844"><style>#mermaid-1544710505139 .label{font-family:trebuchet ms,verdana,arial;color:#333}#mermaid-1544710505139 .node circle,#mermaid-1544710505139 .node ellipse,#mermaid-1544710505139 .node polygon,#mermaid-1544710505139 .node rect{fill:#ececff;stroke:#9370db;stroke-width:1px}#mermaid-1544710505139 .node.clickable{cursor:pointer}#mermaid-1544710505139 .arrowheadPath{fill:#333}#mermaid-1544710505139 .edgePath .path{stroke:#333;stroke-width:1.5px}#mermaid-1544710505139 .edgeLabel{background-color:#e8e8e8}#mermaid-1544710505139 .cluster rect{fill:#ffffde!important;stroke:#aa3!important;stroke-width:1px!important}#mermaid-1544710505139 .cluster text{fill:#333}#mermaid-1544710505139 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:trebuchet ms,verdana,arial;font-size:12px;background:#ffffde;border:1px solid #aa3;border-radius:2px;pointer-events:none;z-index:100}#mermaid-1544710505139 .actor{stroke:#ccf;fill:#ececff}#mermaid-1544710505139 text.actor{fill:#000;stroke:none}#mermaid-1544710505139 .actor-line{stroke:grey}#mermaid-1544710505139 .messageLine0{marker-end:"url(#arrowhead)"}#mermaid-1544710505139 .messageLine0,#mermaid-1544710505139 .messageLine1{stroke-width:1.5;stroke-dasharray:"2 2";stroke:#333}#mermaid-1544710505139 #arrowhead{fill:#333}#mermaid-1544710505139 #crosshead path{fill:#333!important;stroke:#333!important}#mermaid-1544710505139 .messageText{fill:#333;stroke:none}#mermaid-1544710505139 .labelBox{stroke:#ccf;fill:#ececff}#mermaid-1544710505139 .labelText,#mermaid-1544710505139 .loopText{fill:#000;stroke:none}#mermaid-1544710505139 .loopLine{stroke-width:2;stroke-dasharray:"2 2";marker-end:"url(#arrowhead)";stroke:#ccf}#mermaid-1544710505139 .note{stroke:#aa3;fill:#fff5ad}#mermaid-1544710505139 .noteText{fill:#000;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:14px}#mermaid-1544710505139 .section{stroke:none;opacity:.2}#mermaid-1544710505139 .section0{fill:rgba(102,102,255,.49)}#mermaid-1544710505139 .section2{fill:#fff400}#mermaid-1544710505139 .section1,#mermaid-1544710505139 .section3{fill:#fff;opacity:.2}#mermaid-1544710505139 .sectionTitle0,#mermaid-1544710505139 .sectionTitle1,#mermaid-1544710505139 .sectionTitle2,#mermaid-1544710505139 .sectionTitle3{fill:#333}#mermaid-1544710505139 .sectionTitle{text-anchor:start;font-size:11px;text-height:14px}#mermaid-1544710505139 .grid .tick{stroke:#d3d3d3;opacity:.3;shape-rendering:crispEdges}#mermaid-1544710505139 .grid path{stroke-width:0}#mermaid-1544710505139 .today{fill:none;stroke:red;stroke-width:2px}#mermaid-1544710505139 .task{stroke-width:2}#mermaid-1544710505139 .taskText{text-anchor:middle;font-size:11px}#mermaid-1544710505139 .taskTextOutsideRight{fill:#000;text-anchor:start;font-size:11px}#mermaid-1544710505139 .taskTextOutsideLeft{fill:#000;text-anchor:end;font-size:11px}#mermaid-1544710505139 .taskText0,#mermaid-1544710505139 .taskText1,#mermaid-1544710505139 .taskText2,#mermaid-1544710505139 .taskText3{fill:#fff}#mermaid-1544710505139 .task0,#mermaid-1544710505139 .task1,#mermaid-1544710505139 .task2,#mermaid-1544710505139 .task3{fill:#8a90dd;stroke:#534fbc}#mermaid-1544710505139 .taskTextOutside0,#mermaid-1544710505139 .taskTextOutside1,#mermaid-1544710505139 .taskTextOutside2,#mermaid-1544710505139 .taskTextOutside3{fill:#000}#mermaid-1544710505139 .active0,#mermaid-1544710505139 .active1,#mermaid-1544710505139 .active2,#mermaid-1544710505139 .active3{fill:#bfc7ff;stroke:#534fbc}#mermaid-1544710505139 .activeText0,#mermaid-1544710505139 .activeText1,#mermaid-1544710505139 .activeText2,#mermaid-1544710505139 .activeText3{fill:#000!important}#mermaid-1544710505139 .done0,#mermaid-1544710505139 .done1,#mermaid-1544710505139 .done2,#mermaid-1544710505139 .done3{stroke:grey;fill:#d3d3d3;stroke-width:2}#mermaid-1544710505139 .doneText0,#mermaid-1544710505139 .doneText1,#mermaid-1544710505139 .doneText2,#mermaid-1544710505139 .doneText3{fill:#000!important}#mermaid-1544710505139 .crit0,#mermaid-1544710505139 .crit1,#mermaid-1544710505139 .crit2,#mermaid-1544710505139 .crit3{stroke:#f88;fill:red;stroke-width:2}#mermaid-1544710505139 .activeCrit0,#mermaid-1544710505139 .activeCrit1,#mermaid-1544710505139 .activeCrit2,#mermaid-1544710505139 .activeCrit3{stroke:#f88;fill:#bfc7ff;stroke-width:2}#mermaid-1544710505139 .doneCrit0,#mermaid-1544710505139 .doneCrit1,#mermaid-1544710505139 .doneCrit2,#mermaid-1544710505139 .doneCrit3{stroke:#f88;fill:#d3d3d3;stroke-width:2;cursor:pointer;shape-rendering:crispEdges}#mermaid-1544710505139 .activeCritText0,#mermaid-1544710505139 .activeCritText1,#mermaid-1544710505139 .activeCritText2,#mermaid-1544710505139 .activeCritText3,#mermaid-1544710505139 .doneCritText0,#mermaid-1544710505139 .doneCritText1,#mermaid-1544710505139 .doneCritText2,#mermaid-1544710505139 .doneCritText3{fill:#000!important}#mermaid-1544710505139 .titleText{text-anchor:middle;font-size:18px;fill:#000}#mermaid-1544710505139 g.classGroup text{fill:#9370db;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:10px}#mermaid-1544710505139 g.classGroup rect{fill:#ececff;stroke:#9370db}#mermaid-1544710505139 g.classGroup line{stroke:#9370db;stroke-width:1}#mermaid-1544710505139 .classLabel .box{stroke:none;stroke-width:0;fill:#ececff;opacity:.5}#mermaid-1544710505139 .classLabel .label{fill:#9370db;font-size:10px}#mermaid-1544710505139 .relation{stroke:#9370db;stroke-width:1;fill:none}#mermaid-1544710505139 #compositionEnd,#mermaid-1544710505139 #compositionStart{fill:#9370db;stroke:#9370db;stroke-width:1}#mermaid-1544710505139 #aggregationEnd,#mermaid-1544710505139 #aggregationStart{fill:#ececff;stroke:#9370db;stroke-width:1}#mermaid-1544710505139 #dependencyEnd,#mermaid-1544710505139 #dependencyStart,#mermaid-1544710505139 #extensionEnd,#mermaid-1544710505139 #extensionStart{fill:#9370db;stroke:#9370db;stroke-width:1}#mermaid-1544710505139 .branch-label,#mermaid-1544710505139 .commit-id,#mermaid-1544710505139 .commit-msg{fill:#d3d3d3;color:#d3d3d3}</style><style>#mermaid-1544710505139 {
+    color: rgb(33, 37, 41);
+    font: normal normal 400 normal 16px / 28.8px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Noto Sans Japanese", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", Arial, メイリオ, Meiryo, sans-serif;
+  }</style><g transform="translate(-12, -12)"><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M173.03125,68L173.03125,107L173.03125,146" marker-end="url(#arrowhead73)" style="fill:none"></path><defs><marker id="arrowhead73" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M173.03125,194L173.03125,219L173.53125,244.50000305175783" marker-end="url(#arrowhead74)" style="fill:none"></path><defs><marker id="arrowhead74" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M136.48489785145654,350.8067697996988L54.6328125,426.3531188964844L54.6328125,465.3531188964844" marker-end="url(#arrowhead75)" style="fill:none"></path><defs><marker id="arrowhead75" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M173.53125,387.8531219482423L173.03125,426.3531188964844L173.03125,465.3531188964844" marker-end="url(#arrowhead76)" style="fill:none"></path><defs><marker id="arrowhead76" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M210.25335236528878,351.13102568646894L289.3046875,426.3531188964844L289.3046875,465.3531188964844" marker-end="url(#arrowhead77)" style="fill:none"></path><defs><marker id="arrowhead77" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(173.03125,107)" style="opacity: 1;"><g transform="translate(-39.1328125,-14)" class="label"><foreignObject width="78.265625" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Get money</span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(54.6328125,426.3531188964844)" style="opacity: 1;"><g transform="translate(-15.125,-14)" class="label"><foreignObject width="30.25" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">One</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(173.03125,426.3531188964844)" style="opacity: 1;"><g transform="translate(-14.671875,-14)" class="label"><foreignObject width="29.34375" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Two</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(289.3046875,426.3531188964844)" style="opacity: 1;"><g transform="translate(-20.8984375,-14)" class="label"><foreignObject width="41.796875" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Three</span></div></foreignObject></g></g></g><g class="nodes"><g class="node" id="A" transform="translate(173.03125,44)" style="opacity: 1;"><rect rx="0" ry="0" x="-45.0390625" y="-24" width="90.078125" height="48"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-35.0390625,-14)"><foreignObject width="70.078125" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Christmas</div></foreignObject></g></g></g><g class="node" id="B" transform="translate(173.03125,170)" style="opacity: 1;"><rect rx="5" ry="5" x="-53.6015625" y="-24" width="107.203125" height="48"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-43.6015625,-14)"><foreignObject width="87.203125" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Go shopping</div></foreignObject></g></g></g><g class="node" id="C" transform="translate(173.03125,315.6765594482422)" style="opacity: 1;"><polygon points="71.6765625,0 143.353125,-71.6765625 71.6765625,-143.353125 0,-71.6765625" rx="5" ry="5" transform="translate(-71.6765625,71.6765625)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-45.640625,-14)"><foreignObject width="91.28125" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Let me think</div></foreignObject></g></g></g><g class="node" id="D" transform="translate(54.6328125,489.3531188964844)" style="opacity: 1;"><rect rx="0" ry="0" x="-34.6328125" y="-24" width="69.265625" height="48"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-24.6328125,-14)"><foreignObject width="49.265625" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Laptop</div></foreignObject></g></g></g><g class="node" id="E" transform="translate(173.03125,489.3531188964844)" style="opacity: 1;"><rect rx="0" ry="0" x="-33.765625" y="-24" width="67.53125" height="48"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-23.765625,-14)"><foreignObject width="47.53125" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">iPhone</div></foreignObject></g></g></g><g class="node" id="F" transform="translate(289.3046875,489.3531188964844)" style="opacity: 1;"><rect rx="0" ry="0" x="-32.5078125" y="-24" width="65.015625" height="48"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-22.5078125,-14)"><foreignObject width="45.015625" height="28"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><i class="fa fa-car"></i> Car</div></foreignObject></g></g></g></g></g></g></svg></div></div>
         </div>
     </div>
 </main>
@@ -50,7 +349,10 @@
 <script th:src="@{/js/marked.min.js}"></script>
 <script th:src="@{/js/highlight/highlight.pack.js}"></script>
 <script th:src="@{/js/mermaid.min.js}"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
 <script>
+
+
     var fontSize = 16;
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
@@ -60,22 +362,37 @@
     editor.getSession().setTabSize(2);
     editor.$blockScrolling = Infinity;
 
-    //リアルタイムプレビュー
+    //プレビュー
     var viewer=document.getElementById('preview');
     viewer.innerHTML = marked(editor.getValue());
-    editor.getSession().on("change" , function(e){
-            viewer.innerHTML = marked(editor.getValue());
+    var changeFlag;
+    $('.script-preview-load').on("click" , function(e){
+        viewer.innerHTML = marked(editor.getValue());
+        window.mermaid.init();
     });
 
-    editor.getSession().on('changeScrollTop',function(scroll){
-        var cursor = editor.selection.getCursor();
-        var rows = editor.session.getLength();
-        viewer.scrollTop= (viewer.scrollHeight-viewer.clientHeight)*cursor.row/rows;
-    });
+    //30秒ごとにプレビューを更新
+    setInterval(function(){
+        viewer.innerHTML = marked(editor.getValue());
+        window.mermaid.init();
+    }, 30000);
 
     window.onload = function () {
         marked_js_render();
     };
+
+    $('.script-sample-screen').click(function(){
+        if(!$(this).hasClass('active')){
+            $('.base-body').append('<div class="module-back-layer"></div>');
+            $('.module-sample-screen').addClass('active');
+        }
+    });
+
+    $('.base-body').on('click','.module-back-layer',function(e){
+        e.preventDefault();
+        $('.module-sample-screen').removeClass('active');
+        $('.module-back-layer').remove();
+    });
 
     /*
      * 拡張の追加
@@ -83,17 +400,14 @@
     function marked_js_render(){
         // marked.js + highlight.js
         var renderer = new marked.Renderer()
-
         // code syntax hilightの編集
         renderer.code = function (code, language) {
-            console.log(language);
-            console.log(code);
             var html = "";
             if(language == "puml"){
                 var encode= encodeURI(code);
                 html = '<a target="_blank" href="/puml_image?url=' + encode + '"><img' + ' src="/puml_image?url=' + encode + '" /></a>';
             }else if(language == "mermaid"){
-
+                html = '<div class="mermaid">'+code+'</div>';
             }else {
                 html =  '<pre' + '><code class="hljs">' + hljs.highlightAuto(code).value + '</code></pre>';
             }
@@ -109,9 +423,60 @@
             + body
             + '</table>';
         };
+
+        // 見出しタグ
+        renderer.heading = function (text, level) {
+          var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+
+          return '<h' + level + '><a name="' +
+                        escapedText +
+                         '" class="anchor" href="#' +
+                         escapedText +
+                         '"><span class="header-link"></span></a>' +
+                          text + '</h' + level + '>';
+        };
+
+        //目次作成
+        renderer.em = function(text) {
+            console.log(text);
+            if(text == "index") {
+                return createIndex(editor.getValue());
+            }else {
+                return '<em>' + text.replace('\\/', '/') + '</em>';
+            }
+        };
         marked.setOptions({
             renderer: renderer,
         });
+
+        function createIndex(markdown){
+            console.log(markdown);
+            lines = markdown.split(/\n/);
+            var headline = [];
+            var in_code = false;
+            for(var it in lines){
+                console.log(lines[it]);
+                if(lines[it].match(/^```.?/)){
+                    // コードの行内の場合は外す
+                    in_code = in_code ? false : true;
+                }
+                if(lines[it][0] == '#' && !in_code){
+                    // 先頭の#とスペースを削除して追加
+                    headline.push(lines[it].replace(/^#+/, '').trim());
+                }
+            }
+
+            // 表示用のリスト構文
+            var preview = "<div class='module-article-index'><ul>";
+            for(var it in headline){
+                preview += "<li><a href='#" + headline[it] + "'>"
+                        +  headline[it]
+                        + "</a></li>";
+            }
+            preview += "</ul></div>";
+
+            return preview;
+        }
     }
 </script>
 </body>

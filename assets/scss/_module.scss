@@ -722,18 +722,37 @@
     > div {
         width: 50%;
         height: 680px;
+        overflow: hidden;
+        position: relative;
+    }
+    .menu {
+        display: flex;
+        justify-content: flex-end;
+        padding: 5px 10px;
+        position: absolute;
+        top: 0;
+        right: 20px;
+        z-index: 5;
     }
     .editor-side {
         background-color: $black-19;
+        .menu {
+            a {
+                color: $white;
+                font-size: .8rem;
+            }
+        }
         .body {
             width: 100%;
             height: 100%;
+
         }
     }
     .preview-side {
         background-color: $white;
-        padding: 20px;
         .body {
+            padding: 20px;
+            padding-bottom: 100px;
             width: 100%;
             height: 100%;
             overflow-y: scroll;
@@ -752,4 +771,78 @@
     > button {
         margin: 0 10px;
     }
+}
+
+.module-icon-button {
+    border: none;
+    background-color: $gray-2;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: .75rem;
+}
+
+.module-body-history {
+
+    color: $white;
+    .head {
+        background-color: $black-3;
+        padding: 3px;
+    }
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+        max-height: 300px;
+        overflow-y: scroll;
+        li {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background-color: $black-6;
+            margin-bottom: 1px;
+        }
+        .name {
+            width: calc(100% - 181px);
+            padding: 5px;
+        }
+        .menu {
+            width: 100%;
+            max-width: 180px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            > div {
+                margin-right: 5px;
+                a {
+                    padding: 6px 10px;
+                }
+            }
+        }
+    }
+}
+
+.module-sample-screen {
+    &.active {
+        display: flex;
+    }
+    display: none;
+    width: 960px;
+    justify-content: space-around;
+    background-color: $white;
+    position: fixed;
+    left: calc(50% - 480px);
+    top: 30px;
+    z-index: 5;
+    height: 80vh;
+    overflow-y: scroll;
+    align-items: baseline;
+    border: 10px solid $gray-1;
+    > div {
+        width: 50%;
+        padding: 20px;
+    }
+    .editor-side {
+        border-right: 1px solid $gray-1;
+    }
+
 }
