@@ -11,10 +11,12 @@ public class BodiesTest {
     @Test
     public void add() {
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent, bodyHtml);
 
         BodyContent bodyContent2 = new BodyContent("hogehoge");
-        Body body2 = BodyFactory.create(bodyContent2);
+        BodyHtml bodyHtml2 = new BodyHtml("hogehoge");
+        Body body2 = BodyFactory.create(bodyContent2, bodyHtml2);
 
         Bodies bodies = new Bodies();
         bodies.add(body);
@@ -26,10 +28,12 @@ public class BodiesTest {
     @Test
     public void bodies(){
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent, bodyHtml);
 
         BodyContent bodyContent2 = new BodyContent("hogehoge");
-        Body body2 = BodyFactory.create(bodyContent2);
+        BodyHtml bodyHtml2 = new BodyHtml("hogehoge");
+        Body body2 = BodyFactory.create(bodyContent2, bodyHtml2);
 
         List<Body> bodyList = new ArrayList<>();
         bodyList.add(body);
@@ -41,10 +45,12 @@ public class BodiesTest {
     @Test
     public void list(){
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent, bodyHtml);
 
         BodyContent bodyContent2 = new BodyContent("hogehoge");
-        Body body2 = BodyFactory.create(bodyContent2);
+        BodyHtml bodyHtml2 = new BodyHtml("hogehoge");
+        Body body2 = BodyFactory.create(bodyContent2, bodyHtml2);
 
         Bodies bodies = new Bodies();
         bodies.add(body);

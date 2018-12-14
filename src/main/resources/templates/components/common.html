@@ -22,7 +22,7 @@
         <div class="module-search"><form><input type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
     </div>
     <div class="base-header-right">
-        <div class="module-button bg-black border-white"><a href="">Login</a></div>
+        <div class="module-button bg-black border-white"><a th:href="@{/login}">Login</a></div>
     </div>
 </header>
 
@@ -38,13 +38,13 @@
     </div>
     <div class="base-header-right">
         <div class="module-user-menu script-user-menu-toggle">
-            <div class="user-name"><i class="fas fa-user"></i><span>admin</span></div>
+            <div class="user-name"><i class="fas fa-user"></i><span th:text="${userInfo.name}"></span></div>
             <ul class="user-list">
                 <li><a href="">システム設定</a></li>
                 <li><a href="">ユーザー管理</a></li>
                 <li><a href="">ユーザー名変更</a></li>
                 <li><a href="">パスワード変更</a></li>
-                <li><a href="">ログアウト</a></li>
+                <li><a th:href="@{/logout}">ログアウト</a></li>
             </ul>
         </div>
     </div>

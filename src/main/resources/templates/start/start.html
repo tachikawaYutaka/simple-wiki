@@ -5,20 +5,21 @@
 <header th:replace="components/common :: login-header"></header>
 <main class="base-main bg-black-4">
     <div class="module-login">
-        <form action="" method="post">
+        <form th:action="@{/start}" method="post">
             <h1>Get Started!</h1>
+            <div class="module-alert" th:if="${error}" th:text="${errorMessage}"></div>
             <p>
                 <label for="systemName">システム名称</label>
-                <input id="systemName" placeholder="Simple Wiki" type="text" class="module-input-text" value="Simple Wiki" /></p>
+                <input id="systemName" name="systemName" placeholder="Simple Wiki" type="text" class="module-input-text" value="Simple Wiki" /></p>
             <p>
                 <label for="userId">管理者ユーザーID</label>
-                <input id="userId" placeholder="userId" type="text" class="module-input-text" />
+                <input id="userId" name="userName" placeholder="userId" type="text" class="module-input-text" />
             </p>
             <p>
                 <label for="userPassword">管理者ユーザーID</label>
-                <input id="userPassword" placeholder="password" type="password" class="module-input-text" />
+                <input id="userPassword" name="userPassword" placeholder="password" type="password" class="module-input-text" />
             </p>
-            <button class="module-submit-button">
+            <button class="module-submit-button" type="submit">
                 スタート
             </button>
         </form>

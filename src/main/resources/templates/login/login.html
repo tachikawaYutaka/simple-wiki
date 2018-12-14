@@ -5,11 +5,12 @@
 <header th:replace="components/common :: login-header"></header>
 <main class="base-main bg-black-4">
     <div class="module-login">
-        <form action="" method="post">
+        <form th:action="@{/login}" method="post">
             <h1>Simple Wiki</h1>
-            <p><input placeholder="ID" type="text" class="module-input-text" /></p>
-            <p><input placeholder="PASSWORD" type="password" class="module-input-text" /></p>
-            <button class="module-submit-button">
+            <div class="module-alert true" th:if="${success}">システムの初期設定が完了しました。</div>
+            <p><input name="userName" placeholder="ID" type="text" class="module-input-text" /></p>
+            <p><input name="userPassword" placeholder="PASSWORD" type="password" class="module-input-text" /></p>
+            <button type="submit" class="module-submit-button">
                 ログイン
             </button>
         </form>

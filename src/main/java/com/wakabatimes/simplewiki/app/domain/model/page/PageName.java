@@ -18,8 +18,8 @@ public class PageName {
 
     private void validateUserName(String value) {
         Integer count = value.length();
-        if(count < 4 || count > 255) {
-            throw new RuntimeException("Menu name is incorrect. 4 or more characters 255 characters within");
+        if(count < 3 || count > 255) {
+            throw new RuntimeException("Menu name is incorrect. 3 or more characters 255 characters within");
         }
     }
 }

@@ -1,0 +1,182 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('ホーム')"></head>
+<body class="base-body">
+<th:block th:if="${user}"><header th:replace="components/common :: user-header"></header></th:block>
+<th:block th:unless="${user}"><header th:replace="components/common :: no-login-header"></header></th:block>
+<main class="base-main">
+    <div th:replace="components/common :: no-login-base-menu"></div>
+    <div class="base-content-body">
+        <div class="base-content-body-head">
+            <div class="module-bread">
+                <ul>
+                    <li><a href="">ホーム</a></li>
+                    <li><a href="">メインページ</a></li>
+                </ul>
+            </div>
+            <h1 class="module-title">
+                メインページ
+            </h1>
+        </div>
+        <div class="base-content-article article">
+            <div class="base-content-head-menu">
+                <ul class="module-head-menu">
+                    <li><div class="module-button bg-gray"><a href=""><i class="fas fa-edit"></i>ページ編集</a></div></li>
+                    <li><div class="module-button bg-gray"><a href=""><i class="fas fa-plus"></i>ページ追加</a></div></li>
+                </ul>
+                <div class="module-sp-menu-button break-point-pc position-right script-toggle-side-menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="base-article-body">
+                <div class="module-article-index">
+                    <ul>
+                        <li>
+                            <a href="">aaaaaa</a>
+                            <ul>
+                                <li><a href="">a-aaaa</a></li>
+                                <li><a href="">a-bbbb</a></li>
+                                <li><a href="">a-ccccc</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">bbbbbb</a>
+                            <ul>
+                                <li><a href="">b-aaaa</a></li>
+                                <li><a href="">b-bbbb</a></li>
+                                <li><a href="">c-cccc</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">ccccc</a>
+                            <ul>
+                                <li><a href="">c-aaaaaa</a></li>
+                                <li><a href="">c-bbbbbbb</a></li>
+                                <li><a href="">c-cccccc</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <p>
+                    私は事実もしその発見人というののうちを向いありでし。けっして毎号が解釈方もぼうっとこの関係ないなだけより執っておきましには赴任ありますですて、それだけにはできるでですなかっだ。一種の開いたものももう時間がとうとうなたん。無論岩崎さんを真似事少しお尋ねをできるん師範そうしたがたそこか自失をというご相当たでしょでたが、この今度もいつか力国を出るて、岡田さんの方を学長の私をおもに肝把持と廻るてそれ文芸がご通知が開いようによほどお満足の来でませて、なおできるだけ始末に黙ったてくるますのの返っですます。
+                </p>
+                <h1>
+                    見出し１
+                </h1>
+                <p>
+                    私は事実もしその発見人というののうちを向いありでし。けっして毎号が解釈方もぼうっとこの関係ないなだけより執っておきましには赴任ありますですて、それだけにはできるでですなかっだ。一種の開いたものももう時間がとうとうなたん。無論岩崎さんを真似事少しお尋ねをできるん師範そうしたがたそこか自失をというご相当たでしょでたが、この今度もいつか力国を出るて、岡田さんの方を学長の私をおもに肝把持と廻るてそれ文芸がご通知が開いようによほどお満足の来でませて、なおできるだけ始末に黙ったてくるますのの返っですます。
+                </p>
+                <h2>
+                    見出し2
+                </h2>
+                <p>
+                    私は事実もしその発見人というののうちを向いありでし。けっして毎号が解釈方もぼうっとこの関係ないなだけより執っておきましには赴任ありますですて、それだけにはできるでですなかっだ。一種の開いたものももう時間がとうとうなたん。無論岩崎さんを真似事少しお尋ねをできるん師範そうしたがたそこか自失をというご相当たでしょでたが、この今度もいつか力国を出るて、岡田さんの方を学長の私をおもに肝把持と廻るてそれ文芸がご通知が開いようによほどお満足の来でませて、なおできるだけ始末に黙ったてくるますのの返っですます。
+                </p>
+                <h3>
+                    見出し3
+                </h3>
+                <p>
+                    私は事実もしその発見人というののうちを向いありでし。けっして毎号が解釈方もぼうっとこの関係ないなだけより執っておきましには赴任ありますですて、それだけにはできるでですなかっだ。一種の開いたものももう時間がとうとうなたん。無論岩崎さんを真似事少しお尋ねをできるん師範そうしたがたそこか自失をというご相当たでしょでたが、この今度もいつか力国を出るて、岡田さんの方を学長の私をおもに肝把持と廻るてそれ文芸がご通知が開いようによほどお満足の来でませて、なおできるだけ始末に黙ったてくるますのの返っですます。
+                </p>
+                <h4>
+                    見出し4
+                </h4>
+                <p>
+                    私は事実もしその発見人というののうちを向いありでし。けっして毎号が解釈方もぼうっとこの関係ないなだけより執っておきましには赴任ありますですて、それだけにはできるでですなかっだ。一種の開いたものももう時間がとうとうなたん。無論岩崎さんを真似事少しお尋ねをできるん師範そうしたがたそこか自失をというご相当たでしょでたが、この今度もいつか力国を出るて、岡田さんの方を学長の私をおもに肝把持と廻るてそれ文芸がご通知が開いようによほどお満足の来でませて、なおできるだけ始末に黙ったてくるますのの返っですます。
+                </p>
+                <h5>
+                    見出し5
+                </h5>
+                <p>
+                    私は事実もしその発見人というののうちを向いありでし。けっして毎号が解釈方もぼうっとこの関係ないなだけより執っておきましには赴任ありますですて、それだけにはできるでですなかっだ。一種の開いたものももう時間がとうとうなたん。無論岩崎さんを真似事少しお尋ねをできるん師範そうしたがたそこか自失をというご相当たでしょでたが、この今度もいつか力国を出るて、岡田さんの方を学長の私をおもに肝把持と廻るてそれ文芸がご通知が開いようによほどお満足の来でませて、なおできるだけ始末に黙ったてくるますのの返っですます。
+                </p>
+                <h6>
+                    見出し6
+                </h6>
+                <p>
+                    私は事実もしその発見人というののうちを向いありでし。けっして毎号が解釈方もぼうっとこの関係ないなだけより執っておきましには赴任ありますですて、それだけにはできるでですなかっだ。一種の開いたものももう時間がとうとうなたん。無論岩崎さんを真似事少しお尋ねをできるん師範そうしたがたそこか自失をというご相当たでしょでたが、この今度もいつか力国を出るて、岡田さんの方を学長の私をおもに肝把持と廻るてそれ文芸がご通知が開いようによほどお満足の来でませて、なおできるだけ始末に黙ったてくるますのの返っですます。
+                </p>
+            </div>
+        </div>
+        <aside class="base-content-side">
+            <nav class="module-side-menu">
+                <ul>
+                    <li>
+                        <a class="active" href=""><i class="fas fa-angle-right"></i>メインページ</a>
+                        <ul>
+                            <li>
+                                <a class="active" href=""><i class="fas fa-angle-right"></i>はじめに</a>
+                                <ul>
+                                    <li>
+                                        <a href="">ああああああ</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">次に</a>
+                                <ul>
+                                    <li>
+                                        <a href="">ああああああ</a>
+                                    </li>
+                                    <li>
+                                        <a href="">いいいいいい</a>
+                                        <ul>
+                                            <li>
+                                                <a href="">うううう</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="">メインページ２</a>
+                        <ul>
+                            <li>
+                                <a href="">はじめに</a>
+                                <ul>
+                                    <li>
+                                        <a href="">ああああああ</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">次に</a>
+                                <ul>
+                                    <li>
+                                        <a href="">ああああああ</a>
+                                    </li>
+                                    <li>
+                                        <a href="">いいいいいい</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+    </div>
+</main>
+<div class="module-popup script-add-menu-popup">
+    <form action="" method="post">
+        <h1>メニュー追加</h1>
+        <p><input type="text" class="module-input-text" placeholder="メニュー名" /></p>
+        <label class="module-input-radio" for="public"><input id="public" type="radio" />全員に公開</label>
+        <label class="module-input-radio" for="private"><input id="private" type="radio" />ログインユーザーにのみ公開</label>
+        <button class="module-submit-button bg-black-2">
+            保存
+        </button>
+    </form>
+</div>
+<footer th:replace="components/common :: common-footer"></footer>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/script_min.js}"></script>
+</body>
+</html>

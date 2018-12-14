@@ -131,12 +131,12 @@ $(function(){
         $('.module-add-root-page').removeClass('active');
     });
 
-    $('.script-user-menu-toggle').on('click',function(e){
+    $('.script-user-menu-toggle').on('click', '.user-name',function(e){
         e.preventDefault();
-        if(!$(this).hasClass('active')) {
-            $(this).addClass('active')
+        if(!$(this).parent().hasClass('active')) {
+            $(this).parent().addClass('active')
         }else {
-            $(this).removeClass('active')
+            $(this).parent().removeClass('active')
         }
     });
 

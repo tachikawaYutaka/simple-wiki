@@ -1,10 +1,7 @@
 package com.wakabatimes.simplewiki.app.domain.service.body;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
-import com.wakabatimes.simplewiki.app.domain.model.body.Bodies;
-import com.wakabatimes.simplewiki.app.domain.model.body.Body;
-import com.wakabatimes.simplewiki.app.domain.model.body.BodyContent;
-import com.wakabatimes.simplewiki.app.domain.model.body.BodyFactory;
+import com.wakabatimes.simplewiki.app.domain.model.body.*;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
@@ -80,7 +77,8 @@ public class BodyServiceTest {
         pageService.saveRoot(page,menu.getMenuId());
 
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
         bodyService.save(body,page.getPageId());
     }
 
@@ -97,7 +95,8 @@ public class BodyServiceTest {
         pageService.saveRoot(page,menu.getMenuId());
 
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
         bodyService.save(body,page.getPageId());
 
         Body getCurrent = bodyService.getCurrent(page.getPageId());
@@ -117,15 +116,18 @@ public class BodyServiceTest {
         pageService.saveRoot(page,menu.getMenuId());
 
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
         bodyService.save(body,page.getPageId());
 
         BodyContent bodyContent2 = new BodyContent("hogehoge2");
-        Body body2 = BodyFactory.create(bodyContent2);
+        BodyHtml bodyHtml2 = new BodyHtml("hogehoge2");
+        Body body2 = BodyFactory.create(bodyContent2,bodyHtml2);
         bodyService.save(body2,page.getPageId());
 
         BodyContent bodyContent3 = new BodyContent("hogehoge3");
-        Body body3 = BodyFactory.create(bodyContent3);
+        BodyHtml bodyHtml3 = new BodyHtml("hogehoge3");
+        Body body3 = BodyFactory.create(bodyContent3,bodyHtml3);
         bodyService.save(body3,page.getPageId());
 
         Bodies bodies = bodyService.getArchive(page.getPageId());
@@ -145,7 +147,8 @@ public class BodyServiceTest {
         pageService.saveRoot(page,menu.getMenuId());
 
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
         bodyService.save(body,page.getPageId());
 
         Body getBody = bodyService.get(body.getBodyId());
@@ -165,11 +168,13 @@ public class BodyServiceTest {
         pageService.saveRoot(page,menu.getMenuId());
 
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
         bodyService.save(body,page.getPageId());
 
         BodyContent bodyContent2 = new BodyContent("hogehoge2");
-        Body body2 = BodyFactory.create(bodyContent2);
+        BodyHtml bodyHtml2 = new BodyHtml("hogehoge2");
+        Body body2 = BodyFactory.create(bodyContent2,bodyHtml2);
         bodyService.save(body2,page.getPageId());
 
         Body getBody = bodyService.get(body.getBodyId());
@@ -190,7 +195,8 @@ public class BodyServiceTest {
         pageService.saveRoot(page,menu.getMenuId());
 
         BodyContent bodyContent = new BodyContent("hogehoge");
-        Body body = BodyFactory.create(bodyContent);
+        BodyHtml bodyHtml = new BodyHtml("hogehoge");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
         bodyService.save(body,page.getPageId());
 
         Body getBody = bodyService.get(body.getBodyId());

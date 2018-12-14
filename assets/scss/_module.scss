@@ -846,3 +846,17 @@
     }
 
 }
+
+.module-alert {
+    color: $red;
+    padding: 10px;
+    border: 1px solid $red;
+    font-size: .8rem;
+    text-align: left;
+    margin-bottom: 20px;
+    &.true {
+        color: $blue;
+        border-color: $blue;
+    }
+}
+

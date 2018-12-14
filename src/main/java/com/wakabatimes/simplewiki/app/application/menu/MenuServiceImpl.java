@@ -1,9 +1,6 @@
 package com.wakabatimes.simplewiki.app.application.menu;
 
-import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuRepository;
-import com.wakabatimes.simplewiki.app.domain.model.menu.Menus;
+import com.wakabatimes.simplewiki.app.domain.model.menu.*;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,4 +34,10 @@ public class MenuServiceImpl implements MenuService {
     public Menu get(MenuName menuName) {
         return menuRepository.getByMenuName(menuName);
     }
+
+    @Override
+    public Menus listByMenuLimit(MenuLimit menuLimit) {
+        return menuRepository.listByMenuLimit(menuLimit);
+    }
+
 }

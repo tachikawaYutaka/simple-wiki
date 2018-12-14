@@ -33,8 +33,9 @@ public class BodyRepositoryImpl implements BodyRepository{
         BodyDto result = bodyMapper.getCurrent(pageId.getValue());
         BodyId bodyId = new BodyId(result.getId());
         BodyContent bodyContent = new BodyContent(result.getContent());
+        BodyHtml bodyHtml = new BodyHtml(result.getHtml());
         BodyType bodyType = BodyType.getById(result.getType());
-        Body body = new Body(bodyId,bodyContent,bodyType);
+        Body body = new Body(bodyId,bodyContent,bodyHtml, bodyType);
         return body;
     }
 
@@ -45,8 +46,9 @@ public class BodyRepositoryImpl implements BodyRepository{
         for(BodyDto result: results) {
             BodyId bodyId = new BodyId(result.getId());
             BodyContent bodyContent = new BodyContent(result.getContent());
+            BodyHtml bodyHtml = new BodyHtml(result.getHtml());
             BodyType bodyType = BodyType.getById(result.getType());
-            Body body = new Body(bodyId,bodyContent,bodyType);
+            Body body = new Body(bodyId,bodyContent,bodyHtml, bodyType);
             bodies.add(body);
         }
         return bodies;
@@ -69,8 +71,9 @@ public class BodyRepositoryImpl implements BodyRepository{
         BodyDto result = bodyMapper.get(input);
         BodyId bodyId1 = new BodyId(result.getId());
         BodyContent bodyContent = new BodyContent(result.getContent());
+        BodyHtml bodyHtml = new BodyHtml(result.getHtml());
         BodyType bodyType = BodyType.getById(result.getType());
-        Body body = new Body(bodyId1,bodyContent,bodyType);
+        Body body = new Body(bodyId1,bodyContent,bodyHtml, bodyType);
         return body;
     }
 }

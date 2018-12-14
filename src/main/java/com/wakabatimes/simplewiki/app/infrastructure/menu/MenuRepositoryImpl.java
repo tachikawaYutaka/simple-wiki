@@ -87,4 +87,21 @@ public class MenuRepositoryImpl implements MenuRepository {
         Menu menu = new Menu(menuId,menuName1,menuLimit);
         return menu;
     }
+
+    @Override
+    public Menus listByMenuLimit(MenuLimit menuLimit) {
+        MenuDto input = new MenuDto();
+        input.setViewLimit(menuLimit.getId());
+        List<MenuDto> menuDtoList = menuMapper.listByMenuLimit(input);
+        Menus menus = new Menus();
+        for(MenuDto menuDto : menuDtoList) {
+            MenuId menuId = new MenuId(menuDto.getId());
+            MenuName menuName = new MenuName(menuDto.getName());
+            MenuLimit menuLimit1 = MenuLimit.getById(menuDto.getViewLimit());
+            Menu thisMenu = new Menu(menuId,menuName,menuLimit1);
+            menus.add(thisMenu);
+        }
+        return menus;
+    }
+
 }

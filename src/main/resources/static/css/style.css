@@ -1441,3 +1441,14 @@ template {
     padding: 20px; }
   .module-sample-screen .editor-side {
     border-right: 1px solid #ddd; }
+
+.module-alert {
+  color: #dc3545;
+  padding: 10px;
+  border: 1px solid #dc3545;
+  font-size: .8rem;
+  text-align: left;
+  margin-bottom: 20px; }
+  .module-alert.true {
+    color: #007bff;
+    border-color: #007bff; }

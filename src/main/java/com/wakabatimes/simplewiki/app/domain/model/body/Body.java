@@ -19,11 +19,15 @@ public class Body {
     BodyContent bodyContent;
     @Getter
     @NonNull
+    BodyHtml bodyHtml;
+    @Getter
+    @NonNull
     BodyType bodyType;
 
-    public Body(BodyId bodyId, BodyContent bodyContent,BodyType bodyType) {
+    public Body(BodyId bodyId, BodyContent bodyContent,BodyHtml bodyHtml,BodyType bodyType) {
         this.bodyId = bodyId;
         this.bodyContent = bodyContent;
+        this.bodyHtml = bodyHtml;
         this.bodyType = bodyType;
     }
 
