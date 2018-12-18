@@ -4,4 +4,6 @@ import lombok.Data;
 
 @Data
 public class RootPageSaveForm {
+    String menuId;
+    String name;
 }

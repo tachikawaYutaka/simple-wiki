@@ -138,7 +138,7 @@ public class PageServiceTest {
         pageService.saveRoot(page,menu.getMenuId());
 
         PageName newName = new PageName("hogehoge2");
-        Page newPage = new Page(page.getPageId(),newName,page.getPageType(),new Pages());
+        Page newPage = new Page(page.getPageId(),newName,page.getPageType());
         pageService.updateRoot(newPage,menu.getMenuId());
     }
 
@@ -160,7 +160,7 @@ public class PageServiceTest {
         pageService.saveRoot(page2,menu.getMenuId());
 
         PageName newName = new PageName("hogehoge2");
-        Page newPage = new Page(page.getPageId(),newName,page.getPageType(),new Pages());
+        Page newPage = new Page(page.getPageId(),newName,page.getPageType());
         pageService.updateRoot(newPage,menu.getMenuId());
     }
 
@@ -182,7 +182,7 @@ public class PageServiceTest {
         pageService.saveBranch(page2,page.getPageId());
 
         PageName newName = new PageName("hogehoge3");
-        Page newPage = new Page(page2.getPageId(),newName,page2.getPageType(),new Pages());
+        Page newPage = new Page(page2.getPageId(),newName,page2.getPageType());
         pageService.updateBranch(newPage,page.getPageId());
     }
 
@@ -209,7 +209,7 @@ public class PageServiceTest {
         pageService.saveBranch(page3,page.getPageId());
 
         PageName newName = new PageName("hogehoge3");
-        Page newPage = new Page(page2.getPageId(),newName,page2.getPageType(),new Pages());
+        Page newPage = new Page(page2.getPageId(),newName,page2.getPageType());
         pageService.updateBranch(newPage,page.getPageId());
     }
 

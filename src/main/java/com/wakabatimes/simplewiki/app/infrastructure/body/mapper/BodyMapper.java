@@ -19,8 +19,8 @@ public interface BodyMapper {
     void removeCurrent(String pageId);
 
     @Insert("INSERT \n" +
-            "INTO body(id, contents,html, type, created, updated) \n" +
-            "VALUES (#{id}, #{contents}, #{html}, #{type}, now(),now())\n")
+            "INTO body(id, content, html, type, created, updated) \n" +
+            "VALUES (#{id}, #{content}, #{html}, #{type}, now(),now())\n")
     void save(BodyDto input);
 
     @Select("SELECT * FROM body b \n" +

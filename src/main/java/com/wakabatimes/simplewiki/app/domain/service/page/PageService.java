@@ -3,6 +3,7 @@ package com.wakabatimes.simplewiki.app.domain.service.page;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
 import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
+import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
 import com.wakabatimes.simplewiki.app.domain.model.page.Pages;
 
 public interface PageService {
@@ -60,4 +61,19 @@ public interface PageService {
      * @return
      */
     Page get(PageId pageId);
+
+    /**
+     * ページ名からのルートページの検索
+     * @param pageName
+     * @return
+     */
+    Page getRootPageByName(PageName pageName);
+
+    /**
+     * 親ページIDと子ページ名からのページの検索
+     * @param parentId
+     * @param pageName
+     * @return
+     */
+    Page getPageByParentAndChildName(PageId parentId, PageName pageName);
 }

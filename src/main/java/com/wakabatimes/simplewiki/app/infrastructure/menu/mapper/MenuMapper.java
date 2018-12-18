@@ -35,6 +35,9 @@ public interface MenuMapper {
     @Select("select * from menu where name = #{name}")
     MenuDto getByMenuName(MenuDto input);
 
-    @Select("select * from menu where view_limit = #{limit}")
+    @Select("select * from menu where view_limit = #{viewLimit}")
     List<MenuDto> listByMenuLimit(MenuDto input);
+
+    @Select("select * from menu where id = #{id}")
+    MenuDto getById(MenuDto input);
 }

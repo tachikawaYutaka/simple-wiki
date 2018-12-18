@@ -560,6 +560,9 @@
                     p {
                         margin-bottom: 0;
                         font-size: 0.8rem;
+                        a {
+                            color: $black;
+                        }
                         @include mq(tb) {
                             margin-bottom: 10px;
                         }
@@ -613,6 +616,9 @@
             > div {
                 background-color: $black-3;
                 color: #fff;
+                .text-area p a {
+                    color: $white;
+                }
             }
         }
     }

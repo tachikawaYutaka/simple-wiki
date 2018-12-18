@@ -23,14 +23,10 @@ public class Page {
     @NonNull
     PageType pageType;
 
-    @Getter
-    Pages pages;
-
-    public Page(PageId pageId, PageName pageName,PageType pageType, Pages pages) {
+    public Page(PageId pageId, PageName pageName,PageType pageType) {
         this.pageId = pageId;
         this.pageName = pageName;
         this.pageType = pageType;
-        this.pages = pages;
     }
 
     public boolean isRoot(Page page) {

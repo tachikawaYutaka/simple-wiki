@@ -4,4 +4,7 @@ import lombok.Data;
 
 @Data
 public class MenuSaveForm {
+    String name;
+    String viewLimit;
+    String[] pathList;
 }

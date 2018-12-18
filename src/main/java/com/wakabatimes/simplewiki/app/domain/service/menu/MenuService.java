@@ -1,9 +1,6 @@
 package com.wakabatimes.simplewiki.app.domain.service.menu;
 
-import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
-import com.wakabatimes.simplewiki.app.domain.model.menu.Menus;
+import com.wakabatimes.simplewiki.app.domain.model.menu.*;
 
 public interface MenuService {
     /**
@@ -36,6 +33,13 @@ public interface MenuService {
      * @return
      */
     Menu get(MenuName menuName);
+
+    /**
+     * menuの照会
+     * @param menuId
+     * @return
+     */
+    Menu getById(MenuId menuId);
 
     /**
      * Limitによるフィルター

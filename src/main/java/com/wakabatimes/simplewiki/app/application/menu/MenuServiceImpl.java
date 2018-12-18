@@ -36,6 +36,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public Menu getById(MenuId menuId) {
+        return menuRepository.getById(menuId);
+    }
+
+    @Override
     public Menus listByMenuLimit(MenuLimit menuLimit) {
         return menuRepository.listByMenuLimit(menuLimit);
     }

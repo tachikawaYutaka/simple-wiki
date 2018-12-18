@@ -13,4 +13,6 @@ public interface MenuRepository {
     Menu getByMenuName(MenuName menuName);
 
     Menus listByMenuLimit(MenuLimit menuLimit);
+
+    Menu getById(MenuId menuId);
 }

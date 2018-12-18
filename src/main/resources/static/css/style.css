@@ -1218,6 +1218,8 @@ template {
     .module-menu-index-list ul li > div .text-area p {
       margin-bottom: 0;
       font-size: 0.8rem; }
+      .module-menu-index-list ul li > div .text-area p a {
+        color: #000; }
       @media all and (max-width: 640px) {
         .module-menu-index-list ul li > div .text-area p {
           margin-bottom: 10px; } }
@@ -1256,6 +1258,8 @@ template {
   .module-menu-index-list > ul > li > div {
     background-color: #333;
     color: #fff; }
+    .module-menu-index-list > ul > li > div .text-area p a {
+      color: #fff; }
 
 .module-user-menu {
   color: #fff;

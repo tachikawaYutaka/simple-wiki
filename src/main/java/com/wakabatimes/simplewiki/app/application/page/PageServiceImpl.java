@@ -2,10 +2,7 @@ package com.wakabatimes.simplewiki.app.application.page;
 
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
-import com.wakabatimes.simplewiki.app.domain.model.page.Page;
-import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
-import com.wakabatimes.simplewiki.app.domain.model.page.PageRepository;
-import com.wakabatimes.simplewiki.app.domain.model.page.Pages;
+import com.wakabatimes.simplewiki.app.domain.model.page.*;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +50,15 @@ public class PageServiceImpl implements PageService {
     @Override
     public Page get(PageId pageId) {
         return pageRepository.getByPageId(pageId);
+    }
+
+    @Override
+    public Page getRootPageByName(PageName pageName) {
+        return pageRepository.getRootPageByName(pageName);
+    }
+
+    @Override
+    public Page getPageByParentAndChildName(PageId parentId, PageName pageName) {
+        return pageRepository.getPageByParentAndChildName(parentId, pageName);
     }
 }

@@ -1,13 +1,107 @@
 package com.wakabatimes.simplewiki.view.contents;
 
+import com.wakabatimes.simplewiki.app.aggregates.MainMenuShowService;
+import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
+import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
+import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
+import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
+import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
+import com.wakabatimes.simplewiki.app.domain.model.user.User;
+import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
+import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
+import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
+import com.wakabatimes.simplewiki.app.interfaces.menu.dto.MenuResponseDto;
+import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSaveForm;
+import com.wakabatimes.simplewiki.app.interfaces.page_hierarchy.dto.PageHierarchyResponseDto;
+import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.security.Principal;
+import java.util.List;
+@Slf4j
 @Controller
 public class MenuController {
-    @GetMapping("/contents/{menuName}")
-    public String public_content_menu(@PathVariable String menuName){
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private MenuService menuService;
+
+    @Autowired
+    private MainMenuShowService mainMenuShowService;
+
+    @Autowired
+    private PageHierarchyShowService pageHierarchyShowService;
+
+    @GetMapping("/contents/public/{menuName}")
+    public String content_menu(@PathVariable String menuName, Model model, Principal principal){
+        Authentication auth = (Authentication)principal;
+        if(auth != null){
+            String name = auth.getName();
+            User user = (User) userDetailsService.loadUserByUsername(name);
+            UserResponseDto userResponseDto = new UserResponseDto(user);
+            model.addAttribute("userInfo",userResponseDto);
+            model.addAttribute("user",true);
+
+            //全メニューリスト+ルートページの取得
+            List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
+            model.addAttribute("menus",menuLists);
+
+        }else {
+            //限定されたメニューリストの取得
+            List<MainMenuResponseDto> menuLists = mainMenuShowService.listByMenuLimit(MenuLimit.PUBLIC);
+            model.addAttribute("menus",menuLists);
+            model.addAttribute("user",false);
+        }
+
+        MenuName currentMenuName = new MenuName(menuName);
+        Menu current = menuService.get(currentMenuName);
+        MenuResponseDto currentMenu = new MenuResponseDto(current);
+        model.addAttribute("currentMenu",currentMenu);
+
+        List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
+        model.addAttribute("pages",pages);
+
         return "contents/menu";
+    }
+
+    @PostMapping("/menu")
+    public String menuSave(@ModelAttribute MenuSaveForm menuSaveForm, RedirectAttributes attr) throws UnsupportedEncodingException {
+        try{
+            MenuName menuName = new MenuName(menuSaveForm.getName());
+            MenuLimit menuLimit = MenuLimit.getById(Integer.valueOf(menuSaveForm.getViewLimit()));
+            Menu menu = MenuFactory.create(menuName,menuLimit);
+            menuService.save(menu);
+
+            attr.addFlashAttribute("success",true);
+            attr.addFlashAttribute("successMessage","メニューを作成しました");
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }catch(RuntimeException e){
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+
+            String url = "";
+            for(String path: menuSaveForm.getPathList()){
+                url += "/" + URLEncoder.encode(path,"UTF-8");
+            }
+            return "redirect:/contents/" + url;
+        }
     }
 }

@@ -18,4 +18,8 @@ public interface PageRepository {
     Pages listByParentPageId(PageId pageId);
 
     Page getByPageId(PageId pageId);
+
+    Page getRootPageByName(PageName pageName);
+
+    Page getPageByParentAndChildName(PageId parentId, PageName pageName);
 }

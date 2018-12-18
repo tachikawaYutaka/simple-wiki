@@ -59,78 +59,108 @@
     </div>
 </header>
 
-<div th:fragment="no-login-base-menu" class="base-menu">
+<div th:fragment="base-menu" class="base-menu">
     <nav class="module-menu-lists">
-        <ul>
+        <ul th:each="menu : ${menus}">
             <li>
-                <p><a class="active" href=""><i class="fas fa-angle-right"></i>ホーム</a></p>
-                <ul>
+                <p><a class="active" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><i class="fas fa-angle-right"></i><span th:text="${menu.menuName}"></span></a></p>
+                <ul th:each="page : ${menu.pages}">
                     <li>
-                        <p><a class="active" href=""><i class="fas fa-angle-right"></i>自由ページ</a></p>
-                    </li>
-                    <li>
-                        <p><a href="">自由ページ２</a></p>
-                    </li>
-                    <li>
-                        <p><a href="">自由ページ３</a></p>
+                        <p><a class="active" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName} + '/' + ${page.name}"><i class="fas fa-angle-right"></i><span th:text="${page.name}"></span></a></p>
                     </li>
                 </ul>
             </li>
         </ul>
-        <ul>
-            <li>
-                <p><a class="active" href="">設計書</a></p>
-                <ul>
-                    <li>
-                        <p><a class="active" href="">自由ページ</a></p>
-                    </li>
-                    <li>
-                        <p><a href="">自由ページ２</a></p>
-                    </li>
-                    <li>
-                        <p><a href="">自由ページ３</a></p>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <p><a class="active" href="">UI</a></p>
-                <ul>
-                    <li>
-                        <p><a class="active" href="">自由ページ</a></p>
-                    </li>
-                    <li>
-                        <p><a href="">自由ページ２</a></p>
-                    </li>
-                    <li>
-                        <p><a href="">自由ページ３</a></p>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <p><a class="active" href="">UI</a></p>
-                <ul>
-                    <li>
-                        <p><a class="active" href="">自由ページ</a></p>
-                    </li>
-                    <li>
-                        <p><a href="">自由ページ２</a></p>
-                    </li>
-                    <li>
-                        <p><a href="">自由ページ３</a></p>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <div class="module-button bg-gray">
+        <div class="module-button bg-gray" th:if="${user}">
             <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
         </div>
     </nav>
 </div>
 
+<div th:fragment="menu-add-form" class="module-popup script-add-menu-popup">
+    <form th:action="@{/menu}" method="post">
+        <h1>メニュー追加</h1>
+        <p><input name="name" type="text" class="module-input-text" placeholder="メニュー名" /></p>
+        <label class="module-input-radio" for="public"><input name="viewLimit" id="public" type="radio" value="0" checked />全員に公開</label>
+        <label class="module-input-radio" for="private"><input name="viewLimit" id="private" type="radio" value="1" />ログインユーザーにのみ公開</label>
+        <input type="hidden" name="path" th:value="${pathList}">
+        <button class="module-submit-button bg-black-2" type="submit">
+            保存
+        </button>
+    </form>
+</div>
+
+<div th:fragment="menu-edit-form" class="module-popup script-edit-menu-popup">
+    <form action="" method="post">
+        <h1>メニュー編集</h1>
+        <p><input type="text" class="module-input-text" placeholder="メニュー名" /></p>
+        <label class="module-input-radio" for="editPublic"><input id="editPublic" type="radio" />全員に公開</label>
+        <label class="module-input-radio" for="editPrivate"><input id="editPrivate" type="radio" />ログインユーザーにのみ公開</label>
+        <button class="module-submit-button bg-black-2">
+            保存
+        </button>
+    </form>
+</div>
+
+<div th:fragment="menu-delete-form" class="module-popup script-menu-delete-popup">
+    <form action="" method="post">
+        <h1>メニュー削除</h1>
+        <p>「」を削除してもよろしいですか？</p>
+        <button class="module-submit-button bg-black-2">
+            はい
+        </button>
+        <button class="module-submit-button bg-gray script-popup-cancel">
+            いいえ
+        </button>
+    </form>
+</div>
+
+<div th:fragment="page-delete-form" class="module-popup script-page-delete-popup">
+    <form action="" method="post">
+        <h1>ページ削除</h1>
+        <p>「」を削除してもよろしいですか？</p>
+        <button class="module-submit-button bg-black-2">
+            はい
+        </button>
+        <button class="module-submit-button bg-gray script-popup-cancel">
+            いいえ
+        </button>
+    </form>
+</div>
+
+<ul th:fragment="menu-pages-list (id,lists,menu)">
+    <li class="add-under-page" th:if="${id != null}">
+        <div th:if="${user}">
+            <div class="text-area">
+                <form method="post" th:action="'/pages/branch'"><input name="name" type="text" class="module-input-text" />
+                    <input type="hidden" name="parentId" th:value="${id}">
+                    <input type="hidden" name="menuId" th:value="${menu.id}">
+                    <button type="submit" class="module-submit-button">保存</button>
+                    <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button></form>
+            </div>
+        </div>
+    </li>
+    <li th:each="list : ${lists}">
+        <div>
+            <div class="text-area">
+                <p><a th:text="${list.name}" th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + '/' + ${list.path}">メインページ</a></p>
+            </div>
+            <ul class="menu-area" th:if="${user}">
+                <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+            </ul>
+        </div>
+        <ul th:replace="components/common :: menu-pages-list(${list.id},${list.pages},${menu})"></ul>
+    </li>
+</ul>
+
+<ul th:fragment="side-pages-list (id,lists,menu)">
+    <li th:each="list : ${lists}">
+        <a th:text="${list.name}" th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + '/' + ${list.path}">メインページ</a>
+        <ul th:replace="components/common :: side-pages-list(${list.id},${list.pages},${menu})"></ul>
+    </li>
+</ul>
 
 <footer th:fragment="common-footer" class="base-footer">
     <small class="module-copy">Simple Wiki</small>
