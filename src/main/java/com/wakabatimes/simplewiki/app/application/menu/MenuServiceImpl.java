@@ -45,4 +45,9 @@ public class MenuServiceImpl implements MenuService {
         return menuRepository.listByMenuLimit(menuLimit);
     }
 
+    @Override
+    public Menu getHomeMenu() {
+        return menuRepository.getHomeMenu();
+    }
+
 }

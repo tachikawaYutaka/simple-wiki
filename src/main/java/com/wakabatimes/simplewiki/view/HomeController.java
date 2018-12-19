@@ -13,6 +13,8 @@ import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemName;
 import com.wakabatimes.simplewiki.app.domain.model.user.*;
+import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
+import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.user.form.UserInitializeForm;
@@ -36,6 +38,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.Principal;
 
 @Controller
@@ -45,27 +48,26 @@ public class HomeController {
     private UserService userService;
 
     @Autowired
-    UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private MenuService menuService;
+
+    @Autowired
+    private PageService pageService;
 
     @GetMapping("/")
-    public String home(Principal principal, Model model){
+    public String home(Principal principal, Model model) throws UnsupportedEncodingException {
         Users users = userService.list();
         if(users.size() == 0){
             return "start/start";
         }
 
-        Authentication auth = (Authentication)principal;
-        if(auth != null){
-            String name = auth.getName();
-            User user = (User) userDetailsService.loadUserByUsername(name);
-            UserResponseDto userResponseDto = new UserResponseDto(user);
-            model.addAttribute("userInfo",userResponseDto);
-            model.addAttribute("user",true);
-        }else {
-            model.addAttribute("user",false);
-        }
+        Menu menu = menuService.getHomeMenu();
+        Page page = pageService.getHomePage(menu.getMenuId());
+        String url = "/contents/" + menu.getMenuLimit().name().toLowerCase() + "/" + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8") + "/" + URLEncoder.encode(page.getPageName().getValue(),"UTF-8");
 
-        return "home";
+        return "redirect:" + url;
     }
 
     @ResponseBody

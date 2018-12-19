@@ -46,4 +46,10 @@ public interface MenuService {
      * @return
      */
     Menus listByMenuLimit(MenuLimit menuLimit);
+
+    /**
+     * menu sort 1 を紹介
+     * @return
+     */
+    Menu getHomeMenu();
 }

@@ -76,4 +76,11 @@ public interface PageService {
      * @return
      */
     Page getPageByParentAndChildName(PageId parentId, PageName pageName);
+
+    /**
+     * menuのsort1のrootページ
+     * @param menuId
+     * @return
+     */
+    Page getHomePage(MenuId menuId);
 }

@@ -182,4 +182,15 @@ public class PageRepositoryImpl implements PageRepository {
         Page page = new Page(pageId,pageName1,pageType);
         return page;
     }
+
+    @Override
+    public Page getHomePage(MenuId menuId) {
+        PageDto result = pageMapper.getHomePage(menuId.getValue());
+
+        PageId pageId = new PageId(result.getId());
+        PageName pageName1 = new PageName(result.getName());
+        PageType pageType = PageType.getById(result.getType());
+        Page page = new Page(pageId,pageName1,pageType);
+        return page;
+    }
 }

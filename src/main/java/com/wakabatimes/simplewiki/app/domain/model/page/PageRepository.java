@@ -22,4 +22,6 @@ public interface PageRepository {
     Page getRootPageByName(PageName pageName);
 
     Page getPageByParentAndChildName(PageId parentId, PageName pageName);
+
+    Page getHomePage(MenuId menuId);
 }

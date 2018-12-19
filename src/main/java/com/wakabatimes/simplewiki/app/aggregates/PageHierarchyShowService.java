@@ -19,9 +19,9 @@ public class PageHierarchyShowService {
 
     public List<PageHierarchyResponseDto> list(MenuId menuId) {
         List<PageHierarchyResponseDto> result = new ArrayList<>();
-        String path = "";
         Pages pages = pageService.listRoot(menuId);
         for(Page page : pages.list()){
+            String path = "";
             PageHierarchyResponseDto pageHierarchyResponseDto = new PageHierarchyResponseDto(page);
             path += pageHierarchyResponseDto.getName() + "/";
             pageHierarchyResponseDto.setPath(path);
@@ -36,10 +36,11 @@ public class PageHierarchyShowService {
         List<PageHierarchyResponseDto> result = new ArrayList<>();
         Pages pages = pageService.listBranch(pageId);
         for(Page page : pages.list()){
+            String childPath = path;
             PageHierarchyResponseDto pageHierarchyResponseDto = new PageHierarchyResponseDto(page);
-            path += pageHierarchyResponseDto.getName() + "/";
-            pageHierarchyResponseDto.setPath(path);
-            List<PageHierarchyResponseDto> children = getChildren(page.getPageId(), path);
+            childPath += pageHierarchyResponseDto.getName() + "/";
+            pageHierarchyResponseDto.setPath(childPath);
+            List<PageHierarchyResponseDto> children = getChildren(page.getPageId(), childPath);
             pageHierarchyResponseDto.setPages(children);
             result.add(pageHierarchyResponseDto);
         }

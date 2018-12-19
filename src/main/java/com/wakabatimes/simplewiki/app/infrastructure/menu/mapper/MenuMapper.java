@@ -40,4 +40,9 @@ public interface MenuMapper {
 
     @Select("select * from menu where id = #{id}")
     MenuDto getById(MenuDto input);
+
+    @Select("SELECT * FROM menu \n" +
+            "WHERE sort_number = 1\n" +
+            "limit 1")
+    MenuDto getHomeMenu();
 }

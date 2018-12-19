@@ -15,4 +15,6 @@ public interface MenuRepository {
     Menus listByMenuLimit(MenuLimit menuLimit);
 
     Menu getById(MenuId menuId);
+
+    Menu getHomeMenu();
 }

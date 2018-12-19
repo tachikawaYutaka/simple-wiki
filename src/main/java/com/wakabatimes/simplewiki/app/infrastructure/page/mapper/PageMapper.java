@@ -54,4 +54,11 @@ public interface PageMapper {
             "WHERE rcptpp.parent_page_id = #{id}" +
             "AND p.name = #{name}")
     PageDto getPageByParentAndChildName(PageDto input);
+
+    @Select("SELECT * FROM page p\n" +
+            "LEFT JOIN relate_page_to_menu rpm ON p.id = rpm.page_id\n" +
+            "WHERE rpm.menu_id = #{value}\n" +
+            "AND p.sort_number = 1\n" +
+            "LIMIT 1")
+    PageDto getHomePage(String value);
 }

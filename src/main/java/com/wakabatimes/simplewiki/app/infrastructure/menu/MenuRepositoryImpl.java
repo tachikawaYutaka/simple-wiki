@@ -116,4 +116,14 @@ public class MenuRepositoryImpl implements MenuRepository {
         return menu;
     }
 
+    @Override
+    public Menu getHomeMenu() {
+        MenuDto result = menuMapper.getHomeMenu();
+        MenuId menuId1 = new MenuId(result.getId());
+        MenuName menuName = new MenuName(result.getName());
+        MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
+        Menu menu = new Menu(menuId1,menuName,menuLimit);
+        return menu;
+    }
+
 }
