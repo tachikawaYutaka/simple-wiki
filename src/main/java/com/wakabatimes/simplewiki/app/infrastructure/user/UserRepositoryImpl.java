@@ -23,7 +23,7 @@ public class UserRepositoryImpl implements UserRepository {
         UserId userId = new UserId(userDto.getId());
         UserName userName1 = new UserName(userDto.getName());
         UserPassword userPassword = new UserPassword(userDto.getPassword());
-        UserRole userRole = UserRole.ROLE_USER;
+        UserRole userRole = UserRole.getById(userDto.getRole());
         User user = new User(userId,userName1,userPassword,userRole);
         return user;
     }
@@ -37,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
             UserId userId = new UserId(userDto.getId());
             UserName userName = new UserName(userDto.getName());
             UserPassword userPassword = new UserPassword(userDto.getPassword());
-            UserRole userRole = UserRole.ROLE_USER;
+            UserRole userRole = UserRole.getById(userDto.getRole());
             User thisUser = new User(userId,userName,userPassword,userRole);
             users.add(thisUser);
         }
@@ -79,7 +79,7 @@ public class UserRepositoryImpl implements UserRepository {
             UserId userId = new UserId(userDto.getId());
             UserName userName = new UserName(userDto.getName());
             UserPassword userPassword = new UserPassword(userDto.getPassword());
-            UserRole userRole = UserRole.ROLE_USER;
+            UserRole userRole = UserRole.getById(userDto.getRole());
             User user1 = new User(userId,userName,userPassword,userRole);
             users.add(user1);
         }
@@ -87,7 +87,7 @@ public class UserRepositoryImpl implements UserRepository {
         UserId userId = new UserId(user.getUserId().getValue());
         UserName userName = new UserName(newUserName.getValue());
         UserPassword userPassword = new UserPassword(user.getUserPassword().getValue());
-        UserRole userRole = UserRole.ROLE_USER;
+        UserRole userRole = user.getUserRole();
         User updatedUser = new User(userId,userName,userPassword,userRole);
 
         if(!users.containsName(updatedUser)) {
@@ -108,7 +108,7 @@ public class UserRepositoryImpl implements UserRepository {
             UserId userId = new UserId(userDto.getId());
             UserName userName = new UserName(userDto.getName());
             UserPassword userPassword = new UserPassword(userDto.getPassword());
-            UserRole userRole = UserRole.ROLE_USER;
+            UserRole userRole = UserRole.getById(userDto.getRole());
             User user1 = new User(userId,userName,userPassword,userRole);
             users.add(user1);
         }

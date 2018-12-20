@@ -61,4 +61,12 @@ public interface PageMapper {
             "AND p.sort_number = 1\n" +
             "LIMIT 1")
     PageDto getHomePage(String value);
+
+    @Select("SELECT pp.* FROM page p\n" +
+            "LEFT JOIN relate_child_page_to_parent_page rp\n" +
+            "ON p.id = rp.child_page_id \n" +
+            "LEFT JOIN page pp\n" +
+            "ON pp.id = rp.parent_page_id \n" +
+            "WHERE p.id = #{id}")
+    PageDto getParent(PageDto input);
 }

@@ -8,11 +8,12 @@
         <div class="base-content-body-head">
             <div class="module-bread">
                 <ul>
-                    <li><a href="">ホーム</a></li>
+                    <li><a th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name}" th:text="${menu.name}"></a></li>
+                    <li th:each="page : ${currentPages}"><a th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + ${page.path}" th:text="${page.name}">ホーム</a></li>
                 </ul>
             </div>
             <h1 class="module-title">
-                <input type="text" class="module-input-text" value="ホーム" placeholder="タイトル" />
+                <input type="text" class="module-input-text" th:value="${page.name}" placeholder="タイトル" />
             </h1>
         </div>
         <div class="base-content-edit-body">
@@ -350,9 +351,9 @@ PageType pageType;</code></pre><hr>
 <script th:src="@{/js/highlight/highlight.pack.js}"></script>
 <script th:src="@{/js/mermaid.min.js}"></script>
 <script>mermaid.initialize({startOnLoad:true});</script>
-<script>
-
-
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var value = /*[[${body.content} ]]*/ 'html';
     var fontSize = 16;
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
@@ -361,6 +362,7 @@ PageType pageType;</code></pre><hr>
     editor.getSession().setUseWrapMode(true);
     editor.getSession().setTabSize(2);
     editor.$blockScrolling = Infinity;
+    editor.setValue(value, -1);
 
     //プレビュー
     var viewer=document.getElementById('preview');
@@ -478,6 +480,7 @@ PageType pageType;</code></pre><hr>
             return preview;
         }
     }
+  /*]]>*/
 </script>
 </body>
 </html>

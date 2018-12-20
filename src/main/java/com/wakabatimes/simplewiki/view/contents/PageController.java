@@ -86,7 +86,6 @@ public class PageController {
             //全メニューリスト+ルートページの取得
             List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
             model.addAttribute("menus",menuLists);
-
         }else {
             //限定されたメニューリストの取得
             List<MainMenuResponseDto> menuLists = mainMenuShowService.listByMenuLimit(MenuLimit.PUBLIC);
@@ -99,9 +98,6 @@ public class PageController {
         MenuResponseDto currentMenu = new MenuResponseDto(current);
         model.addAttribute("currentMenu",currentMenu);
 
-        List<String> pathList = new ArrayList<>();
-        pathList.add(menuName);
-
         String[] splitPath = resourcePath.split("/");
         if(splitPath.length > 0){
             String parentId = "";
@@ -110,12 +106,10 @@ public class PageController {
                 if(parentId.equals("")){
                     Page rootPage = pageService.getRootPageByName(pageName);
                     parentId = rootPage.getPageId().getValue();
-                    pathList.add(rootPage.getPageName().getValue());
                 }else {
                     PageId parentPageId = new PageId(parentId);
                     Page childPage = pageService.getPageByParentAndChildName(parentPageId, pageName);
                     parentId = childPage.getPageId().getValue();
-                    pathList.add(childPage.getPageName().getValue());
                 }
             }
             PageId pageId = new PageId(parentId);
@@ -126,19 +120,22 @@ public class PageController {
             Body currentBody = bodyService.getCurrent(currentPage.getPageId());
             BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
             model.addAttribute("currentBody",bodyResponseDto);
+
+            List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
+            model.addAttribute("currentPages",currentPages);
         }else {
             PageName pageName = new PageName(resourcePath);
             Page currentPage = pageService.getRootPageByName(pageName);
             PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
             model.addAttribute("currentPage",pageResponseDto);
 
-            pathList.add(currentPage.getPageName().getValue());
-
             Body currentBody = bodyService.getCurrent(currentPage.getPageId());
             BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
             model.addAttribute("currentBody",bodyResponseDto);
+
+            List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
+            model.addAttribute("currentPages",currentPages);
         }
-        model.addAttribute("pathList",pathList);
 
         List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
         model.addAttribute("pages",pages);

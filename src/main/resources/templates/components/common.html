@@ -146,7 +146,7 @@
                 <p><a th:text="${list.name}" th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + '/' + ${list.path}">メインページ</a></p>
             </div>
             <ul class="menu-area" th:if="${user}">
-                <li><div class="module-button bg-gray small"><a href=""><i class="fas fa-edit"></i>編集</a></div></li>
+                <li><div class="module-button bg-gray small"><a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${list.id}"><i class="fas fa-edit"></i>編集</a></div></li>
                 <li><div class="module-button bg-gray small"><a href="" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
                 <li><div class="module-button bg-gray small"><a href="" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
             </ul>

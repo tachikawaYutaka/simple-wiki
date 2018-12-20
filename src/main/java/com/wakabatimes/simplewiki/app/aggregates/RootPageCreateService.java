@@ -23,8 +23,8 @@ public class RootPageCreateService {
     public void save(Page page, MenuId menuId){
         pageService.saveRoot(page,menuId);
 
-        BodyContent bodyContent = new BodyContent("#新規ページ\\n ページを編集して内容を登録してください");
-        BodyHtml bodyHtml = new BodyHtml("<h1>新規ページ</h1><p>ページを編集して内容を登録してください</p>");
+        BodyContent bodyContent = new BodyContent("# ページを編集して内容を登録してください");
+        BodyHtml bodyHtml = new BodyHtml("<h1>ページを編集して内容を登録してください</h1>");
         Body body = BodyFactory.create(bodyContent,bodyHtml);
         bodyService.save(body,page.getPageId());
     }

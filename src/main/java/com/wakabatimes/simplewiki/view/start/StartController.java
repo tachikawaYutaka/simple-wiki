@@ -71,9 +71,8 @@ public class StartController {
             Page page = PageFactory.create(pageName,pageType);
 
             //ページボディの作成
-            //TODO 初期画面のページボディ
-            BodyContent bodyContent = new BodyContent("hogehoge");
-            BodyHtml bodyHtml = new BodyHtml("hogehoge");
+            BodyContent bodyContent = new BodyContent("# ページを編集して内容を登録してください");
+            BodyHtml bodyHtml = new BodyHtml("<h1>ページを編集して内容を登録してください</h1>");
             Body body = BodyFactory.create(bodyContent,bodyHtml);
 
             systemInitializeService.save(system, user, menu, page, body);

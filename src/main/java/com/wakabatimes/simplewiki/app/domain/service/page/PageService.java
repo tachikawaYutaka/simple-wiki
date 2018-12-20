@@ -83,4 +83,11 @@ public interface PageService {
      * @return
      */
     Page getHomePage(MenuId menuId);
+
+    /**
+     * 親ページを照会
+     * @param pageId
+     * @return
+     */
+    Page getParent(PageId pageId);
 }

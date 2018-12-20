@@ -66,4 +66,9 @@ public class PageServiceImpl implements PageService {
     public Page getHomePage(MenuId menuId) {
         return pageRepository.getHomePage(menuId);
     }
+
+    @Override
+    public Page getParent(PageId pageId) {
+        return pageRepository.getParent(pageId);
+    }
 }

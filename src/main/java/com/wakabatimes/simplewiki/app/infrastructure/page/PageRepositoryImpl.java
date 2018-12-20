@@ -193,4 +193,17 @@ public class PageRepositoryImpl implements PageRepository {
         Page page = new Page(pageId,pageName1,pageType);
         return page;
     }
+
+    @Override
+    public Page getParent(PageId pageId) {
+        PageDto input = new PageDto();
+        input.setId(pageId.getValue());
+        PageDto result = pageMapper.getParent(input);
+
+        PageId pageId1 = new PageId(result.getId());
+        PageName pageName1 = new PageName(result.getName());
+        PageType pageType = PageType.getById(result.getType());
+        Page page = new Page(pageId1,pageName1,pageType);
+        return page;
+    }
 }

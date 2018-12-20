@@ -10,7 +10,8 @@
         <div class="base-content-body-head">
             <div class="module-bread">
                 <ul>
-                    <li th:each="path : ${pathList}"><a href="" th:text="${path}"></a></li>
+                    <li><a th:href="'/contents/' + ${#strings.toLowerCase(currentMenu.limit)} + '/' + ${currentMenu.name}" th:text="${currentMenu.name}"></a></li>
+                    <li th:each="page : ${currentPages}"><a th:href="'/contents/' + ${#strings.toLowerCase(currentMenu.limit)} + '/' + ${currentMenu.name} + ${page.path}" th:text="${page.name}">ホーム</a></li>
                 </ul>
             </div>
             <h1 class="module-title" th:text="${currentPage.name}">
@@ -20,7 +21,7 @@
         <div class="base-content-article article">
             <div class="base-content-head-menu">
                 <ul class="module-head-menu">
-                    <li th:if="${user}"><div class="module-button bg-gray"><a href=""><i class="fas fa-edit"></i>ページ編集</a></div></li>
+                    <li th:if="${user}"><div class="module-button bg-gray"><a target="_blank" th:href="'/contents/edit/' + ${currentMenu.id} + '/' + ${currentPage.id}"><i class="fas fa-edit"></i>ページ編集</a></div></li>
                     <li th:if="${user}"><div class="module-button bg-gray"><a href=""><i class="fas fa-plus"></i>ページ追加</a></div></li>
                 </ul>
                 <div class="module-sp-menu-button break-point-pc position-right script-toggle-side-menu">
