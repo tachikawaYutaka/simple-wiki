@@ -11,7 +11,7 @@ public interface PageRepository {
 
     void update(Page page, PageId parentId);
 
-    void delete(Page page);
+    void delete(Page page, MenuId menuId);
 
     Pages listByMenuId(MenuId menuId);
 

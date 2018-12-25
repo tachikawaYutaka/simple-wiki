@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BranchPageSaveForm{
-    String menuId;
-    String parentId;
-    String name;
+    private String menuId;
+    private String parentId;
+    private String name;
 }

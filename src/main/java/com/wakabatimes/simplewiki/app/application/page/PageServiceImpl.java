@@ -33,8 +33,8 @@ public class PageServiceImpl implements PageService {
     }
 
     @Override
-    public void delete(Page page) {
-        pageRepository.delete(page);
+    public void delete(Page page, MenuId menuId) {
+        pageRepository.delete(page,menuId);
     }
 
     @Override

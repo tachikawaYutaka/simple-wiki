@@ -5,7 +5,10 @@ import com.wakabatimes.simplewiki.app.aggregates.MainMenuShowService;
 import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
 import com.wakabatimes.simplewiki.app.aggregates.RootPageCreateService;
 import com.wakabatimes.simplewiki.app.domain.model.body.Body;
-import com.wakabatimes.simplewiki.app.domain.model.menu.*;
+import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
+import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
+import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
+import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
 import com.wakabatimes.simplewiki.app.domain.model.page.*;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
@@ -15,7 +18,6 @@ import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.body.dto.BodyResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.dto.MenuResponseDto;
-import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSaveForm;
 import com.wakabatimes.simplewiki.app.interfaces.page.dto.PageResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.page.form.BranchPageSaveForm;
 import com.wakabatimes.simplewiki.app.interfaces.page.form.RootPageSaveForm;
@@ -39,7 +41,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -105,7 +108,9 @@ public class PageController {
                 PageName pageName = new PageName(path);
                 if(parentId.equals("")){
                     Page rootPage = pageService.getRootPageByName(pageName);
+                    PageResponseDto rootPageDto = new PageResponseDto(rootPage);
                     parentId = rootPage.getPageId().getValue();
+                    model.addAttribute("rootPage",rootPageDto);
                 }else {
                     PageId parentPageId = new PageId(parentId);
                     Page childPage = pageService.getPageByParentAndChildName(parentPageId, pageName);
@@ -187,6 +192,49 @@ public class PageController {
             attr.addFlashAttribute("success",true);
             attr.addFlashAttribute("successMessage","ページを作成しました");
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }catch(RuntimeException e){
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }
+    }
+
+    @PostMapping("/pages/{menuId}/{pageId}/delete")
+    public String pageDelete(@PathVariable String menuId, @PathVariable String pageId, RedirectAttributes attr) throws UnsupportedEncodingException {
+        MenuId menuId1 = new MenuId(menuId);
+        Menu menu = menuService.getById(menuId1);
+        try{
+            PageId pageId1 = new PageId(pageId);
+            Page page = pageService.get(pageId1);
+            pageService.delete(page, menuId1);
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }catch(RuntimeException e){
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }
+    }
+
+    @PostMapping("/pages/{menuId}/{parentPageId}/new")
+    public String pageNew(@PathVariable String menuId, @PathVariable String parentPageId, RedirectAttributes attr) throws UnsupportedEncodingException {
+        MenuId menuId1 = new MenuId(menuId);
+        Menu menu = menuService.getById(menuId1);
+        try{
+            PageId parentPageId1 = new PageId(parentPageId);
+            Page parentPage = pageService.get(parentPageId1);
+
+            Page page = PageFactory.createNewPage(parentPage.getPageType());
+            branchPageCreateService.save(page,parentPageId1);
+            List<PageHierarchyResponseDto> pagePath = pageHierarchyShowService.getCurrentPath(page.getPageId());
+            String path = "";
+            for(PageHierarchyResponseDto pageHierarchyResponseDto: pagePath){
+                if(pageHierarchyResponseDto.getId().equals(page.getPageId().getValue())){
+                    path = pageHierarchyResponseDto.getName();
+                }
+            }
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8") + '/' +  URLEncoder.encode(path,"UTF-8");
         }catch(RuntimeException e){
             log.error("Error :",e);
             attr.addFlashAttribute("error",true);

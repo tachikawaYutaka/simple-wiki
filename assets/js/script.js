@@ -68,6 +68,13 @@ $(function(){
             $(this).addClass('active');
             $('.base-body').append('<div class="module-back-layer"></div>');
             $('.script-page-delete-popup').addClass('active');
+            var name = $(this).attr('data-page-name');
+            var menuId = $(this).attr('data-menu-id');
+            var pageId = $(this).attr('data-page-id');
+            var action = $('.script-page-delete-popup').find('form').attr('data-action');
+            console.log(action.replace("##MENUID##",menuId).replace("##PAGEID##",pageId));
+            $('.script-page-delete-popup').find('form').attr('action',action.replace("##MENUID##",menuId).replace("##PAGEID##",pageId));
+            $('.script-page-delete-popup').find('.page-name').text(name);
         }
     });
 

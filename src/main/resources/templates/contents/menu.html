@@ -5,9 +5,11 @@
 <th:block th:if="${user}"><header th:replace="components/common :: user-header"></header></th:block>
 <th:block th:unless="${user}"><header th:replace="components/common :: no-login-header"></header></th:block>
 <main class="base-main">
-    <div th:replace="components/common :: base-menu"></div>
+    <div th:replace="components/common :: base-menu(${currentMenu},null)"></div>
     <div class="base-content-body">
         <div class="base-content-body-head">
+            <div class="module-alert bg-white mt-10" th:if="${error}" th:text="${errorMessage}"></div>
+            <div class="module-alert true bg-white mt-10" th:if="${success}" th:text="${successMessage}"></div>
             <div class="module-bread">
                 <ul>
                     <li><a href="" th:text="${currentMenu.name}">ホーム</a></li>
@@ -40,8 +42,8 @@
     </div>
 </main>
 <div th:replace="components/common :: menu-add-form"></div>
-<div th:replace="components/common :: menu-edit-form"></div>
-<div th:replace="components/common :: menu-delete-form"></div>
+<div th:replace="components/common :: menu-edit-form(${currentMenu})"></div>
+<div th:replace="components/common :: menu-delete-form(${currentMenu})"></div>
 <div th:replace="components/common :: page-delete-form"></div>
 
 

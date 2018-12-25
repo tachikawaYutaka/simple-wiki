@@ -111,9 +111,14 @@ public class PageRepositoryImpl implements PageRepository {
     }
 
     @Override
-    public void delete(Page page) {
+    public void delete(Page page, MenuId menuId) {
         PageDto input = new PageDto(page);
-        pageMapper.delete(input);
+        PageDto homePage = pageMapper.getHomePage(menuId.getValue());
+        if(input.getId().equals(homePage.getId())){
+            throw new RuntimeException("メニュー内にページが無くなります。");
+        }else {
+            pageMapper.delete(input);
+        }
     }
 
     @Override

@@ -822,7 +822,7 @@ template {
 
 .module-button {
   width: 100%; }
-  .module-button a {
+  .module-button a, .module-button button {
     display: block;
     text-align: center;
     padding: 8px 10px;
@@ -832,38 +832,38 @@ template {
     font-size: 0.9rem;
     text-decoration: none;
     font-weight: 700; }
-    .module-button a:hover {
+    .module-button a:hover, .module-button button:hover {
       background-color: #000;
       color: #fff; }
     @media all and (max-width: 960px) {
-      .module-button a {
+      .module-button a, .module-button button {
         padding: 8px 5px;
         font-size: 0.8rem; } }
   .module-button i {
     padding-right: 5px; }
-  .module-button.bg-black a {
+  .module-button.bg-black a, .module-button.bg-black button {
     color: #fff;
     background-color: #000; }
-    .module-button.bg-black a:hover {
+    .module-button.bg-black a:hover, .module-button.bg-black button:hover {
       background-color: #fff;
       color: #000; }
-  .module-button.border-white a {
+  .module-button.border-white a, .module-button.border-white button {
     border-color: #fff; }
-  .module-button.bg-gray a {
+  .module-button.bg-gray a, .module-button.bg-gray button {
     border: none;
     color: #000;
     background-color: #eee; }
-    .module-button.bg-gray a:hover {
+    .module-button.bg-gray a:hover, .module-button.bg-gray button:hover {
       background-color: #000;
       color: #fff; }
-  .module-button.bg-white a {
+  .module-button.bg-white a, .module-button.bg-white button {
     border: none;
     color: #000;
     background-color: #fff; }
-    .module-button.bg-white a:hover {
+    .module-button.bg-white a:hover, .module-button.bg-white button:hover {
       background-color: #000;
       color: #fff; }
-  .module-button.small a {
+  .module-button.small a, .module-button.small button {
     font-size: 0.7rem; }
 
 .module-menu-lists {
@@ -1310,7 +1310,7 @@ template {
     width: 136px;
     padding: 10px;
     list-style-type: none;
-    z-index: 3;
+    z-index: 10;
     font-size: .9rem;
     border: 1px solid #ccc; }
     @media all and (max-width: 960px) {
@@ -1386,6 +1386,9 @@ template {
   margin-bottom: 80px; }
   .module-button-lists > button {
     margin: 0 10px; }
+  .module-button-lists.m-0 {
+    margin-top: 0;
+    margin-bottom: 0; }
 
 .module-icon-button {
   border: none;
@@ -1412,17 +1415,17 @@ template {
       background-color: #666;
       margin-bottom: 1px; }
     .module-body-history ul .name {
-      width: calc(100% - 181px);
+      width: calc(100% - 246px);
       padding: 5px; }
     .module-body-history ul .menu {
       width: 100%;
-      max-width: 180px;
+      max-width: 245px;
       display: flex;
       justify-content: space-around;
       align-items: center; }
       .module-body-history ul .menu > div {
         margin-right: 5px; }
-        .module-body-history ul .menu > div a {
+        .module-body-history ul .menu > div a, .module-body-history ul .menu > div button {
           padding: 6px 10px; }
 
 .module-sample-screen {
@@ -1456,3 +1459,7 @@ template {
   .module-alert.true {
     color: #007bff;
     border-color: #007bff; }
+  .module-alert.bg-white {
+    background-color: #fff; }
+  .module-alert.mt-10 {
+    margin-top: 10px; }

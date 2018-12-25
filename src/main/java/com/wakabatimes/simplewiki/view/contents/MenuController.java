@@ -2,16 +2,14 @@ package com.wakabatimes.simplewiki.view.contents;
 
 import com.wakabatimes.simplewiki.app.aggregates.MainMenuShowService;
 import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
-import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
+import com.wakabatimes.simplewiki.app.domain.model.menu.*;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.dto.MenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSaveForm;
+import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuUpdateForm;
 import com.wakabatimes.simplewiki.app.interfaces.page_hierarchy.dto.PageHierarchyResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +48,7 @@ public class MenuController {
     private PageHierarchyShowService pageHierarchyShowService;
 
     @GetMapping("/contents/public/{menuName}")
-    public String content_menu(@PathVariable String menuName, Model model, Principal principal){
+    public String contentMenu(@PathVariable String menuName, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         if(auth != null){
             String name = auth.getName();
@@ -85,7 +83,7 @@ public class MenuController {
     public String menuSave(@ModelAttribute MenuSaveForm menuSaveForm, RedirectAttributes attr) throws UnsupportedEncodingException {
         try{
             MenuName menuName = new MenuName(menuSaveForm.getName());
-            MenuLimit menuLimit = MenuLimit.getById(Integer.valueOf(menuSaveForm.getViewLimit()));
+            MenuLimit menuLimit = MenuLimit.getById(menuSaveForm.getViewLimit());
             Menu menu = MenuFactory.create(menuName,menuLimit);
             menuService.save(menu);
 
@@ -97,11 +95,48 @@ public class MenuController {
             attr.addFlashAttribute("error",true);
             attr.addFlashAttribute("errorMessage",e.getMessage());
 
-            String url = "";
-            for(String path: menuSaveForm.getPathList()){
-                url += "/" + URLEncoder.encode(path,"UTF-8");
-            }
-            return "redirect:/contents/" + url;
+            Menu home = menuService.getHomeMenu();
+            return "redirect:/contents/" + home.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(home.getMenuName().getValue(),"UTF-8");
+        }
+    }
+
+    @PostMapping("/menu/{menuId}/delete")
+    public String menuDelete(@PathVariable String menuId, RedirectAttributes attr) throws UnsupportedEncodingException {
+        try{
+            MenuId menuId1 = new MenuId(menuId);
+            Menu menu = menuService.getById(menuId1);
+            menuService.delete(menu);
+            Menu home = menuService.getHomeMenu();
+            attr.addFlashAttribute("success",true);
+            attr.addFlashAttribute("successMessage","メニューを削除しました");
+            return "redirect:/contents/" + home.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(home.getMenuName().getValue(),"UTF-8");
+        }catch(RuntimeException e){
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+
+            Menu home = menuService.getHomeMenu();
+            return "redirect:/contents/" + home.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(home.getMenuName().getValue(),"UTF-8");
+        }
+    }
+
+    @PostMapping("/menu/{menuId}/update")
+    public String menuUpdate(@PathVariable String menuId, @ModelAttribute MenuUpdateForm form, RedirectAttributes attr) throws UnsupportedEncodingException {
+        try{
+            MenuId menuId1 = new MenuId(menuId);
+            MenuName menuName = new MenuName(form.getMenuName());
+            MenuLimit menuLimit = MenuLimit.getById(form.getMenuViewLimit());
+            Menu menu = new Menu(menuId1,menuName,menuLimit);
+            menuService.update(menu);
+            attr.addFlashAttribute("success",true);
+            attr.addFlashAttribute("successMessage","メニューを更新しました");
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }catch(RuntimeException e){
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            Menu home = menuService.getHomeMenu();
+            return "redirect:/contents/" + home.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(home.getMenuName().getValue(),"UTF-8");
         }
     }
 }

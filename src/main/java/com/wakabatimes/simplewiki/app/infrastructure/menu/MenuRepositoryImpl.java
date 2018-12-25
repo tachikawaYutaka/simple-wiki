@@ -59,7 +59,12 @@ public class MenuRepositoryImpl implements MenuRepository {
     @Override
     public void delete(Menu menu) {
         MenuDto input = new MenuDto(menu);
-        menuMapper.delete(input);
+        MenuDto homeMenu = menuMapper.getHomeMenu();
+        if(input.getId().equals(homeMenu.getId())){
+            throw new RuntimeException("ホームメニューは削除できません。");
+        }else{
+            menuMapper.delete(input);
+        }
     }
 
     @Override

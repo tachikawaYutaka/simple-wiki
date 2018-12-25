@@ -18,8 +18,8 @@ public class BodyHtml {
 
     private void validateBodyHtml(String value) {
         Integer count = value.length();
-        if(count <= 0 || count > 10000) {
-            throw new RuntimeException("BodyContent is incorrect. 0 or more characters 10000 characters within");
+        if(count <= 0 || count > 1000000) {
+            throw new RuntimeException("BodyHtml is incorrect. 0 or more characters 1000000 characters within");
         }
     }
 }

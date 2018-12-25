@@ -1,28 +1,27 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="components/common :: common-head(${currentPage.name})"></head>
+<head th:replace="components/common :: common-head(${page.name} + '過去のバージョン')"></head>
 <body class="base-body">
 <th:block th:if="${user}"><header th:replace="components/common :: user-header"></header></th:block>
 <th:block th:unless="${user}"><header th:replace="components/common :: no-login-header"></header></th:block>
 <main class="base-main">
-    <div th:replace="components/common :: base-menu(${currentMenu},${rootPage})"></div>
+    <div th:replace="components/common :: base-menu"></div>
     <div class="base-content-body">
         <div class="base-content-body-head">
             <div class="module-bread">
                 <ul>
-                    <li><a th:href="'/contents/' + ${#strings.toLowerCase(currentMenu.limit)} + '/' + ${currentMenu.name}" th:text="${currentMenu.name}"></a></li>
-                    <li th:each="page : ${currentPages}"><a th:data-id="${page.id}" th:href="'/contents/' + ${#strings.toLowerCase(currentMenu.limit)} + '/' + ${currentMenu.name} + ${page.path}" th:text="${page.name}">ホーム</a></li>
+                    <li><a th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name}" th:text="${menu.name}"></a></li>
+                    <li th:each="page : ${currentPages}"><a th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + ${page.path}" th:text="${page.name}">ホーム</a></li>
                 </ul>
             </div>
-            <h1 class="module-title" th:text="${currentPage.name}">
+            <h1 class="module-title" th:text="${page.name} + '（過去のバージョン）'">
                 メインページ
             </h1>
         </div>
         <div class="base-content-article article">
             <div class="base-content-head-menu">
                 <ul class="module-head-menu">
-                    <li th:if="${user}"><div class="module-button bg-gray"><a target="_blank" th:href="'/contents/edit/' + ${currentMenu.id} + '/' + ${currentPage.id}"><i class="fas fa-edit"></i>ページ編集</a></div></li>
-                    <li th:if="${user}"><div class="module-button bg-gray"><form method="post" th:action="'/pages/'+ ${currentMenu.id} +'/' + ${currentPage.id} + '/new'"><button type="submit"><i class="fas fa-plus"></i>ページ追加</button></form></div></li>
+                    <li th:if="${user}"><div class="module-button bg-gray"><form method="post" th:action="'/contents/edit/' + ${menu.id} + '/' + ${page.id} + '/' + ${body.id}"><button type="submit"><i class="fas fa-window-restore"></i>復元する</button></form></div></li>
                 </ul>
                 <div class="module-sp-menu-button break-point-pc position-right script-toggle-side-menu">
                     <div></div>
@@ -30,13 +29,13 @@
                     <div></div>
                 </div>
             </div>
-            <div class="base-article-body article" th:utext="${currentBody.html}">
+            <div class="base-article-body article" th:utext="${body.html}">
 
             </div>
         </div>
         <aside class="base-content-side">
             <nav class="module-side-menu">
-                <ul th:replace="components/common :: side-pages-list(null,${pages},${currentMenu},${rootPage},${currentPage})"></ul>
+                <ul th:replace="components/common :: side-pages-list(null,${pages},${currentMenu})"></ul>
             </nav>
         </aside>
     </div>

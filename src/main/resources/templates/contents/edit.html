@@ -4,8 +4,10 @@
 <body class="base-body">
 <header th:replace="components/common :: user-header"></header>
 <main class="base-main bg-gray">
-    <div class="base-content-body max">
+    <form method="post" th:action="'/contents/edit/' + ${menu.id} + '/' + ${page.id}" class="base-content-body max">
         <div class="base-content-body-head">
+            <div class="module-alert bg-white mt-10" th:if="${error}" th:text="${errorMessage}"></div>
+            <div class="module-alert true bg-white mt-10" th:if="${success}" th:text="${successMessage}"></div>
             <div class="module-bread">
                 <ul>
                     <li><a th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name}" th:text="${menu.name}"></a></li>
@@ -13,10 +15,11 @@
                 </ul>
             </div>
             <h1 class="module-title">
-                <input type="text" class="module-input-text" th:value="${page.name}" placeholder="タイトル" />
+                <input name="pageName" type="text" class="module-input-text" th:value="${page.name}" placeholder="タイトル" />
             </h1>
+
         </div>
-        <div class="base-content-edit-body">
+        <div class="base-content-edit-body script-edit-save">
             <div class="module-edit-body">
                 <div class="editor-side">
                     <div class="menu">
@@ -32,126 +35,40 @@
                 </div>
             </div>
             <div class="module-button-lists">
-                <button class="module-submit-button bg-black-2">
+                <button class="module-submit-button bg-black-2" type="submit">
                     保存
                 </button>
-                <button class="module-submit-button bg-gray script-popup-cancel">
+                <button class="module-submit-button bg-gray script-edit-cancel">
                     キャンセル
                 </button>
             </div>
+            <input type="hidden" name="content" />
+            <input type="hidden" name="html" />
         </div>
         <div class="base-content-article max">
             <div class="module-body-history">
                 <div class="head">改訂履歴</div>
                 <ul>
-                    <li>
-                        <div class="name">
+                    <li th:each="body : ${bodyArchive}">
+                        <div class="name" th:text="${body.id}">
                             admin:2018/xx/xx xx:xx
                         </div>
                         <div class="menu">
                             <div class="module-button bg-gray small">
-                                <a href="#">プレビュー</a>
+                                <a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${page.id} + '/' + ${body.id}">プレビュー</a>
                             </div>
                             <div class="module-button bg-gray small">
-                                <a href="#">復元</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            admin:2018/xx/xx xx:xx
-                        </div>
-                        <div class="menu">
-                            <div class="module-button bg-gray small">
-                                <a href="#">プレビュー</a>
+                                <form method="post" th:action="'/contents/edit/' + ${menu.id} + '/' + ${page.id} + '/' + ${body.id}"><button type="submit">復元</button></form>
                             </div>
                             <div class="module-button bg-gray small">
-                                <a href="#">復元</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            admin:2018/xx/xx xx:xx
-                        </div>
-                        <div class="menu">
-                            <div class="module-button bg-gray small">
-                                <a href="#">プレビュー</a>
-                            </div>
-                            <div class="module-button bg-gray small">
-                                <a href="#">復元</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            admin:2018/xx/xx xx:xx
-                        </div>
-                        <div class="menu">
-                            <div class="module-button bg-gray small">
-                                <a href="#">プレビュー</a>
-                            </div>
-                            <div class="module-button bg-gray small">
-                                <a href="#">復元</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            admin:2018/xx/xx xx:xx
-                        </div>
-                        <div class="menu">
-                            <div class="module-button bg-gray small">
-                                <a href="#">プレビュー</a>
-                            </div>
-                            <div class="module-button bg-gray small">
-                                <a href="#">復元</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            admin:2018/xx/xx xx:xx
-                        </div>
-                        <div class="menu">
-                            <div class="module-button bg-gray small">
-                                <a href="#">プレビュー</a>
-                            </div>
-                            <div class="module-button bg-gray small">
-                                <a href="#">復元</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            admin:2018/xx/xx xx:xx
-                        </div>
-                        <div class="menu">
-                            <div class="module-button bg-gray small">
-                                <a href="#">プレビュー</a>
-                            </div>
-                            <div class="module-button bg-gray small">
-                                <a href="#">復元</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="name">
-                            admin:2018/xx/xx xx:xx
-                        </div>
-                        <div class="menu">
-                            <div class="module-button bg-gray small">
-                                <a href="#">プレビュー</a>
-                            </div>
-                            <div class="module-button bg-gray small">
-                                <a href="#">復元</a>
+                                <form method="post" th:action="'/contents/edit/' + ${menu.id} + '/' + ${page.id} + '/' + ${body.id} + '/delete'"><button type="submit">削除</button></form>
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
+    </form>
     <div class="module-sample-screen script-sample-load">
         <div class="editor-side">
 <pre>
@@ -369,8 +286,16 @@ PageType pageType;</code></pre><hr>
     viewer.innerHTML = marked(editor.getValue());
     var changeFlag;
     $('.script-preview-load').on("click" , function(e){
+        e.preventDefault();
         viewer.innerHTML = marked(editor.getValue());
         window.mermaid.init();
+    });
+
+    $('.script-edit-save').on('submit',function(){
+        viewer.innerHTML = marked(editor.getValue());
+        window.mermaid.init();
+        $('[name="content"]').val(editor.getValue());
+        $('[name="html"]').val($('#preview').html());
     });
 
     //30秒ごとにプレビューを更新
@@ -388,6 +313,11 @@ PageType pageType;</code></pre><hr>
             $('.base-body').append('<div class="module-back-layer"></div>');
             $('.module-sample-screen').addClass('active');
         }
+    });
+
+    $('.script-edit-cancel').on('click',function(e){
+        e.preventDefault();
+        location.reload();
     });
 
     $('.base-body').on('click','.module-back-layer',function(e){

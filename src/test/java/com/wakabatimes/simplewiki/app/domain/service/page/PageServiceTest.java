@@ -225,7 +225,7 @@ public class PageServiceTest {
         Page page = PageFactory.create(pageName,pageType);
         pageService.saveRoot(page,menu.getMenuId());
 
-        pageService.delete(page);
+        pageService.delete(page,menu.getMenuId());
     }
 
     @Test

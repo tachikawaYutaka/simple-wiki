@@ -4,4 +4,6 @@ import lombok.Data;
 
 @Data
 public class MenuUpdateForm {
+    private String menuName;
+    private Integer menuViewLimit;
 }

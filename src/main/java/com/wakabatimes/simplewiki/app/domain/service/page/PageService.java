@@ -39,7 +39,7 @@ public interface PageService {
      * ページ情報の削除
      * @param page
      */
-    void delete(Page page);
+    void delete(Page page, MenuId menuId);
 
     /**
      * メニュー直下のページのリスト
