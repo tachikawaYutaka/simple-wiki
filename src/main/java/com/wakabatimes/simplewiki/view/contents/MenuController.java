@@ -48,7 +48,7 @@ public class MenuController {
     private PageHierarchyShowService pageHierarchyShowService;
 
     @GetMapping("/contents/public/{menuName}")
-    public String contentMenu(@PathVariable String menuName, Model model, Principal principal){
+    public String contentPublicMenu(@PathVariable String menuName, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         if(auth != null){
             String name = auth.getName();
@@ -67,6 +67,26 @@ public class MenuController {
             model.addAttribute("menus",menuLists);
             model.addAttribute("user",false);
         }
+
+        MenuName currentMenuName = new MenuName(menuName);
+        Menu current = menuService.get(currentMenuName);
+        MenuResponseDto currentMenu = new MenuResponseDto(current);
+        model.addAttribute("currentMenu",currentMenu);
+
+        List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
+        model.addAttribute("pages",pages);
+
+        return "contents/menu";
+    }
+
+    @GetMapping("/contents/private/{menuName}")
+    public String contentPrivateMenu(@PathVariable String menuName, Model model, Principal principal){
+        Authentication auth = (Authentication)principal;
+
+        //限定されたメニューリストの取得
+        List<MainMenuResponseDto> menuLists = mainMenuShowService.listByMenuLimit(MenuLimit.PUBLIC);
+        model.addAttribute("menus",menuLists);
+        model.addAttribute("user",false);
 
         MenuName currentMenuName = new MenuName(menuName);
         Menu current = menuService.get(currentMenuName);
