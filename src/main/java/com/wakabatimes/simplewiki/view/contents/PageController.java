@@ -76,7 +76,7 @@ public class PageController {
     private PageHierarchyShowService pageHierarchyShowService;
 
     @GetMapping("/contents/public/{menuName}/**")
-    public String content_public_page(HttpServletRequest request, @PathVariable String menuName, Model model, Principal principal){
+    public String contentPublicPage(HttpServletRequest request, @PathVariable String menuName, Model model, Principal principal){
         final String resourcePath = extractPathFromPattern(request);
         Authentication auth = (Authentication)principal;
         if(auth != null){
@@ -95,6 +95,66 @@ public class PageController {
             model.addAttribute("menus",menuLists);
             model.addAttribute("user",false);
         }
+
+        MenuName currentMenuName = new MenuName(menuName);
+        Menu current = menuService.get(currentMenuName);
+        MenuResponseDto currentMenu = new MenuResponseDto(current);
+        model.addAttribute("currentMenu",currentMenu);
+
+        String[] splitPath = resourcePath.split("/");
+        if(splitPath.length > 0){
+            String parentId = "";
+            for(String path : splitPath){
+                PageName pageName = new PageName(path);
+                if(parentId.equals("")){
+                    Page rootPage = pageService.getRootPageByName(pageName);
+                    PageResponseDto rootPageDto = new PageResponseDto(rootPage);
+                    parentId = rootPage.getPageId().getValue();
+                    model.addAttribute("rootPage",rootPageDto);
+                }else {
+                    PageId parentPageId = new PageId(parentId);
+                    Page childPage = pageService.getPageByParentAndChildName(parentPageId, pageName);
+                    parentId = childPage.getPageId().getValue();
+                }
+            }
+            PageId pageId = new PageId(parentId);
+            Page currentPage = pageService.get(pageId);
+            PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
+            model.addAttribute("currentPage",pageResponseDto);
+
+            Body currentBody = bodyService.getCurrent(currentPage.getPageId());
+            BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
+            model.addAttribute("currentBody",bodyResponseDto);
+
+            List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
+            model.addAttribute("currentPages",currentPages);
+        }else {
+            PageName pageName = new PageName(resourcePath);
+            Page currentPage = pageService.getRootPageByName(pageName);
+            PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
+            model.addAttribute("currentPage",pageResponseDto);
+
+            Body currentBody = bodyService.getCurrent(currentPage.getPageId());
+            BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
+            model.addAttribute("currentBody",bodyResponseDto);
+
+            List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
+            model.addAttribute("currentPages",currentPages);
+        }
+
+        List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
+        model.addAttribute("pages",pages);
+        return "contents/page";
+    }
+
+    @GetMapping("/contents/private/{menuName}/**")
+    public String contentPrivatePage(HttpServletRequest request, @PathVariable String menuName, Model model, Principal principal){
+        final String resourcePath = extractPathFromPattern(request);
+        Authentication auth = (Authentication)principal;
+        //限定されたメニューリストの取得
+        List<MainMenuResponseDto> menuLists = mainMenuShowService.listByMenuLimit(MenuLimit.PUBLIC);
+        model.addAttribute("menus",menuLists);
+        model.addAttribute("user",false);
 
         MenuName currentMenuName = new MenuName(menuName);
         Menu current = menuService.get(currentMenuName);
