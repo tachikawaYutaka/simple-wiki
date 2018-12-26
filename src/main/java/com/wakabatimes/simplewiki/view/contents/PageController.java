@@ -10,10 +10,12 @@ import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
 import com.wakabatimes.simplewiki.app.domain.model.page.*;
+import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
+import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.body.dto.BodyResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
@@ -22,6 +24,7 @@ import com.wakabatimes.simplewiki.app.interfaces.page.dto.PageResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.page.form.BranchPageSaveForm;
 import com.wakabatimes.simplewiki.app.interfaces.page.form.RootPageSaveForm;
 import com.wakabatimes.simplewiki.app.interfaces.page_hierarchy.dto.PageHierarchyResponseDto;
+import com.wakabatimes.simplewiki.app.interfaces.system.dto.SystemResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +77,9 @@ public class PageController {
 
     @Autowired
     private PageHierarchyShowService pageHierarchyShowService;
+
+    @Autowired
+    private SystemService systemService;
 
     @GetMapping("/contents/public/{menuName}/**")
     public String contentPublicPage(HttpServletRequest request, @PathVariable String menuName, Model model, Principal principal){
@@ -144,6 +150,11 @@ public class PageController {
 
         List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
         model.addAttribute("pages",pages);
+
+        System system = systemService.get();
+        SystemResponseDto systemResponseDto = new SystemResponseDto(system);
+        model.addAttribute("system",systemResponseDto);
+
         return "contents/page";
     }
 
@@ -151,10 +162,15 @@ public class PageController {
     public String contentPrivatePage(HttpServletRequest request, @PathVariable String menuName, Model model, Principal principal){
         final String resourcePath = extractPathFromPattern(request);
         Authentication auth = (Authentication)principal;
-        //限定されたメニューリストの取得
-        List<MainMenuResponseDto> menuLists = mainMenuShowService.listByMenuLimit(MenuLimit.PUBLIC);
+        String name = auth.getName();
+        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserResponseDto userResponseDto = new UserResponseDto(user);
+        model.addAttribute("userInfo",userResponseDto);
+        model.addAttribute("user",true);
+
+        //全メニューリスト+ルートページの取得
+        List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
         model.addAttribute("menus",menuLists);
-        model.addAttribute("user",false);
 
         MenuName currentMenuName = new MenuName(menuName);
         Menu current = menuService.get(currentMenuName);
@@ -204,6 +220,11 @@ public class PageController {
 
         List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
         model.addAttribute("pages",pages);
+
+        System system = systemService.get();
+        SystemResponseDto systemResponseDto = new SystemResponseDto(system);
+        model.addAttribute("system",systemResponseDto);
+
         return "contents/page";
     }
 

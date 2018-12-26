@@ -14,6 +14,15 @@ public class PageNameTest {
         PageName pageName = new PageName("a");
     }
 
+    @Test(expected = RuntimeException.class)
+    public void createInstance_fail2() {
+        PageName pageName  = new PageName("aaaaa!!!!");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void createInstance_fail3() {
+        PageName pageName  = new PageName("aaaaa~./");
+    }
     @Test
     public void getValue() {
         PageName pageName = new PageName("hogehoge");

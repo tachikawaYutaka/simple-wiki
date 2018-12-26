@@ -8,4 +8,12 @@ public class BodyFactory {
         BodyType bodyType = BodyType.CURRENT;
         return new Body(bodyId, bodyContent,bodyHtml, bodyType);
     }
+
+    public static Body createNewBody(){
+        BodyId bodyId = new BodyId(UUID.randomUUID().toString());
+        BodyContent bodyContent = new BodyContent("# ページを編集して内容を登録してください");
+        BodyHtml bodyHtml = new BodyHtml("<h1>ページを編集して内容を登録してください</h1>");
+        BodyType bodyType = BodyType.CURRENT;
+        return new Body(bodyId, bodyContent,bodyHtml, bodyType);
+    }
 }

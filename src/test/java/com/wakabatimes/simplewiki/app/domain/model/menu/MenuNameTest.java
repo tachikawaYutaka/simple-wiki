@@ -14,6 +14,16 @@ public class MenuNameTest {
         MenuName menuName = new MenuName("a");
     }
 
+    @Test(expected = RuntimeException.class)
+    public void createInstance_fail2() {
+        MenuName menuName = new MenuName("aaaaa!!!!");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void createInstance_fail3() {
+        MenuName menuName = new MenuName("aaaaa~./");
+    }
+
     @Test
     public void getValue() {
         MenuName menuName = new MenuName("hogehoge");

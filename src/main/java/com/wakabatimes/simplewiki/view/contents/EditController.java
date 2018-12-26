@@ -9,16 +9,19 @@ import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
 import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
+import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
+import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.interfaces.body.dto.BodyResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.body.form.BodySaveForm;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.dto.MenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.page.dto.PageResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.page_hierarchy.dto.PageHierarchyResponseDto;
+import com.wakabatimes.simplewiki.app.interfaces.system.dto.SystemResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +63,9 @@ public class EditController {
     @Autowired
     private BodyAndPageSaveService bodyAndPageSaveService;
 
+    @Autowired
+    private SystemService systemService;
+
     @GetMapping("/contents/edit/{menuId}/{pageId}")
     public String edit(@PathVariable String menuId, @PathVariable String pageId, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
@@ -93,6 +99,10 @@ public class EditController {
             bodyArchive.add(bodyResponseDto1);
         }
         model.addAttribute("bodyArchive",bodyArchive);
+
+        System system = systemService.get();
+        SystemResponseDto systemResponseDto = new SystemResponseDto(system);
+        model.addAttribute("system",systemResponseDto);
 
         return "contents/edit";
     }
@@ -156,6 +166,11 @@ public class EditController {
 
         List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(pageId1);
         model.addAttribute("currentPages",currentPages);
+
+        System system = systemService.get();
+        SystemResponseDto systemResponseDto = new SystemResponseDto(system);
+        model.addAttribute("system",systemResponseDto);
+
         return "contents/preview";
     }
 

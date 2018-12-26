@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="components/common :: common-head('初期設定')"></head>
 <body class="base-body">
-<header th:replace="components/common :: login-header"></header>
+<header th:replace="components/common :: start-header"></header>
 <main class="base-main bg-black-4">
     <div class="module-login">
         <form th:action="@{/start}" method="post">
@@ -25,7 +25,9 @@
         </form>
     </div>
 </main>
-<footer th:replace="components/common :: common-footer"></footer>
+<footer class="base-footer">
+    <small class="module-copy">Simple Wiki</small>
+</footer>
 <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

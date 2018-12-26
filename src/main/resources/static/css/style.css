@@ -1463,3 +1463,7 @@ template {
     background-color: #fff; }
   .module-alert.mt-10 {
     margin-top: 10px; }
+
+.module-editor {
+  width: 100%;
+  min-height: 500px; }

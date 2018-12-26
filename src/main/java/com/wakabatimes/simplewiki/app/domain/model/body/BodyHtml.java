@@ -19,7 +19,7 @@ public class BodyHtml {
     private void validateBodyHtml(String value) {
         Integer count = value.length();
         if(count <= 0 || count > 1000000) {
-            throw new RuntimeException("BodyHtml is incorrect. 0 or more characters 1000000 characters within");
+            throw new RuntimeException("内容にエラーがあります。0～1000000内で入力してください。");
         }
     }
 }

@@ -38,7 +38,7 @@
                 <button class="module-submit-button bg-black-2" type="submit">
                     保存
                 </button>
-                <button class="module-submit-button bg-gray script-edit-cancel">
+                <button class="module-submit-button bg-gray script-screen-reload">
                     キャンセル
                 </button>
             </div>
@@ -313,11 +313,6 @@ PageType pageType;</code></pre><hr>
             $('.base-body').append('<div class="module-back-layer"></div>');
             $('.module-sample-screen').addClass('active');
         }
-    });
-
-    $('.script-edit-cancel').on('click',function(e){
-        e.preventDefault();
-        location.reload();
     });
 
     $('.base-body').on('click','.module-back-layer',function(e){

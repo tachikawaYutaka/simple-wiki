@@ -22,12 +22,12 @@ public class SystemName {
         String inputPattern = "^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]+$";
 
         if (!Pattern.matches(inputPattern, value)) {
-            throw new RuntimeException("Input is incorrect. Expected value [" + inputPattern + "] [value=" + value + "]");
+            throw new RuntimeException("システム名称の入力が正しくありません。半角英数で入力してください。");
         }
 
         Integer count = value.length();
         if(count < 3 || count > 20) {
-            throw new RuntimeException("User name is incorrect. 3 or more characters 20 characters within");
+            throw new RuntimeException("システム名称の入力が正しくありません。3～20字内で入力してください。");
         }
     }
 }

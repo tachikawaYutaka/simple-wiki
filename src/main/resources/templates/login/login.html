@@ -6,7 +6,7 @@
 <main class="base-main bg-black-4">
     <div class="module-login">
         <form th:action="@{/login}" method="post">
-            <h1>Simple Wiki</h1>
+            <h1 th:text="${system.name}">Simple Wiki</h1>
             <div class="module-alert true" th:if="${success}">システムの初期設定が完了しました。</div>
             <p><input name="userName" placeholder="ID" type="text" class="module-input-text" /></p>
             <p><input name="userPassword" placeholder="PASSWORD" type="password" class="module-input-text" /></p>

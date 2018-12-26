@@ -18,7 +18,7 @@
             <div></div>
             <div></div>
         </div>
-        <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
+        <div class="module-logo"><a th:href="@{/}" th:text="${system.name}">Simple Wiki</a></div>
         <div class="module-search"><form><input type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
     </div>
     <div class="base-header-right">
@@ -33,14 +33,14 @@
             <div></div>
             <div></div>
         </div>
-        <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
+        <div class="module-logo"><a th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
         <div class="module-search"><form><input type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
     </div>
     <div class="base-header-right">
         <div class="module-user-menu script-user-menu-toggle">
             <div class="user-name"><i class="fas fa-user"></i><span th:text="${userInfo.name}"></span></div>
             <ul class="user-list">
-                <li><a href="">システム設定</a></li>
+                <li><a th:href="@{/system/name}">システム設定</a></li>
                 <li><a href="">ユーザー管理</a></li>
                 <li><a href="">ユーザー名変更</a></li>
                 <li><a href="">パスワード変更</a></li>
@@ -51,6 +51,15 @@
 </header>
 
 <header th:fragment="login-header" class="base-header">
+    <div class="base-header-left">
+        <div class="module-logo"><a th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
+    </div>
+    <div class="base-header-right">
+
+    </div>
+</header>
+
+<header th:fragment="start-header" class="base-header">
     <div class="base-header-left">
         <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
     </div>
@@ -75,6 +84,48 @@
         <div class="module-button bg-gray" th:if="${user}">
             <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
         </div>
+    </nav>
+</div>
+
+<div th:fragment="system-menu(menu,page)" class="base-menu">
+    <nav class="module-menu-lists">
+        <ul>
+            <li>
+                <p><a th:class="${menu == 'system' ? 'active': ''}" th:href="@{/system/name}"><i  th:if="${menu == 'system'}" class="fas fa-angle-right"></i><span>システム設定</span></a></p>
+                <ul>
+                    <li>
+                        <p><a th:class="${page == 'name' ? 'active': ''}" th:href="@{/system/name}"><i  th:if="${page == 'name'}" class="fas fa-angle-right"></i><span>システム名称</span></a></p>
+                    </li>
+                    <li>
+                        <p><a th:class="${page == 'style' ? 'active': ''}" th:href="@{/system/style}"><i  th:if="${page == 'style'}" class="fas fa-angle-right"></i><span>独自スタイル</span></a></p>
+                    </li>
+                    <li>
+                        <p><a th:class="${page == 'html' ? 'active': ''}" th:href="@{/system/html}"><i  th:if="${page == 'html'}" class="fas fa-angle-right"></i><span>独自HTML</span></a></p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <p><a th:class="${menu == 'user' ? 'active': ''}" th:href="@{/system/users}"><i  th:if="${menu == 'user'}" class="fas fa-angle-right"></i><span>ユーザー管理</span></a></p>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div th:fragment="user-menu(menu,page)" class="base-menu">
+    <nav class="module-menu-lists">
+        <ul>
+            <li>
+                <p><a th:class="${menu == 'user' ? 'active': ''}" th:href="'/contents/'"><i  th:if="${menu == 'user'}" class="fas fa-angle-right"></i><span>ユーザー設定</span></a></p>
+                <ul>
+                    <li>
+                        <p><a th:class="${page == 'name' ? 'active': ''}" th:href="'/contents/'"><i  th:if="${page == 'name'}" class="fas fa-angle-right"></i><span>ユーザー名変更</span></a></p>
+                    </li>
+                    <li>
+                        <p><a th:class="${page == 'password' ? 'active': ''}" th:href="'/contents/'"><i  th:if="${page == 'password'}" class="fas fa-angle-right"></i><span>パスワード変更</span></a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </nav>
 </div>
 
@@ -170,7 +221,7 @@
 </ul>
 
 <footer th:fragment="common-footer" class="base-footer">
-    <small class="module-copy">Simple Wiki</small>
+    <small class="module-copy" th:text="${system.name}">Simple Wiki</small>
 </footer>
 
 </body>

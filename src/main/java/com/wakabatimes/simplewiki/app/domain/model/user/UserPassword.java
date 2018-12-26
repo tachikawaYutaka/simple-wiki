@@ -29,12 +29,12 @@ public class UserPassword {
 
 
         if (!Pattern.matches(inputPattern, value)) {
-            throw new RuntimeException("Input is incorrect. Expected value [" + inputPattern + "] [value=" + value + "]");
+            throw new RuntimeException("パスワードの入力が正しくありません。半角英数で入力してください。");
         }
 
         Integer count = value.length();
         if(count < 8 || count > 255) {
-            throw new RuntimeException("Password is incorrect. 8 or more characters 255 characters within");
+            throw new RuntimeException("パスワードの入力が正しくありません。 8～255字内で入力してください。n");
         }
     }
 

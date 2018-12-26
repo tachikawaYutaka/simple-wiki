@@ -18,8 +18,8 @@ public class OriginalStyleBody {
 
     private void validateBodyContent(String value) {
         Integer count = value.length();
-        if(count < 1 || count > 10000) {
-            throw new RuntimeException("BodyContent is incorrect. 1 or more characters 10000 characters within");
+        if(count < 1 || count > 100000) {
+            throw new RuntimeException("スタイルの入力が正しくありません。1～100000字内で入力してください。");
         }
     }
 }

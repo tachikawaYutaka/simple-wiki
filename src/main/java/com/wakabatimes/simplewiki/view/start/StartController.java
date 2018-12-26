@@ -71,9 +71,7 @@ public class StartController {
             Page page = PageFactory.create(pageName,pageType);
 
             //ページボディの作成
-            BodyContent bodyContent = new BodyContent("# ページを編集して内容を登録してください");
-            BodyHtml bodyHtml = new BodyHtml("<h1>ページを編集して内容を登録してください</h1>");
-            Body body = BodyFactory.create(bodyContent,bodyHtml);
+            Body body = BodyFactory.createNewBody();
 
             systemInitializeService.save(system, user, menu, page, body);
         }catch (RuntimeException e){

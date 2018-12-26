@@ -3,14 +3,17 @@ package com.wakabatimes.simplewiki.view.contents;
 import com.wakabatimes.simplewiki.app.aggregates.MainMenuShowService;
 import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
 import com.wakabatimes.simplewiki.app.domain.model.menu.*;
+import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
+import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.dto.MenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSaveForm;
 import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuUpdateForm;
 import com.wakabatimes.simplewiki.app.interfaces.page_hierarchy.dto.PageHierarchyResponseDto;
+import com.wakabatimes.simplewiki.app.interfaces.system.dto.SystemResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,9 @@ public class MenuController {
     @Autowired
     private PageHierarchyShowService pageHierarchyShowService;
 
+    @Autowired
+    private SystemService systemService;
+
     @GetMapping("/contents/public/{menuName}")
     public String contentPublicMenu(@PathVariable String menuName, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
@@ -68,6 +74,10 @@ public class MenuController {
             model.addAttribute("user",false);
         }
 
+        System system = systemService.get();
+        SystemResponseDto systemResponseDto = new SystemResponseDto(system);
+        model.addAttribute("system",systemResponseDto);
+
         MenuName currentMenuName = new MenuName(menuName);
         Menu current = menuService.get(currentMenuName);
         MenuResponseDto currentMenu = new MenuResponseDto(current);
@@ -82,11 +92,19 @@ public class MenuController {
     @GetMapping("/contents/private/{menuName}")
     public String contentPrivateMenu(@PathVariable String menuName, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
+        String name = auth.getName();
+        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserResponseDto userResponseDto = new UserResponseDto(user);
+        model.addAttribute("userInfo",userResponseDto);
+        model.addAttribute("user",true);
 
-        //限定されたメニューリストの取得
-        List<MainMenuResponseDto> menuLists = mainMenuShowService.listByMenuLimit(MenuLimit.PUBLIC);
+        //全メニューリスト+ルートページの取得
+        List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
         model.addAttribute("menus",menuLists);
-        model.addAttribute("user",false);
+
+        System system = systemService.get();
+        SystemResponseDto systemResponseDto = new SystemResponseDto(system);
+        model.addAttribute("system",systemResponseDto);
 
         MenuName currentMenuName = new MenuName(menuName);
         Menu current = menuService.get(currentMenuName);

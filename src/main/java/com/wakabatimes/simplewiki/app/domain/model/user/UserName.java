@@ -22,12 +22,12 @@ public class UserName {
         String inputPattern = "^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]+$";
 
         if (!Pattern.matches(inputPattern, value)) {
-            throw new RuntimeException("Input is incorrect. Expected value [" + inputPattern + "] [value=" + value + "]");
+            throw new RuntimeException("ユーザー名の入力が正しくありません。半角英数で入力してください。");
         }
 
         Integer count = value.length();
         if(count < 8 || count > 255) {
-            throw new RuntimeException("User name is incorrect. 8 or more characters 255 characters within");
+            throw new RuntimeException("ユーザー名の入力が正しくありません。8～255字内で入力してください。");
         }
     }
 }

@@ -22,10 +22,7 @@ public class RootPageCreateService {
     @Transactional
     public void save(Page page, MenuId menuId){
         pageService.saveRoot(page,menuId);
-
-        BodyContent bodyContent = new BodyContent("# ページを編集して内容を登録してください");
-        BodyHtml bodyHtml = new BodyHtml("<h1>ページを編集して内容を登録してください</h1>");
-        Body body = BodyFactory.create(bodyContent,bodyHtml);
+        Body body = BodyFactory.createNewBody();
         bodyService.save(body,page.getPageId());
     }
 }

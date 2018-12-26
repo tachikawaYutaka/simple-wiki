@@ -102,6 +102,20 @@ public class MenuServiceTest {
         Menu menu = MenuFactory.create(menuName,menuLimit);
         menuService.save(menu);
 
+        MenuName menuName2 = new MenuName("hogehoge2");
+        MenuLimit menuLimit2 = MenuLimit.PUBLIC;
+        Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
+        menuService.save(menu2);
+
+        menuService.delete(menu2);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void delete_fail(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
         menuService.delete(menu);
     }
 

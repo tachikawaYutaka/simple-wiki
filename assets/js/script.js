@@ -148,5 +148,9 @@ $(function(){
     });
 
 
+    $('.script-screen-reload').on('click',function(e){
+        e.preventDefault();
+        location.reload();
+    });
 
 });
