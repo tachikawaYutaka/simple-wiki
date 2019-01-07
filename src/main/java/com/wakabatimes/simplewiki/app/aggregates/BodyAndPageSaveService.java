@@ -23,7 +23,7 @@ public class BodyAndPageSaveService {
             pageService.updateRoot(newPage,menuId);
         }else {
             Page parent = pageService.getParent(newPage.getPageId());
-            pageService.saveBranch(newPage,parent.getPageId());
+            pageService.updateBranch(newPage,parent.getPageId());
         }
         bodyService.save(body,newPage.getPageId());
     }

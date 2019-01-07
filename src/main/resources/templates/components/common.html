@@ -40,10 +40,9 @@
         <div class="module-user-menu script-user-menu-toggle">
             <div class="user-name"><i class="fas fa-user"></i><span th:text="${userInfo.name}"></span></div>
             <ul class="user-list">
-                <li><a th:href="@{/system/name}">システム設定</a></li>
-                <li><a href="">ユーザー管理</a></li>
-                <li><a href="">ユーザー名変更</a></li>
-                <li><a href="">パスワード変更</a></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN'}"><a th:href="@{/system/name}">システム設定</a></li>
+y                <li><a th:href="@{/user/name}">ユーザー名変更</a></li>
+                <li><a th:href="@{/user/password}">パスワード変更</a></li>
                 <li><a th:href="@{/logout}">ログアウト</a></li>
             </ul>
         </div>
@@ -115,13 +114,13 @@
     <nav class="module-menu-lists">
         <ul>
             <li>
-                <p><a th:class="${menu == 'user' ? 'active': ''}" th:href="'/contents/'"><i  th:if="${menu == 'user'}" class="fas fa-angle-right"></i><span>ユーザー設定</span></a></p>
+                <p><a th:class="${menu == 'user' ? 'active': ''}" th:href="@{/user/name}"><i  th:if="${menu == 'user'}" class="fas fa-angle-right"></i><span>ユーザー設定</span></a></p>
                 <ul>
                     <li>
-                        <p><a th:class="${page == 'name' ? 'active': ''}" th:href="'/contents/'"><i  th:if="${page == 'name'}" class="fas fa-angle-right"></i><span>ユーザー名変更</span></a></p>
+                        <p><a th:class="${page == 'name' ? 'active': ''}" th:href="@{/user/name}"><i th:if="${page == 'name'}" class="fas fa-angle-right"></i><span>ユーザー名変更</span></a></p>
                     </li>
                     <li>
-                        <p><a th:class="${page == 'password' ? 'active': ''}" th:href="'/contents/'"><i  th:if="${page == 'password'}" class="fas fa-angle-right"></i><span>パスワード変更</span></a></p>
+                        <p><a th:class="${page == 'password' ? 'active': ''}" th:href="@{/user/password}"><i  th:if="${page == 'password'}" class="fas fa-angle-right"></i><span>パスワード変更</span></a></p>
                     </li>
                 </ul>
             </li>
@@ -182,6 +181,76 @@
         </div>
     </form>
 </div>
+
+<div th:fragment="user-name-mod-form" class="module-popup script-user-name-mod-popup">
+    <form th:action="'/system/users/##USERID##/userName'" data-action="/system/users/##USERID##/userName" method="post">
+        <h1>ユーザー名変更</h1>
+        <p><input name="userName" type="text" class="module-input-text" placeholder="ユーザー名" /></p>
+        <div class="module-button-lists">
+            <button class="module-submit-button bg-black-2">
+                保存
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                キャンセル
+            </button>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="user-password-mod-form" class="module-popup script-user-password-mod-popup">
+    <form th:action="'/system/users/##USERID##/userPassword'" data-action="/system/users/##USERID##/userPassword" method="post">
+        <h1>パスワード変更</h1>
+        <p><input name="userPassword" type="password" class="module-input-text" placeholder="パスワード" /></p>
+        <div class="module-button-lists">
+            <button class="module-submit-button bg-black-2">
+                保存
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                キャンセル
+            </button>
+        </div>
+    </form>
+</div>
+
+
+<div th:fragment="user-delete-form" class="module-popup script-user-delete-popup">
+    <form th:action="'/system/users/##USERID##/delete'" data-action="/system/users/##USERID##/delete" method="post">
+        <h1>ユーザー削除</h1>
+        <p>「<span class="user-name"></span>」を削除してもよろしいですか？</p>
+        <div class="module-button-lists">
+            <button class="module-submit-button bg-black-2" type="submit">
+                はい
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                いいえ
+            </button>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="user-add-form" class="module-popup script-user-add-popup">
+    <form th:action="'/system/users'" method="post">
+        <h1>ユーザー追加</h1>
+        <p>
+            <input id="userId" name="userName" placeholder="ユーザー名（半角英数）" type="text" class="module-input-text" />
+        </p>
+        <p>
+            <input id="userPassword" name="userPassword" placeholder="パスワード" type="password" class="module-input-text" />
+        </p>
+        <label class="module-input-radio" for="roleEditor"><input name="userRole" id="roleEditor" type="radio" value="1" checked />編集者</label>
+        <label class="module-input-radio" for="roleViewer"><input name="userRole" id="roleViewer" type="radio" value="2" />閲覧者</label>
+        <div class="module-button-lists">
+            <button class="module-submit-button bg-black-2" type="submit">
+                保存
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                キャンセル
+            </button>
+        </div>
+    </form>
+</div>
+
+
 
 <ul th:fragment="menu-pages-list (id,lists,menu)">
     <li class="add-under-page" th:if="${id != null}">

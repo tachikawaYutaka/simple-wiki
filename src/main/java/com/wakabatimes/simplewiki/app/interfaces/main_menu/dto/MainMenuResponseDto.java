@@ -13,10 +13,6 @@ public class MainMenuResponseDto {
     String menuLimit;
     List<PageResponseDto> pages;
 
-    public MainMenuResponseDto(){
-
-    }
-
     public MainMenuResponseDto(Menu menu) {
         this.menuId = menu.getMenuId().getValue();
         this.menuName = menu.getMenuName().getValue();

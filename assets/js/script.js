@@ -72,9 +72,61 @@ $(function(){
             var menuId = $(this).attr('data-menu-id');
             var pageId = $(this).attr('data-page-id');
             var action = $('.script-page-delete-popup').find('form').attr('data-action');
-            console.log(action.replace("##MENUID##",menuId).replace("##PAGEID##",pageId));
             $('.script-page-delete-popup').find('form').attr('action',action.replace("##MENUID##",menuId).replace("##PAGEID##",pageId));
             $('.script-page-delete-popup').find('.page-name').text(name);
+        }
+    });
+
+    $('.script-user-name-mod').on('click',function(e){
+        e.preventDefault();
+        if(!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            var userId = $(this).parents('.menu').parents('li').attr('data-user-id');
+            var userName = $(this).parents('.menu').parents('li').attr('data-user-name');
+            var action = $('.script-user-name-mod-popup').find('form').attr('data-action');
+            $('.script-user-name-mod-popup form').attr('action',action.replace("##USERID##",userId));
+            $('.script-user-name-mod-popup form [name="userName"]').val(userName);
+
+            $('.base-body').append('<div class="module-back-layer"></div>');
+            $('.script-user-name-mod-popup').addClass('active');
+        }
+    });
+
+    $('.script-user-password-mod').on('click',function(e){
+        e.preventDefault();
+        if(!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            var userId = $(this).parents('.menu').parents('li').attr('data-user-id');
+            var action = $('.script-user-password-mod-popup').find('form').attr('data-action');
+            $('.script-user-password-mod-popup form').attr('action',action.replace("##USERID##",userId));
+
+            $('.base-body').append('<div class="module-back-layer"></div>');
+            $('.script-user-password-mod-popup').addClass('active');
+
+        }
+    });
+
+    $('.script-user-delete').on('click',function(e){
+        e.preventDefault();
+        if(!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            var userId = $(this).parents('.menu').parents('li').attr('data-user-id');
+            var userName = $(this).parents('.menu').parents('li').attr('data-user-name');
+            var action = $('.script-user-delete-popup').find('form').attr('data-action');
+            $('.script-user-delete-popup form').attr('action',action.replace("##USERID##",userId));
+            $('.script-user-delete-popup form .user-name').text(userName);
+
+            $('.base-body').append('<div class="module-back-layer"></div>');
+            $('.script-user-delete-popup').addClass('active');
+        }
+    });
+
+    $('.script-user-add').on('click',function(e){
+        e.preventDefault();
+        if(!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            $('.base-body').append('<div class="module-back-layer"></div>');
+            $('.script-user-add-popup').addClass('active');
         }
     });
 
@@ -107,6 +159,18 @@ $(function(){
 
         $('.script-edit-menu').removeClass('active');
         $('.script-edit-menu-popup').removeClass('active');
+
+        $('.script-user-name-mod').removeClass('active');
+        $('.script-user-name-mod-popup').removeClass('active');
+
+        $('.script-user-password-mod').removeClass('active');
+        $('.script-user-password-mod-popup').removeClass('active');
+
+        $('.script-user-delete').removeClass('active');
+        $('.script-user-delete-popup').removeClass('active');
+
+        $('.script-user-add').removeClass('active');
+        $('.script-user-add-popup').removeClass('active');
 
         $('.module-back-layer').remove();
 

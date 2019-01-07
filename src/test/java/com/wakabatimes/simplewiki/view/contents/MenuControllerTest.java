@@ -1,4 +1,5 @@
 package com.wakabatimes.simplewiki.view.contents;
 
-public class PublicMenuControllerTest {
+public class MenuControllerTest
+{
 }

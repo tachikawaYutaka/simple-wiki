@@ -309,4 +309,78 @@ public class PageServiceTest {
         Page getPage = pageService.get(page.getPageId());
         assertNotNull(getPage);
     }
+
+    @Test
+    public void getRootPageByName(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        Page getPage = pageService.getRootPageByName(page.getPageName());
+        assertNotNull(getPage);
+    }
+
+    @Test
+    public void getPageByParentAndChildName(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge2");
+        PageType pageType2 = PageType.BRANCH;
+        Page page2 = PageFactory.create(pageName2,pageType2);
+        pageService.saveBranch(page2,page.getPageId());
+
+        Page getPage = pageService.getPageByParentAndChildName(page.getPageId(),pageName2);
+        assertNotNull(getPage);
+    }
+
+    @Test
+    public void getHomePage(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        Page getPage = pageService.getHomePage(menu.getMenuId());
+        assertNotNull(getPage);
+    }
+
+    @Test
+    public void getParent(){
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge2");
+        PageType pageType2 = PageType.BRANCH;
+        Page page2 = PageFactory.create(pageName2,pageType2);
+        pageService.saveBranch(page2,page.getPageId());
+
+        Page getPage = pageService.getParent(page2.getPageId());
+        assertNotNull(getPage);
+    }
 }

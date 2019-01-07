@@ -11,9 +11,9 @@ public interface UserService {
 
     /**
      * ユーザーの退会
-     * @param userId
+     * @param user
      */
-    void delete(UserId userId, UserName userName);
+    void delete(User user);
 
     /**
      * パスワード更新
@@ -35,6 +35,13 @@ public interface UserService {
      * @return
      */
     User get(UserName userName);
+
+    /**
+     * useの照会
+     * @param userId
+     * @return
+     */
+    User getById(UserId userId);
 
     /**
      * ユーザー一覧の取得

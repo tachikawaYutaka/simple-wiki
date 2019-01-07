@@ -23,9 +23,9 @@ public interface UserRepository {
 
     /**
      *
-     * @param userId
+     * @param user
      */
-    void delete(UserId userId);
+    void delete(User user);
 
     /**
      *
@@ -45,4 +45,11 @@ public interface UserRepository {
      * @return
      */
     Users list();
+
+    /**
+     *
+     * @param userId
+     * @return
+     */
+    User getUserById(UserId userId);
 }

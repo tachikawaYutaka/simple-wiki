@@ -1467,3 +1467,32 @@ template {
 .module-editor {
   width: 100%;
   min-height: 500px; }
+
+.module-users-list {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style-type: none; }
+  .module-users-list > li {
+    background-color: #666;
+    color: #fff;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px 4px 4px 10px;
+    font-size: .8rem;
+    margin-bottom: 1px; }
+  .module-users-list .name {
+    width: 25%; }
+  .module-users-list .role {
+    width: 25%; }
+  .module-users-list .menu {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; }
+    .module-users-list .menu li {
+      margin-left: 2px; }

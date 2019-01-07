@@ -13,6 +13,12 @@ public class BodyTest {
     }
 
     @Test
+    public void createInsntace_success2() {
+        Body body = BodyFactory.createNewBody();
+        Assert.assertNotNull(body);
+    }
+
+    @Test
     public void equals() {
         BodyContent bodyContent = new BodyContent("hogehoge");
         BodyHtml bodyHtml = new BodyHtml("hogehoge");

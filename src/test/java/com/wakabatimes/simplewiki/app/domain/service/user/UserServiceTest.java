@@ -66,7 +66,7 @@ public class UserServiceTest {
         UserPassword userPassword = new UserPassword("hogehoge");
         User user = UserFactory.create(userName, userPassword);
         userService.save(user);
-        userService.delete(user.getUserId(),user.getUserName());
+        userService.delete(user);
     }
 
     @Test(expected = RuntimeException.class)
@@ -74,7 +74,17 @@ public class UserServiceTest {
         UserName userName = new UserName("hogehoge");
         UserPassword userPassword = new UserPassword("hogehoge");
         User user = UserFactory.create(userName, userPassword);
-        userService.delete(user.getUserId(),user.getUserName());
+        userService.delete(user);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void delete_fail2(){
+        UserName userName = new UserName("hogehoge");
+        UserPassword userPassword = new UserPassword("hogehoge");
+        UserRole userRole = UserRole.ROLE_ADMIN;
+        User user = UserFactory.create(userName, userPassword,userRole);
+        userService.save(user);
+        userService.delete(user);
     }
 
     @Test
@@ -138,6 +148,16 @@ public class UserServiceTest {
         User user = UserFactory.create(userName, userPassword);
         userService.save(user);
         User getUser = userService.get(userName);
+        assertNotNull(getUser);
+    }
+
+    @Test
+    public void getByUserId(){
+        UserName userName = new UserName("hogehoge");
+        UserPassword userPassword = new UserPassword("hogehoge");
+        User user = UserFactory.create(userName, userPassword);
+        userService.save(user);
+        User getUser = userService.getById(user.getUserId());
         assertNotNull(getUser);
     }
 

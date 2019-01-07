@@ -145,4 +145,37 @@ public class MenuServiceTest {
         Menu getMenu = menuService.get(menu.getMenuName());
         assertNotNull(getMenu);
     }
+
+    @Test
+    public void getById(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        Menu getMenu = menuService.getById(menu.getMenuId());
+        assertNotNull(getMenu);
+    }
+
+    @Test
+    public void listByMenuLimit(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        Menus getMenu = menuService.listByMenuLimit(menu.getMenuLimit());
+        assertNotNull(getMenu);
+    }
+
+    @Test
+    public void getHomeMenu(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        Menu getMenu = menuService.getHomeMenu();
+        assertNotNull(getMenu);
+    }
 }

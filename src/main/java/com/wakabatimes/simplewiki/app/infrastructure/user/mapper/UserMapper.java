@@ -27,4 +27,7 @@ public interface UserMapper {
 
     @Update("UPDATE wiki_user SET name=#{name}, updated = now() where id = #{id}")
     void updateUserName(UserDto userDto);
+
+    @Select("select * from wiki_user where id = #{id}")
+    UserDto getUserById(UserDto input);
 }

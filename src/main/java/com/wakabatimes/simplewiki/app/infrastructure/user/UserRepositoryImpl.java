@@ -58,9 +58,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(UserId userId) {
-        UserDto userDto = new UserDto();
-        userDto.setId(userId.getValue());
+    public void delete(User user) {
+        UserDto userDto = new UserDto(user);
         userMapper.delete(userDto);
     }
 
@@ -113,6 +112,21 @@ public class UserRepositoryImpl implements UserRepository {
             users.add(user1);
         }
         return users;
+    }
+
+    @Override
+    public User getUserById(UserId userId) {
+        UserDto input = new UserDto();
+        input.setId(userId.getValue());
+
+        UserDto userDto = userMapper.getUserById(input);
+
+        UserId userId1 = new UserId(userDto.getId());
+        UserName userName1 = new UserName(userDto.getName());
+        UserPassword userPassword = new UserPassword(userDto.getPassword());
+        UserRole userRole = UserRole.getById(userDto.getRole());
+        User user = new User(userId1,userName1,userPassword,userRole);
+        return user;
     }
 }
 

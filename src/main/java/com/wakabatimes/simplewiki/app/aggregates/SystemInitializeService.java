@@ -29,14 +29,10 @@ public class SystemInitializeService {
 
     @Transactional
     public void save(System system, User user, Menu menu, Page page, Body body){
-        try {
-            systemService.save(system);
-            userService.save(user);
-            menuService.save(menu);
-            pageService.saveRoot(page, menu.getMenuId());
-            bodyService.save(body,page.getPageId());
-        }catch (RuntimeException e){
-            throw new RuntimeException(e.getMessage());
-        }
+        systemService.save(system);
+        userService.save(user);
+        menuService.save(menu);
+        pageService.saveRoot(page, menu.getMenuId());
+        bodyService.save(body,page.getPageId());
     }
 }

@@ -13,6 +13,13 @@ public class PageTest {
     }
 
     @Test
+    public void createInsntace_success2() {
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.createNewPage(pageType);
+        Assert.assertNotNull(page);
+    }
+
+    @Test
     public void equals() {
         PageName pageName = new PageName("hogehoge");
         PageType pageType = PageType.ROOT;

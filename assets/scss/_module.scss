@@ -879,3 +879,38 @@
     width: 100%;
     min-height: 500px;
 }
+
+.module-users-list {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+    > li {
+        background-color: $black-6;
+        color: $white;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 4px 4px 4px 10px;
+        font-size: .8rem;
+        margin-bottom: 1px;
+    }
+    .name {
+        width: 25%;
+    }
+    .role {
+        width: 25%;
+    }
+    .menu {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 0;
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        li {
+            margin-left: 2px;
+        }
+    }
+}

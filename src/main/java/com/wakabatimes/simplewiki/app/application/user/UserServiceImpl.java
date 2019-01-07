@@ -16,10 +16,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(UserId userId, UserName userName) {
-        Long count = userRepository.countUserByIdAndName(userName);
+    public void delete(User user) {
+        Long count = userRepository.countUserByIdAndName(user.getUserName());
         if(count > 0) {
-            userRepository.delete(userId);
+            if(!user.getUserRole().name().equals(UserRole.ROLE_ADMIN.name())){
+                userRepository.delete(user);
+            }else {
+                throw new RuntimeException("管理者ユーザーは削除できません。");
+            }
         }else {
             throw new RuntimeException("指定したユーザーは存在しません。");
         }
@@ -52,6 +56,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User get(UserName userName) {
         return userRepository.getUserByUserName(userName.getValue());
+    }
+
+    @Override
+    public User getById(UserId userId) {
+        return userRepository.getUserById(userId);
     }
 
     @Override
