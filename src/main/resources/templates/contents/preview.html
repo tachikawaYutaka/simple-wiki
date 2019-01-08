@@ -5,7 +5,7 @@
 <th:block th:if="${user}"><header th:replace="components/common :: user-header"></header></th:block>
 <th:block th:unless="${user}"><header th:replace="components/common :: no-login-header"></header></th:block>
 <main class="base-main">
-    <div th:replace="components/common :: base-menu"></div>
+    <div th:replace="components/common :: preview-menu"></div>
     <div class="base-content-body">
         <div class="base-content-body-head">
             <div class="module-bread">
@@ -35,7 +35,7 @@
         </div>
         <aside class="base-content-side">
             <nav class="module-side-menu">
-                <ul th:replace="components/common :: side-pages-list(null,${pages},${currentMenu})"></ul>
+                <ul th:replace="components/common :: side-pages-list(null,${pages},${currentMenu}, null, null)"></ul>
             </nav>
         </aside>
     </div>

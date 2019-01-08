@@ -9,6 +9,7 @@ import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleF
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemName;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
+import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.model.user.Users;
 import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
 import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
@@ -43,9 +44,6 @@ public class SystemController {
     private UserService userService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
     private SystemService systemService;
 
     @Autowired
@@ -58,7 +56,8 @@ public class SystemController {
     public String systemName(Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);
@@ -92,7 +91,8 @@ public class SystemController {
     public String systemStyle(Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);
@@ -137,7 +137,8 @@ public class SystemController {
     public String systemHtml(Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);
@@ -159,7 +160,7 @@ public class SystemController {
     public String systemHtmlUpdate(@ModelAttribute OriginalHtmlUpdateForm form, RedirectAttributes attr, Model model){
         try {
             OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody(form.getBody());
-            if(originalStyleService.exist()){
+            if(originalHtmlService.exist()){
                 OriginalHtml originalHtml = originalHtmlService.get();
                 OriginalHtml update = new OriginalHtml(originalHtml.getOriginalHtmlId(),originalHtmlBody);
                 originalHtmlService.update(update);

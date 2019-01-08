@@ -114,11 +114,15 @@ public class MenuRepositoryImpl implements MenuRepository {
         MenuDto input = new MenuDto();
         input.setId(menuId.getValue());
         MenuDto result = menuMapper.getById(input);
-        MenuId menuId1 = new MenuId(result.getId());
-        MenuName menuName = new MenuName(result.getName());
-        MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
-        Menu menu = new Menu(menuId1,menuName,menuLimit);
-        return menu;
+        if(result != null){
+            MenuId menuId1 = new MenuId(result.getId());
+            MenuName menuName = new MenuName(result.getName());
+            MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
+            Menu menu = new Menu(menuId1,menuName,menuLimit);
+            return menu;
+        }else {
+            throw new RuntimeException("指定したメニューが存在しません。");
+        }
     }
 
     @Override

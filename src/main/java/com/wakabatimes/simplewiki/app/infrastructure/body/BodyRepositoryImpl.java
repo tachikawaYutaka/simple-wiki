@@ -69,11 +69,15 @@ public class BodyRepositoryImpl implements BodyRepository{
         BodyDto input = new BodyDto();
         input.setId(bodyId.getValue());
         BodyDto result = bodyMapper.get(input);
-        BodyId bodyId1 = new BodyId(result.getId());
-        BodyContent bodyContent = new BodyContent(result.getContent());
-        BodyHtml bodyHtml = new BodyHtml(result.getHtml());
-        BodyType bodyType = BodyType.getById(result.getType());
-        Body body = new Body(bodyId1,bodyContent,bodyHtml, bodyType);
-        return body;
+        if(result != null){
+            BodyId bodyId1 = new BodyId(result.getId());
+            BodyContent bodyContent = new BodyContent(result.getContent());
+            BodyHtml bodyHtml = new BodyHtml(result.getHtml());
+            BodyType bodyType = BodyType.getById(result.getType());
+            Body body = new Body(bodyId1,bodyContent,bodyHtml, bodyType);
+            return body;
+        }else {
+            throw new RuntimeException("指定したボディが存在しません。");
+        }
     }
 }

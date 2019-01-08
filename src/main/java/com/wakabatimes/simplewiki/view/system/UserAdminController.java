@@ -29,9 +29,6 @@ import java.util.List;
 @Controller
 public class UserAdminController {
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
@@ -44,7 +41,8 @@ public class UserAdminController {
     public String systemUsers(Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);

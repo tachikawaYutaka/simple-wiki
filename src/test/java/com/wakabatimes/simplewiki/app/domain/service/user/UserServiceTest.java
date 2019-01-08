@@ -151,6 +151,12 @@ public class UserServiceTest {
         assertNotNull(getUser);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void get_fail(){
+        UserName userName = new UserName("hogehoge");
+        userService.get(userName);
+    }
+
     @Test
     public void getByUserId(){
         UserName userName = new UserName("hogehoge");

@@ -6,15 +6,18 @@ import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
 import com.wakabatimes.simplewiki.app.domain.model.body.*;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
+import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
 import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
+import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
+import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.body.dto.BodyResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.body.form.BodySaveForm;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
@@ -43,7 +46,7 @@ import java.util.List;
 @Controller
 public class EditController {
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userService;
 
     @Autowired
     private PageService pageService;
@@ -70,7 +73,8 @@ public class EditController {
     public String edit(@PathVariable String menuId, @PathVariable String pageId, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);
@@ -111,7 +115,8 @@ public class EditController {
     public String editSave(@PathVariable String menuId, @PathVariable String pageId, @ModelAttribute BodySaveForm form, RedirectAttributes attr, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         try{
             PageId pageId1 = new PageId(pageId);
             Page page = pageService.get(pageId1);
@@ -140,7 +145,8 @@ public class EditController {
     public String preview(@PathVariable String menuId, @PathVariable String pageId,@PathVariable String bodyId, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);

@@ -28,9 +28,6 @@ import java.security.Principal;
 @Controller
 public class UserController {
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
     private SystemService systemService;
 
     @Autowired
@@ -43,7 +40,8 @@ public class UserController {
     public String userName(Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);
@@ -59,9 +57,10 @@ public class UserController {
         Authentication auth = (Authentication)principal;
         try{
             String name = auth.getName();
-            User user = (User) userDetailsService.loadUserByUsername(name);
-            UserName userName = new UserName(form.getUserName());
-            userService.nameUpdate(user.getUserName(),userName);
+            UserName userName = new UserName(name);
+            User user = userService.get(userName);
+            UserName userName2 = new UserName(form.getUserName());
+            userService.nameUpdate(user.getUserName(),userName2);
         }catch(RuntimeException e){
             log.error("Error",e);
             attr.addFlashAttribute("error",true);
@@ -77,7 +76,8 @@ public class UserController {
     public String userPassword(Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);
@@ -93,7 +93,8 @@ public class UserController {
         Authentication auth = (Authentication)principal;
         try{
             String name = auth.getName();
-            User user = (User) userDetailsService.loadUserByUsername(name);
+            UserName userName = new UserName(name);
+            User user = userService.get(userName);
             UserPassword userPassword = new UserPassword(form.getUserPassword(),bCryptPasswordEncoder);
             userService.passwordUpdate(user.getUserName(),userPassword);
         }catch(RuntimeException e){

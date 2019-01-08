@@ -4,6 +4,7 @@ import com.wakabatimes.simplewiki.app.aggregates.BranchPageCreateService;
 import com.wakabatimes.simplewiki.app.aggregates.MainMenuShowService;
 import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
 import com.wakabatimes.simplewiki.app.aggregates.RootPageCreateService;
+import com.wakabatimes.simplewiki.app.application.user.UserDetailsServiceImpl;
 import com.wakabatimes.simplewiki.app.domain.model.body.Body;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
@@ -12,6 +13,7 @@ import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
 import com.wakabatimes.simplewiki.app.domain.model.page.*;
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
+import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
@@ -29,7 +31,7 @@ import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.AntPathMatcher;
@@ -44,8 +46,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -53,9 +53,6 @@ import java.util.List;
 public class PageController {
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     @Autowired
     private MenuService menuService;
@@ -87,7 +84,9 @@ public class PageController {
         Authentication auth = (Authentication)principal;
         if(auth != null){
             String name = auth.getName();
-            User user = (User) userDetailsService.loadUserByUsername(name);
+            UserName userName = new UserName(name);
+            User user = userService.get(userName);
+
             UserResponseDto userResponseDto = new UserResponseDto(user);
             model.addAttribute("userInfo",userResponseDto);
             model.addAttribute("user",true);
@@ -108,45 +107,32 @@ public class PageController {
         model.addAttribute("currentMenu",currentMenu);
 
         String[] splitPath = resourcePath.split("/");
-        if(splitPath.length > 0){
-            String parentId = "";
-            for(String path : splitPath){
-                PageName pageName = new PageName(path);
-                if(parentId.equals("")){
-                    Page rootPage = pageService.getRootPageByName(pageName);
-                    PageResponseDto rootPageDto = new PageResponseDto(rootPage);
-                    parentId = rootPage.getPageId().getValue();
-                    model.addAttribute("rootPage",rootPageDto);
-                }else {
-                    PageId parentPageId = new PageId(parentId);
-                    Page childPage = pageService.getPageByParentAndChildName(parentPageId, pageName);
-                    parentId = childPage.getPageId().getValue();
-                }
+        String parentId = "";
+        for(String path : splitPath){
+            PageName pageName = new PageName(path);
+            if(parentId.equals("")){
+                Page rootPage = pageService.getRootPageByName(pageName);
+                PageResponseDto rootPageDto = new PageResponseDto(rootPage);
+                parentId = rootPage.getPageId().getValue();
+                model.addAttribute("rootPage",rootPageDto);
+            }else {
+                PageId parentPageId = new PageId(parentId);
+                Page childPage = pageService.getPageByParentAndChildName(parentPageId, pageName);
+                parentId = childPage.getPageId().getValue();
             }
-            PageId pageId = new PageId(parentId);
-            Page currentPage = pageService.get(pageId);
-            PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
-            model.addAttribute("currentPage",pageResponseDto);
-
-            Body currentBody = bodyService.getCurrent(currentPage.getPageId());
-            BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
-            model.addAttribute("currentBody",bodyResponseDto);
-
-            List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
-            model.addAttribute("currentPages",currentPages);
-        }else {
-            PageName pageName = new PageName(resourcePath);
-            Page currentPage = pageService.getRootPageByName(pageName);
-            PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
-            model.addAttribute("currentPage",pageResponseDto);
-
-            Body currentBody = bodyService.getCurrent(currentPage.getPageId());
-            BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
-            model.addAttribute("currentBody",bodyResponseDto);
-
-            List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
-            model.addAttribute("currentPages",currentPages);
         }
+        PageId pageId = new PageId(parentId);
+        Page currentPage = pageService.get(pageId);
+        PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
+        model.addAttribute("currentPage",pageResponseDto);
+
+        Body currentBody = bodyService.getCurrent(currentPage.getPageId());
+        BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
+        model.addAttribute("currentBody",bodyResponseDto);
+
+        List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
+        model.addAttribute("currentPages",currentPages);
+
 
         List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
         model.addAttribute("pages",pages);
@@ -163,7 +149,8 @@ public class PageController {
         final String resourcePath = extractPathFromPattern(request);
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);
@@ -178,45 +165,31 @@ public class PageController {
         model.addAttribute("currentMenu",currentMenu);
 
         String[] splitPath = resourcePath.split("/");
-        if(splitPath.length > 0){
-            String parentId = "";
-            for(String path : splitPath){
-                PageName pageName = new PageName(path);
-                if(parentId.equals("")){
-                    Page rootPage = pageService.getRootPageByName(pageName);
-                    PageResponseDto rootPageDto = new PageResponseDto(rootPage);
-                    parentId = rootPage.getPageId().getValue();
-                    model.addAttribute("rootPage",rootPageDto);
-                }else {
-                    PageId parentPageId = new PageId(parentId);
-                    Page childPage = pageService.getPageByParentAndChildName(parentPageId, pageName);
-                    parentId = childPage.getPageId().getValue();
-                }
+        String parentId = "";
+        for(String path : splitPath){
+            PageName pageName = new PageName(path);
+            if(parentId.equals("")){
+                Page rootPage = pageService.getRootPageByName(pageName);
+                PageResponseDto rootPageDto = new PageResponseDto(rootPage);
+                parentId = rootPage.getPageId().getValue();
+                model.addAttribute("rootPage",rootPageDto);
+            }else {
+                PageId parentPageId = new PageId(parentId);
+                Page childPage = pageService.getPageByParentAndChildName(parentPageId, pageName);
+                parentId = childPage.getPageId().getValue();
             }
-            PageId pageId = new PageId(parentId);
-            Page currentPage = pageService.get(pageId);
-            PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
-            model.addAttribute("currentPage",pageResponseDto);
-
-            Body currentBody = bodyService.getCurrent(currentPage.getPageId());
-            BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
-            model.addAttribute("currentBody",bodyResponseDto);
-
-            List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
-            model.addAttribute("currentPages",currentPages);
-        }else {
-            PageName pageName = new PageName(resourcePath);
-            Page currentPage = pageService.getRootPageByName(pageName);
-            PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
-            model.addAttribute("currentPage",pageResponseDto);
-
-            Body currentBody = bodyService.getCurrent(currentPage.getPageId());
-            BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
-            model.addAttribute("currentBody",bodyResponseDto);
-
-            List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
-            model.addAttribute("currentPages",currentPages);
         }
+        PageId pageId = new PageId(parentId);
+        Page currentPage = pageService.get(pageId);
+        PageResponseDto pageResponseDto = new PageResponseDto(currentPage);
+        model.addAttribute("currentPage",pageResponseDto);
+
+        Body currentBody = bodyService.getCurrent(currentPage.getPageId());
+        BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
+        model.addAttribute("currentBody",bodyResponseDto);
+
+        List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
+        model.addAttribute("currentPages",currentPages);
 
         List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
         model.addAttribute("pages",pages);
@@ -239,9 +212,10 @@ public class PageController {
 
     @PostMapping("/pages/root")
     public String rootPageSave(@ModelAttribute RootPageSaveForm form, RedirectAttributes attr) throws UnsupportedEncodingException {
-        MenuId menuId = new MenuId(form.getMenuId());
-        Menu menu = menuService.getById(menuId);
         try{
+            MenuId menuId = new MenuId(form.getMenuId());
+            Menu menu = menuService.getById(menuId);
+
             PageName pageName = new PageName(form.getName());
             PageType pageType = PageType.ROOT;
             Page page = PageFactory.create(pageName,pageType);
@@ -255,15 +229,18 @@ public class PageController {
             log.error("Error :",e);
             attr.addFlashAttribute("error",true);
             attr.addFlashAttribute("errorMessage",e.getMessage());
+
+            Menu menu = menuService.getHomeMenu();
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
         }
     }
 
     @PostMapping("/pages/branch")
     public String branchPageSave(@ModelAttribute BranchPageSaveForm form, RedirectAttributes attr) throws UnsupportedEncodingException {
-        MenuId menuId = new MenuId(form.getMenuId());
-        Menu menu = menuService.getById(menuId);
         try{
+            MenuId menuId = new MenuId(form.getMenuId());
+            Menu menu = menuService.getById(menuId);
+
             PageId parentId = new PageId(form.getParentId());
             PageName pageName = new PageName(form.getName());
             PageType pageType = PageType.BRANCH;
@@ -277,32 +254,41 @@ public class PageController {
             log.error("Error :",e);
             attr.addFlashAttribute("error",true);
             attr.addFlashAttribute("errorMessage",e.getMessage());
+
+            Menu menu = menuService.getHomeMenu();
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
         }
     }
 
     @PostMapping("/pages/{menuId}/{pageId}/delete")
     public String pageDelete(@PathVariable String menuId, @PathVariable String pageId, RedirectAttributes attr) throws UnsupportedEncodingException {
-        MenuId menuId1 = new MenuId(menuId);
-        Menu menu = menuService.getById(menuId1);
         try{
+            MenuId menuId1 = new MenuId(menuId);
+            Menu menu = menuService.getById(menuId1);
+
             PageId pageId1 = new PageId(pageId);
             Page page = pageService.get(pageId1);
             pageService.delete(page, menuId1);
+
+            attr.addFlashAttribute("success",true);
+            attr.addFlashAttribute("successMessage","ページを削除しました。");
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
         }catch(RuntimeException e){
             log.error("Error :",e);
             attr.addFlashAttribute("error",true);
             attr.addFlashAttribute("errorMessage",e.getMessage());
+
+            Menu menu = menuService.getHomeMenu();
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
         }
     }
 
     @PostMapping("/pages/{menuId}/{parentPageId}/new")
     public String pageNew(@PathVariable String menuId, @PathVariable String parentPageId, RedirectAttributes attr) throws UnsupportedEncodingException {
-        MenuId menuId1 = new MenuId(menuId);
-        Menu menu = menuService.getById(menuId1);
         try{
+            MenuId menuId1 = new MenuId(menuId);
+            Menu menu = menuService.getById(menuId1);
+
             PageId parentPageId1 = new PageId(parentPageId);
             Page parentPage = pageService.get(parentPageId1);
 
@@ -315,11 +301,16 @@ public class PageController {
                     path = pageHierarchyResponseDto.getName();
                 }
             }
+
+            attr.addFlashAttribute("success",true);
+            attr.addFlashAttribute("successMessage","ページを作成しました。");
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8") + '/' +  URLEncoder.encode(path,"UTF-8");
         }catch(RuntimeException e){
             log.error("Error :",e);
             attr.addFlashAttribute("error",true);
             attr.addFlashAttribute("errorMessage",e.getMessage());
+
+            Menu menu = menuService.getHomeMenu();
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
         }
     }

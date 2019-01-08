@@ -67,6 +67,24 @@ y                <li><a th:href="@{/user/name}">ユーザー名変更</a></li>
     </div>
 </header>
 
+<div th:fragment="preview-menu" class="base-menu">
+    <nav class="module-menu-lists">
+        <ul th:each="menu : ${menus}">
+            <li>
+                <p><a th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><span th:text="${menu.menuName}"></span></a></p>
+                <ul th:each="page : ${menu.pages}">
+                    <li>
+                        <p><a th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName} + '/' + ${page.name}"><span th:text="${page.name}"></span></a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="module-button bg-gray" th:if="${user}">
+            <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
+        </div>
+    </nav>
+</div>
+
 <div th:fragment="base-menu(currentMenu,rootPage)" class="base-menu">
     <nav class="module-menu-lists">
         <ul th:each="menu : ${menus}">

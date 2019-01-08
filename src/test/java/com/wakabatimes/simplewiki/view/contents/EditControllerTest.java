@@ -1,8 +1,11 @@
 package com.wakabatimes.simplewiki.view.contents;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
+import com.wakabatimes.simplewiki.WithMockCustomUser;
 import com.wakabatimes.simplewiki.app.domain.model.body.Body;
+import com.wakabatimes.simplewiki.app.domain.model.body.BodyContent;
 import com.wakabatimes.simplewiki.app.domain.model.body.BodyFactory;
+import com.wakabatimes.simplewiki.app.domain.model.body.BodyHtml;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
@@ -29,8 +32,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -111,7 +112,7 @@ public class EditControllerTest {
     }
 
     @Test
-    @WithMockUser(username="testUser",roles={"ADMIN","EDITOR","VIEWER"})
+    @WithMockCustomUser
     public void edit() throws Exception {
         MenuName menuName = new MenuName("menu");
         MenuLimit menuLimit = MenuLimit.PUBLIC;
@@ -136,7 +137,7 @@ public class EditControllerTest {
     }
 
     @Test
-    @WithMockUser(username="testUser",roles={"ADMIN","EDITOR","VIEWER"})
+    @WithMockCustomUser
     public void editSave() throws Exception {
         MenuName menuName = new MenuName("menu");
         MenuLimit menuLimit = MenuLimit.PUBLIC;
@@ -163,30 +164,209 @@ public class EditControllerTest {
         mockMvc.perform(
                 post("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue())
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
-                .param("name",bodySaveForm.getPageName())
+                .param("pageName",bodySaveForm.getPageName())
                 .param("content",bodySaveForm.getContent())
                 .param("html",bodySaveForm.getHtml()))
             .andExpect(model().hasNoErrors())
+            .andExpect(flash().attribute("success",true))
             .andExpect(status().is3xxRedirection());
 
-        log.debug(bodyService.getCurrent(page.getPageId()).getBodyContent().getValue());
+        Assert.assertTrue(bodyService.getCurrent(page.getPageId()).getBodyContent().getValue().equals("hogehoge2"));
     }
 
     @Test
-    @WithUserDetails("testUser")
-    public void preview(){
+    @WithMockCustomUser
+    public void editSave_fail() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
 
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        Body body = BodyFactory.createNewBody();
+        bodyService.save(body,page.getPageId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        BodySaveForm bodySaveForm = new BodySaveForm();
+        bodySaveForm.setPageName("h");
+        bodySaveForm.setContent("h");
+        bodySaveForm.setHtml("h");
+
+        mockMvc.perform(
+                post("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue())
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .param("pageName",bodySaveForm.getPageName())
+                        .param("content",bodySaveForm.getContent())
+                        .param("html",bodySaveForm.getHtml()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attribute("error",true));
     }
 
     @Test
-    @WithUserDetails("testUser")
-    public void restore(){
+    @WithMockCustomUser
+    public void preview() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
 
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        Body body = BodyFactory.createNewBody();
+        bodyService.save(body,page.getPageId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        mockMvc.perform(get("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue() + "/" + body.getBodyId().getValue()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("contents/preview"));
     }
 
     @Test
-    @WithUserDetails("testUser")
-    public void delete(){
+    @WithMockCustomUser
+    public void restore() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
 
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        BodyContent bodyContent = new BodyContent("hogehoge2");
+        BodyHtml bodyHtml = new BodyHtml("hogehoge2");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
+        bodyService.save(body,page.getPageId());
+
+        Body body2 = BodyFactory.createNewBody();
+        bodyService.save(body2,page.getPageId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        mockMvc.perform(
+                post("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue() + "/" + body.getBodyId().getValue())
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andExpect(model().hasNoErrors())
+                .andExpect(flash().attribute("success",true))
+                .andExpect(status().is3xxRedirection());
+
+        Assert.assertTrue(bodyService.getCurrent(page.getPageId()).getBodyContent().getValue().equals("hogehoge2"));
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void restore_fail() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        BodyContent bodyContent = new BodyContent("hogehoge2");
+        BodyHtml bodyHtml = new BodyHtml("hogehoge2");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
+        bodyService.save(body,page.getPageId());
+
+        Body body2 = BodyFactory.createNewBody();
+        bodyService.save(body2,page.getPageId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        mockMvc.perform(
+                post("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue() + "/389a8998-8dbb-4eb2-aba2-d125decf5e3f")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andExpect(model().hasNoErrors())
+                .andExpect(flash().attribute("error",true))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void delete() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        BodyContent bodyContent = new BodyContent("hogehoge2");
+        BodyHtml bodyHtml = new BodyHtml("hogehoge2");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
+        bodyService.save(body,page.getPageId());
+
+        Body body2 = BodyFactory.createNewBody();
+        bodyService.save(body2,page.getPageId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        mockMvc.perform(
+                post("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue() + "/" + body.getBodyId().getValue() + "/delete")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andExpect(model().hasNoErrors())
+                .andExpect(flash().attribute("success",true))
+                .andExpect(status().is3xxRedirection());
+
+        Assert.assertTrue(bodyService.getArchive(page.getPageId()).size() == 1);
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void delete_fail() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        BodyContent bodyContent = new BodyContent("hogehoge2");
+        BodyHtml bodyHtml = new BodyHtml("hogehoge2");
+        Body body = BodyFactory.create(bodyContent,bodyHtml);
+        bodyService.save(body,page.getPageId());
+
+        Body body2 = BodyFactory.createNewBody();
+        bodyService.save(body2,page.getPageId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        mockMvc.perform(
+                post("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue() + "/389a8998-8dbb-4eb2-aba2-d125decf5e3f/delete")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andExpect(model().hasNoErrors())
+                .andExpect(flash().attribute("error",true))
+                .andExpect(status().is3xxRedirection());
     }
 }

@@ -72,22 +72,11 @@ public class HomeController {
 
     @ResponseBody
     @GetMapping(path="/puml_image", produces = MediaType.IMAGE_PNG_VALUE)
-    public HttpEntity<byte[]> puml_image(@RequestParam("url")  String url){
-        String decode  = "";
-        try {
-            decode = URLDecoder.decode(url, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
-        }
+    public HttpEntity<byte[]> puml_image(@RequestParam("url")  String url) throws IOException {
+        String decode  = URLDecoder.decode(url, "UTF-8");
         SourceStringReader reader = new SourceStringReader(decode.replace(';','\n'));
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try {
-            reader.generateImage(bos, new FileFormatOption(FileFormat.PNG, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
-        }
+        reader.generateImage(bos, new FileFormatOption(FileFormat.PNG, false));
 
         byte[] b = bos.toByteArray();
         HttpHeaders headers = new HttpHeaders();

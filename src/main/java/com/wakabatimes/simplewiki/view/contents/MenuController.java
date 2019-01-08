@@ -5,6 +5,7 @@ import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
 import com.wakabatimes.simplewiki.app.domain.model.menu.*;
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
+import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
@@ -39,9 +40,6 @@ public class MenuController {
     private UserService userService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
     private MenuService menuService;
 
     @Autowired
@@ -58,7 +56,8 @@ public class MenuController {
         Authentication auth = (Authentication)principal;
         if(auth != null){
             String name = auth.getName();
-            User user = (User) userDetailsService.loadUserByUsername(name);
+            UserName userName = new UserName(name);
+            User user = userService.get(userName);
             UserResponseDto userResponseDto = new UserResponseDto(user);
             model.addAttribute("userInfo",userResponseDto);
             model.addAttribute("user",true);
@@ -93,7 +92,8 @@ public class MenuController {
     public String contentPrivateMenu(@PathVariable String menuName, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
         String name = auth.getName();
-        User user = (User) userDetailsService.loadUserByUsername(name);
+        UserName userName = new UserName(name);
+        User user = userService.get(userName);
         UserResponseDto userResponseDto = new UserResponseDto(user);
         model.addAttribute("userInfo",userResponseDto);
         model.addAttribute("user",true);

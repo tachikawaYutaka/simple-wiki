@@ -19,13 +19,16 @@ public class UserRepositoryImpl implements UserRepository {
         input.setName(userName);
 
         UserDto userDto = userMapper.getUserByUserName(input);
-
-        UserId userId = new UserId(userDto.getId());
-        UserName userName1 = new UserName(userDto.getName());
-        UserPassword userPassword = new UserPassword(userDto.getPassword());
-        UserRole userRole = UserRole.getById(userDto.getRole());
-        User user = new User(userId,userName1,userPassword,userRole);
-        return user;
+        if(userDto != null){
+            UserId userId = new UserId(userDto.getId());
+            UserName userName1 = new UserName(userDto.getName());
+            UserPassword userPassword = new UserPassword(userDto.getPassword());
+            UserRole userRole = UserRole.getById(userDto.getRole());
+            User user = new User(userId,userName1,userPassword,userRole);
+            return user;
+        }else {
+            throw new RuntimeException("指定したユーザーが存在しません。");
+        }
     }
 
     @Override
