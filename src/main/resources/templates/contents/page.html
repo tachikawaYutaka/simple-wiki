@@ -42,11 +42,14 @@
     </div>
 </main>
 <div th:replace="components/common :: menu-add-form"></div>
+<div th:if="${originalHtml != null}" th:utext="${originalHtml.body}"></div>
+
 <footer th:replace="components/common :: common-footer"></footer>
 <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 <script th:src="@{/js/script_min.js}"></script>
+<style th:if="${originalStyle != null}" th:utext="${originalStyle.body}"></style>
 </body>
 </html>

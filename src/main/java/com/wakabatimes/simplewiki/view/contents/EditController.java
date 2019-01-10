@@ -15,9 +15,13 @@ import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
+import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
+import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
+import com.wakabatimes.simplewiki.app.infrastructure.original_html.dto.OriginalHtmlDto;
+import com.wakabatimes.simplewiki.app.infrastructure.original_style.dto.OriginalStyleDto;
 import com.wakabatimes.simplewiki.app.interfaces.body.dto.BodyResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.body.form.BodySaveForm;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
@@ -69,6 +73,11 @@ public class EditController {
     @Autowired
     private SystemService systemService;
 
+    @Autowired
+    private OriginalHtmlService originalHtmlService;
+    @Autowired
+    private OriginalStyleService originalStyleService;
+
     @GetMapping("/contents/edit/{menuId}/{pageId}")
     public String edit(@PathVariable String menuId, @PathVariable String pageId, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
@@ -107,6 +116,15 @@ public class EditController {
         System system = systemService.get();
         SystemResponseDto systemResponseDto = new SystemResponseDto(system);
         model.addAttribute("system",systemResponseDto);
+
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
+        }
 
         return "contents/edit";
     }
@@ -176,6 +194,15 @@ public class EditController {
         System system = systemService.get();
         SystemResponseDto systemResponseDto = new SystemResponseDto(system);
         model.addAttribute("system",systemResponseDto);
+
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
+        }
 
         return "contents/preview";
     }

@@ -44,6 +44,8 @@
     </div>
 </main>
 <footer th:replace="components/common :: common-footer"></footer>
+<div th:if="${originalHtml != null}" th:utext="${originalHtml.body}"></div>
+
 <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -52,9 +54,9 @@
 <script th:src="@{/js/ace/ace.js}"></script>
 <script th:src="@{/js/ace/ext-emmet.js}"></script>
 
-<script>
+<script th:inline="javascript">
     /*<![CDATA[*/
-    var value = `[[${html != null ? html.body : ''} ]]`;
+    var value = /*[[${html != null ? html.body : ''} ]]*/;
     var fontSize = 16;
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
@@ -70,5 +72,6 @@
         $('[name="body"]').val(editor.getValue());
     });
 </script>
+<style th:if="${originalStyle != null}" th:utext="${originalStyle.body}"></style>
 </body>
 </html>

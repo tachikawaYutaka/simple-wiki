@@ -41,7 +41,7 @@
             <div class="user-name"><i class="fas fa-user"></i><span th:text="${userInfo.name}"></span></div>
             <ul class="user-list">
                 <li th:if="${userInfo.role == 'ROLE_ADMIN'}"><a th:href="@{/system/name}">システム設定</a></li>
-y                <li><a th:href="@{/user/name}">ユーザー名変更</a></li>
+                <li><a th:href="@{/user/name}">ユーザー名変更</a></li>
                 <li><a th:href="@{/user/password}">パスワード変更</a></li>
                 <li><a th:href="@{/logout}">ログアウト</a></li>
             </ul>

@@ -8,6 +8,12 @@ import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtml;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlBody;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlFactory;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyle;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleBody;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleFactory;
 import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageFactory;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
@@ -17,6 +23,8 @@ import com.wakabatimes.simplewiki.app.domain.model.system.SystemFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
+import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
+import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
@@ -63,6 +71,12 @@ public class LoginControllerTest {
     private SystemService systemService;
 
     @Autowired
+    private OriginalStyleService originalStyleService;
+
+    @Autowired
+    private OriginalHtmlService originalHtmlService;
+
+    @Autowired
     private JdbcOperations jdbcOperations; // 各テスト前処理用
 
     @Before
@@ -74,6 +88,8 @@ public class LoginControllerTest {
         jdbcOperations.execute("DELETE FROM system");
         jdbcOperations.execute("DELETE FROM relate_page_to_menu");
         jdbcOperations.execute("DELETE FROM relate_child_page_to_parent_page");
+        jdbcOperations.execute("DELETE FROM original_style");
+        jdbcOperations.execute("DELETE FROM original_html");
         jdbcOperations.execute("DELETE FROM body");
         jdbcOperations.execute("DELETE FROM relate_body_to_page");
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=1");
@@ -98,6 +114,8 @@ public class LoginControllerTest {
         jdbcOperations.execute("DELETE FROM menu");
         jdbcOperations.execute("DELETE FROM page");
         jdbcOperations.execute("DELETE FROM system");
+        jdbcOperations.execute("DELETE FROM original_style");
+        jdbcOperations.execute("DELETE FROM original_html");
         jdbcOperations.execute("DELETE FROM relate_page_to_menu");
         jdbcOperations.execute("DELETE FROM relate_child_page_to_parent_page");
         jdbcOperations.execute("DELETE FROM body");
@@ -107,6 +125,25 @@ public class LoginControllerTest {
 
     @Test
     public void login() throws Exception {
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
+        OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
+        originalHtmlService.save(originalHtml);
+
+        OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
+        OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
+        originalStyleService.save(originalStyle);
+
+        mockMvc.perform(get("/login"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("login/login"));
+    }
+
+    @Test
+    public void login2() throws Exception {
         SystemName systemName = new SystemName("Simple Wiki");
         System system = SystemFactory.create(systemName);
         systemService.save(system);

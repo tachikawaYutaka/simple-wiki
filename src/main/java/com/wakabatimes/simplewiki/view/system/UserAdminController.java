@@ -2,8 +2,12 @@ package com.wakabatimes.simplewiki.view.system;
 
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.*;
+import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
+import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
+import com.wakabatimes.simplewiki.app.infrastructure.original_html.dto.OriginalHtmlDto;
+import com.wakabatimes.simplewiki.app.infrastructure.original_style.dto.OriginalStyleDto;
 import com.wakabatimes.simplewiki.app.interfaces.system.dto.SystemResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.user.form.UserNameUpdateForm;
@@ -37,6 +41,12 @@ public class UserAdminController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private OriginalStyleService originalStyleService;
+
+    @Autowired
+    private OriginalHtmlService originalHtmlService;
+
     @GetMapping("/system/users")
     public String systemUsers(Model model, Principal principal){
         Authentication auth = (Authentication)principal;
@@ -58,6 +68,15 @@ public class UserAdminController {
             userResponseDtos.add(userResponseDto1);
         }
         model.addAttribute("users",userResponseDtos);
+
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
+        }
 
         return "system/system_user";
     }

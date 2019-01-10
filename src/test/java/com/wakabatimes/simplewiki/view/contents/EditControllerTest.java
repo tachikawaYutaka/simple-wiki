@@ -10,6 +10,12 @@ import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtml;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlBody;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlFactory;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyle;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleBody;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleFactory;
 import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageFactory;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
@@ -19,10 +25,13 @@ import com.wakabatimes.simplewiki.app.domain.model.system.SystemFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
+import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
+import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.body.form.BodySaveForm;
+import com.wakabatimes.simplewiki.app.interfaces.original_html.form.OriginalHtmlUpdateForm;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
@@ -68,6 +77,12 @@ public class EditControllerTest {
     private SystemService systemService;
 
     @Autowired
+    private OriginalStyleService originalStyleService;
+
+    @Autowired
+    private OriginalHtmlService originalHtmlService;
+
+    @Autowired
     private JdbcOperations jdbcOperations; // 各テスト前処理用
 
     @Before
@@ -77,6 +92,8 @@ public class EditControllerTest {
         jdbcOperations.execute("DELETE FROM menu");
         jdbcOperations.execute("DELETE FROM page");
         jdbcOperations.execute("DELETE FROM system");
+        jdbcOperations.execute("DELETE FROM original_style");
+        jdbcOperations.execute("DELETE FROM original_html");
         jdbcOperations.execute("DELETE FROM relate_page_to_menu");
         jdbcOperations.execute("DELETE FROM relate_child_page_to_parent_page");
         jdbcOperations.execute("DELETE FROM body");
@@ -104,6 +121,8 @@ public class EditControllerTest {
         jdbcOperations.execute("DELETE FROM menu");
         jdbcOperations.execute("DELETE FROM page");
         jdbcOperations.execute("DELETE FROM system");
+        jdbcOperations.execute("DELETE FROM original_style");
+        jdbcOperations.execute("DELETE FROM original_html");
         jdbcOperations.execute("DELETE FROM relate_page_to_menu");
         jdbcOperations.execute("DELETE FROM relate_child_page_to_parent_page");
         jdbcOperations.execute("DELETE FROM body");
@@ -114,6 +133,40 @@ public class EditControllerTest {
     @Test
     @WithMockCustomUser
     public void edit() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        Body body = BodyFactory.createNewBody();
+        bodyService.save(body,page.getPageId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
+        OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
+        originalHtmlService.save(originalHtml);
+
+        OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
+        OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
+        originalStyleService.save(originalStyle);
+
+
+        mockMvc.perform(get("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("contents/edit"));
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void edit2() throws Exception {
         MenuName menuName = new MenuName("menu");
         MenuLimit menuLimit = MenuLimit.PUBLIC;
         Menu menu = MenuFactory.create(menuName,menuLimit);
@@ -212,6 +265,39 @@ public class EditControllerTest {
     @Test
     @WithMockCustomUser
     public void preview() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        Body body = BodyFactory.createNewBody();
+        bodyService.save(body,page.getPageId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
+        OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
+        originalHtmlService.save(originalHtml);
+
+        OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
+        OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
+        originalStyleService.save(originalStyle);
+
+        mockMvc.perform(get("/contents/edit/" + menu.getMenuId().getValue() + "/" + page.getPageId().getValue() + "/" + body.getBodyId().getValue()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("contents/preview"));
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void preview2() throws Exception {
         MenuName menuName = new MenuName("menu");
         MenuLimit menuLimit = MenuLimit.PUBLIC;
         Menu menu = MenuFactory.create(menuName,menuLimit);

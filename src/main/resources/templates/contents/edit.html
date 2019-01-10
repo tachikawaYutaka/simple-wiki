@@ -257,6 +257,8 @@ PageType pageType;</code></pre><hr>
     </div>
 </main>
 
+<div th:if="${originalHtml != null}" th:utext="${originalHtml.body}"></div>
+
 <footer th:replace="components/common :: common-footer"></footer>
 <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -407,5 +409,6 @@ PageType pageType;</code></pre><hr>
     }
   /*]]>*/
 </script>
+<style th:if="${originalStyle != null}" th:utext="${originalStyle.body}"></style>
 </body>
 </html>

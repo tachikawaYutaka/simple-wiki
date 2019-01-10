@@ -7,8 +7,12 @@ import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
+import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
+import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
+import com.wakabatimes.simplewiki.app.infrastructure.original_html.dto.OriginalHtmlDto;
+import com.wakabatimes.simplewiki.app.infrastructure.original_style.dto.OriginalStyleDto;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.dto.MenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSaveForm;
@@ -51,6 +55,12 @@ public class MenuController {
     @Autowired
     private SystemService systemService;
 
+    @Autowired
+    private OriginalStyleService originalStyleService;
+
+    @Autowired
+    private OriginalHtmlService originalHtmlService;
+
     @GetMapping("/contents/public/{menuName}")
     public String contentPublicMenu(@PathVariable String menuName, Model model, Principal principal){
         Authentication auth = (Authentication)principal;
@@ -85,6 +95,16 @@ public class MenuController {
         List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
         model.addAttribute("pages",pages);
 
+
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
+        }
+
         return "contents/menu";
     }
 
@@ -113,6 +133,15 @@ public class MenuController {
 
         List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
         model.addAttribute("pages",pages);
+
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
+        }
 
         return "contents/menu";
     }

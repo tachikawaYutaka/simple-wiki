@@ -2,6 +2,12 @@ package com.wakabatimes.simplewiki.view.system;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
 import com.wakabatimes.simplewiki.WithMockCustomUser;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtml;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlBody;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlFactory;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyle;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleBody;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemName;
@@ -116,6 +122,26 @@ public class UserAdminControllerTest {
     @Test
     @WithMockCustomUser
     public void systemUsers() throws Exception {
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
+        OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
+        originalHtmlService.save(originalHtml);
+
+        OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
+        OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
+        originalStyleService.save(originalStyle);
+
+        mockMvc.perform(get("/system/users"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("system/system_user"));
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void systemUsers2() throws Exception {
         SystemName systemName = new SystemName("Simple Wiki");
         System system = SystemFactory.create(systemName);
         systemService.save(system);

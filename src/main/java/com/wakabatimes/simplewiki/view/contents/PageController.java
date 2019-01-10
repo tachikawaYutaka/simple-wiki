@@ -16,9 +16,13 @@ import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
+import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
+import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
+import com.wakabatimes.simplewiki.app.infrastructure.original_html.dto.OriginalHtmlDto;
+import com.wakabatimes.simplewiki.app.infrastructure.original_style.dto.OriginalStyleDto;
 import com.wakabatimes.simplewiki.app.interfaces.body.dto.BodyResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.dto.MenuResponseDto;
@@ -77,6 +81,12 @@ public class PageController {
 
     @Autowired
     private SystemService systemService;
+
+    @Autowired
+    private OriginalStyleService originalStyleService;
+
+    @Autowired
+    private OriginalHtmlService originalHtmlService;
 
     @GetMapping("/contents/public/{menuName}/**")
     public String contentPublicPage(HttpServletRequest request, @PathVariable String menuName, Model model, Principal principal){
@@ -141,6 +151,15 @@ public class PageController {
         SystemResponseDto systemResponseDto = new SystemResponseDto(system);
         model.addAttribute("system",systemResponseDto);
 
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
+        }
+
         return "contents/page";
     }
 
@@ -197,6 +216,15 @@ public class PageController {
         System system = systemService.get();
         SystemResponseDto systemResponseDto = new SystemResponseDto(system);
         model.addAttribute("system",systemResponseDto);
+
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
+        }
 
         return "contents/page";
     }
@@ -298,13 +326,18 @@ public class PageController {
             String path = "";
             for(PageHierarchyResponseDto pageHierarchyResponseDto: pagePath){
                 if(pageHierarchyResponseDto.getId().equals(page.getPageId().getValue())){
-                    path = pageHierarchyResponseDto.getName();
+                    path = pageHierarchyResponseDto.getPath();
                 }
+            }
+            String pageUrl = "";
+            String[] pathList = path.split("/");
+            for(String  pathItem : pathList){
+                pageUrl += URLEncoder.encode(pathItem.replace("/",""),"UTF-8") + "/";
             }
 
             attr.addFlashAttribute("success",true);
             attr.addFlashAttribute("successMessage","ページを作成しました。");
-            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8") + '/' +  URLEncoder.encode(path,"UTF-8");
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8") +  pageUrl;
         }catch(RuntimeException e){
             log.error("Error :",e);
             attr.addFlashAttribute("error",true);

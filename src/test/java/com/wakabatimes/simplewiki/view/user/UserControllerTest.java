@@ -2,6 +2,12 @@ package com.wakabatimes.simplewiki.view.user;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
 import com.wakabatimes.simplewiki.WithMockCustomUser;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtml;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlBody;
+import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlFactory;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyle;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleBody;
+import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemName;
@@ -118,6 +124,26 @@ public class UserControllerTest {
         System system = SystemFactory.create(systemName);
         systemService.save(system);
 
+        OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
+        OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
+        originalHtmlService.save(originalHtml);
+
+        OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
+        OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
+        originalStyleService.save(originalStyle);
+
+        mockMvc.perform(get("/user/name"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/user_name"));
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void userName2() throws Exception {
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
         mockMvc.perform(get("/user/name"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/user_name"));
@@ -165,6 +191,27 @@ public class UserControllerTest {
     @Test
     @WithMockCustomUser
     public void userPassword() throws Exception {
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
+        OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
+        originalHtmlService.save(originalHtml);
+
+        OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
+        OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
+        originalStyleService.save(originalStyle);
+
+
+        mockMvc.perform(get("/user/password"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/user_password"));
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void userPassword2() throws Exception {
         SystemName systemName = new SystemName("Simple Wiki");
         System system = SystemFactory.create(systemName);
         systemService.save(system);

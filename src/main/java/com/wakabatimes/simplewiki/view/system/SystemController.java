@@ -15,6 +15,8 @@ import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlS
 import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
+import com.wakabatimes.simplewiki.app.infrastructure.original_html.dto.OriginalHtmlDto;
+import com.wakabatimes.simplewiki.app.infrastructure.original_style.dto.OriginalStyleDto;
 import com.wakabatimes.simplewiki.app.interfaces.original_html.dto.OriginalHtmlResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.original_html.form.OriginalHtmlUpdateForm;
 import com.wakabatimes.simplewiki.app.interfaces.original_style.dto.OriginalStyleResponseDto;
@@ -66,6 +68,15 @@ public class SystemController {
         SystemResponseDto systemResponseDto = new SystemResponseDto(system);
         model.addAttribute("system",systemResponseDto);
 
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
+        }
+
         return "system/system_name";
     }
 
@@ -105,6 +116,15 @@ public class SystemController {
             OriginalStyle originalStyle = originalStyleService.get();
             OriginalStyleResponseDto originalStyleResponseDto = new OriginalStyleResponseDto(originalStyle);
             model.addAttribute("style",originalStyleResponseDto);
+        }
+
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
         }
 
         return "system/system_style";
@@ -151,6 +171,15 @@ public class SystemController {
             OriginalHtml originalHtml = originalHtmlService.get();
             OriginalHtmlResponseDto originalHtmlResponseDto = new OriginalHtmlResponseDto(originalHtml);
             model.addAttribute("html",originalHtmlResponseDto);
+        }
+
+        if(originalHtmlService.exist()){
+            OriginalHtmlDto originalHtmlDto = new OriginalHtmlDto(originalHtmlService.get());
+            model.addAttribute("originalHtml",originalHtmlDto);
+        }
+        if(originalStyleService.exist()){
+            OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
+            model.addAttribute("originalStyle",originalStyleDto);
         }
 
         return "system/system_html";

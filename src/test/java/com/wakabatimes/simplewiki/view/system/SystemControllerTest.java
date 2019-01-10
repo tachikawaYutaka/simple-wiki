@@ -125,6 +125,26 @@ public class SystemControllerTest {
         System system = SystemFactory.create(systemName);
         systemService.save(system);
 
+        OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
+        OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
+        originalHtmlService.save(originalHtml);
+
+        OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
+        OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
+        originalStyleService.save(originalStyle);
+
+        mockMvc.perform(get("/system/name"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("system/system_name"));
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void systemName2() throws Exception {
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
         mockMvc.perform(get("/system/name"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("system/system_name"));
@@ -186,6 +206,10 @@ public class SystemControllerTest {
         SystemName systemName = new SystemName("Simple Wiki");
         System system = SystemFactory.create(systemName);
         systemService.save(system);
+
+        OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
+        OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
+        originalHtmlService.save(originalHtml);
 
         OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
         OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
@@ -279,6 +303,10 @@ public class SystemControllerTest {
         OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody("hogehoge");
         OriginalHtml originalHtml = OriginalHtmlFactory.create(originalHtmlBody);
         originalHtmlService.save(originalHtml);
+
+        OriginalStyleBody originalStyleBody = new OriginalStyleBody("hogehoge");
+        OriginalStyle originalStyle = OriginalStyleFactory.create(originalStyleBody);
+        originalStyleService.save(originalStyle);
 
         mockMvc.perform(get("/system/html"))
                 .andExpect(status().isOk())
