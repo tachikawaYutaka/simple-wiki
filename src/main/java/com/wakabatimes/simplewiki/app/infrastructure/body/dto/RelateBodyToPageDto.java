@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class RelateBodyToPageDto {
-    String bodyId;
-    String pageId;
+    private String bodyId;
+    private String pageId;
 
     public RelateBodyToPageDto(BodyId bodyId, PageId pageId) {
         this.bodyId = bodyId.getValue();

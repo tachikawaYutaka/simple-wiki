@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class RelatePageToMenuDto {
-    String pageId;
-    String menuId;
+    private String pageId;
+    private String menuId;
 
     public RelatePageToMenuDto(Page page, MenuId menuId) {
         this.pageId = page.getPageId().getValue();

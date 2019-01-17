@@ -4,7 +4,7 @@
 <body class="base-body">
 <header th:replace="components/common :: user-header"></header>
 <main class="base-main bg-gray">
-    <form method="post" th:action="'/contents/edit/' + ${menu.id} + '/' + ${page.id}" class="base-content-body max">
+    <form method="post" th:action="'/contents/edit/' + ${menu.id} + '/' + ${page.id}" class="base-content-body max script-edit-save">
         <div class="base-content-body-head">
             <div class="module-alert bg-white mt-10" th:if="${error}" th:text="${errorMessage}"></div>
             <div class="module-alert true bg-white mt-10" th:if="${success}" th:text="${successMessage}"></div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="module-button-lists">
-                <button class="module-submit-button bg-black-2" type="submit">
+                <button class="module-submit-button bg-black-2 " type="submit">
                     保存
                 </button>
                 <button class="module-submit-button bg-gray script-screen-reload">

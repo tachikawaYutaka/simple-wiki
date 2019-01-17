@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class MenuDto {
-    String id;
-    String name;
-    Integer viewLimit;
-    Integer sortNumber;
+    private String id;
+    private String name;
+    private Integer viewLimit;
+    private Integer sortNumber;
 
     public MenuDto() {
 

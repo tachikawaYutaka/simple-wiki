@@ -1,10 +1,9 @@
 package com.wakabatimes.simplewiki.view.start;
 
-import com.wakabatimes.simplewiki.app.aggregates.SystemInitializeService;
+import com.wakabatimes.simplewiki.app.application.system_initialize.SystemInitializeServiceImpl;
+import com.wakabatimes.simplewiki.app.domain.aggregates.sytem_initialize.SystemInitialize;
 import com.wakabatimes.simplewiki.app.domain.model.body.Body;
-import com.wakabatimes.simplewiki.app.domain.model.body.BodyContent;
 import com.wakabatimes.simplewiki.app.domain.model.body.BodyFactory;
-import com.wakabatimes.simplewiki.app.domain.model.body.BodyHtml;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
@@ -17,6 +16,7 @@ import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemName;
 import com.wakabatimes.simplewiki.app.domain.model.user.*;
+import com.wakabatimes.simplewiki.app.domain.service.system_initialize.SystemInitializeService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.user.form.UserInitializeForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,8 @@ public class StartController {
             //ページボディの作成
             Body body = BodyFactory.createNewBody();
 
-            systemInitializeService.save(system, user, menu, page, body);
+            SystemInitialize systemInitialize = new SystemInitialize(system,user,menu,page,body);
+            systemInitializeService.save(systemInitialize);
         }catch (RuntimeException e){
             attr.addFlashAttribute("error",true);
             attr.addFlashAttribute("errorMessage",e.getMessage());

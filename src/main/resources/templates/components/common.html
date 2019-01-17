@@ -19,7 +19,7 @@
             <div></div>
         </div>
         <div class="module-logo"><a th:href="@{/}" th:text="${system.name}">Simple Wiki</a></div>
-        <div class="module-search"><form><input type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
+        <div class="module-search"></div>
     </div>
     <div class="base-header-right">
         <div class="module-button bg-black border-white"><a th:href="@{/login}">Login</a></div>
@@ -34,7 +34,7 @@
             <div></div>
         </div>
         <div class="module-logo"><a th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
-        <div class="module-search"><form><input type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
+        <div class="module-search"><form th:action="@{/search}"><input name="q" type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
     </div>
     <div class="base-header-right">
         <div class="module-user-menu script-user-menu-toggle">

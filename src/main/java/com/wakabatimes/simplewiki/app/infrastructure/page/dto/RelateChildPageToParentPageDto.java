@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class RelateChildPageToParentPageDto {
-    String childPageId;
-    String parentPageId;
+    private String childPageId;
+    private String parentPageId;
 
     public RelateChildPageToParentPageDto(Page childPage, PageId parentId) {
         this.childPageId = childPage.getPageId().getValue();

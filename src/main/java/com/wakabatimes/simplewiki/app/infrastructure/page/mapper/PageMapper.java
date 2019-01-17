@@ -1,6 +1,7 @@
 package com.wakabatimes.simplewiki.app.infrastructure.page.mapper;
 
 import com.wakabatimes.simplewiki.app.infrastructure.page.dto.PageDto;
+import com.wakabatimes.simplewiki.app.infrastructure.page_with_body.dto.PageWithBodyDto;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -69,4 +70,6 @@ public interface PageMapper {
             "ON pp.id = rp.parent_page_id \n" +
             "WHERE p.id = #{id}")
     PageDto getParent(PageDto input);
+
+
 }

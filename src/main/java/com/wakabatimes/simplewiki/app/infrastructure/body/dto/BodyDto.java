@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class BodyDto {
-    String id;
-    String content;
-    String html;
-    Integer type;
+    private String id;
+    private String content;
+    private String html;
+    private Integer type;
 
     public BodyDto(){
 

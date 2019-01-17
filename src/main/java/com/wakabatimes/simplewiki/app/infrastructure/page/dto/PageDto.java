@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class PageDto {
-    String id;
-    String name;
-    Integer type;
-    Integer sortNumber;
+    private String id;
+    private String name;
+    private Integer type;
+    private Integer sortNumber;
 
     public PageDto(){
 

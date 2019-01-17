@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/index","/login","/start","/home","/contents/public/**","/puml_image/**").permitAll() // indexは全ユーザーアクセス許可
                 // ロールが必要なURL
+                .antMatchers("/search").hasRole("USER")
                 .antMatchers("/contents/private/**").hasRole("USER")
                 .antMatchers("/contents/edit/**").hasRole("EDITOR")
                 .antMatchers("/system/**").hasRole("ADMIN")

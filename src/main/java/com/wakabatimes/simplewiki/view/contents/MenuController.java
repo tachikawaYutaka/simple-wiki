@@ -1,14 +1,18 @@
 package com.wakabatimes.simplewiki.view.contents;
 
-import com.wakabatimes.simplewiki.app.aggregates.MainMenuShowService;
-import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
+import com.wakabatimes.simplewiki.app.application.main_menu.MainMenuServiceImpl;
+import com.wakabatimes.simplewiki.app.application.page_hierarchy.PageHierarchyServiceImpl;
+import com.wakabatimes.simplewiki.app.domain.aggregates.main_menu.MainMenus;
+import com.wakabatimes.simplewiki.app.domain.aggregates.page_hierarchy.PageHierarchies;
 import com.wakabatimes.simplewiki.app.domain.model.menu.*;
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
+import com.wakabatimes.simplewiki.app.domain.service.main_menu.MainMenuService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
 import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
+import com.wakabatimes.simplewiki.app.domain.service.page_hierarchy.PageHierarchyService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.infrastructure.original_html.dto.OriginalHtmlDto;
@@ -23,7 +27,6 @@ import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +35,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
@@ -47,10 +49,10 @@ public class MenuController {
     private MenuService menuService;
 
     @Autowired
-    private MainMenuShowService mainMenuShowService;
+    private MainMenuService mainMenuService;
 
     @Autowired
-    private PageHierarchyShowService pageHierarchyShowService;
+    private PageHierarchyService pageHierarchyService;
 
     @Autowired
     private SystemService systemService;
@@ -73,12 +75,14 @@ public class MenuController {
             model.addAttribute("user",true);
 
             //全メニューリスト+ルートページの取得
-            List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
+            MainMenus mainMenus = mainMenuService.list();
+            List<MainMenuResponseDto> menuLists = mainMenus.responseList();
             model.addAttribute("menus",menuLists);
 
         }else {
             //限定されたメニューリストの取得
-            List<MainMenuResponseDto> menuLists = mainMenuShowService.listByMenuLimit(MenuLimit.PUBLIC);
+            MainMenus mainMenus = mainMenuService.listByMenuLimit(MenuLimit.PUBLIC);
+            List<MainMenuResponseDto> menuLists = mainMenus.responseList();
             model.addAttribute("menus",menuLists);
             model.addAttribute("user",false);
         }
@@ -92,7 +96,8 @@ public class MenuController {
         MenuResponseDto currentMenu = new MenuResponseDto(current);
         model.addAttribute("currentMenu",currentMenu);
 
-        List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
+        PageHierarchies pageHierarchies = pageHierarchyService.list(current.getMenuId());
+        List<PageHierarchyResponseDto> pages = pageHierarchies.responseList();
         model.addAttribute("pages",pages);
 
 
@@ -104,6 +109,8 @@ public class MenuController {
             OriginalStyleDto originalStyleDto = new OriginalStyleDto(originalStyleService.get());
             model.addAttribute("originalStyle",originalStyleDto);
         }
+
+
 
         return "contents/menu";
     }
@@ -119,7 +126,8 @@ public class MenuController {
         model.addAttribute("user",true);
 
         //全メニューリスト+ルートページの取得
-        List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
+        MainMenus mainMenus = mainMenuService.list();
+        List<MainMenuResponseDto> menuLists = mainMenus.responseList();
         model.addAttribute("menus",menuLists);
 
         System system = systemService.get();
@@ -131,7 +139,8 @@ public class MenuController {
         MenuResponseDto currentMenu = new MenuResponseDto(current);
         model.addAttribute("currentMenu",currentMenu);
 
-        List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
+        PageHierarchies pageHierarchies = pageHierarchyService.list(current.getMenuId());
+        List<PageHierarchyResponseDto> pages = pageHierarchies.responseList();
         model.addAttribute("pages",pages);
 
         if(originalHtmlService.exist()){

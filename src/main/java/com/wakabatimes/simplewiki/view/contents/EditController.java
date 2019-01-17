@@ -1,12 +1,15 @@
 package com.wakabatimes.simplewiki.view.contents;
 
-import com.wakabatimes.simplewiki.app.aggregates.BodyAndPageSaveService;
-import com.wakabatimes.simplewiki.app.aggregates.MainMenuShowService;
-import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
+import com.wakabatimes.simplewiki.app.application.body_and_page.BodyAndPageServiceImpl;
+import com.wakabatimes.simplewiki.app.application.main_menu.MainMenuServiceImpl;
+import com.wakabatimes.simplewiki.app.application.page_hierarchy.PageHierarchyServiceImpl;
+import com.wakabatimes.simplewiki.app.domain.aggregates.body_and_page.BodyAndPage;
+import com.wakabatimes.simplewiki.app.domain.aggregates.main_menu.MainMenus;
+import com.wakabatimes.simplewiki.app.domain.aggregates.page_hierarchy.PageHierarchies;
+import com.wakabatimes.simplewiki.app.domain.aggregates.page_hierarchy.PageHierarchy;
 import com.wakabatimes.simplewiki.app.domain.model.body.*;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
 import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
@@ -14,10 +17,13 @@ import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
+import com.wakabatimes.simplewiki.app.domain.service.body_and_page.BodyAndPageService;
+import com.wakabatimes.simplewiki.app.domain.service.main_menu.MainMenuService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
 import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
+import com.wakabatimes.simplewiki.app.domain.service.page_hierarchy.PageHierarchyService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.infrastructure.original_html.dto.OriginalHtmlDto;
@@ -33,7 +39,6 @@ import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,13 +67,13 @@ public class EditController {
     private BodyService bodyService;
 
     @Autowired
-    private PageHierarchyShowService pageHierarchyShowService;
+    private PageHierarchyService pageHierarchyService;
 
     @Autowired
-    private MainMenuShowService mainMenuShowService;
+    private MainMenuService mainMenuService;
 
     @Autowired
-    private BodyAndPageSaveService bodyAndPageSaveService;
+    private BodyAndPageService bodyAndPageService;
 
     @Autowired
     private SystemService systemService;
@@ -102,8 +107,9 @@ public class EditController {
         BodyResponseDto bodyResponseDto = new BodyResponseDto(body);
         model.addAttribute("body",bodyResponseDto);
 
-        List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(pageId1);
-        model.addAttribute("currentPages",currentPages);
+        PageHierarchies currentPages = pageHierarchyService.getCurrentPath(pageId1);
+        List<PageHierarchyResponseDto> currentPageList = currentPages.responseList();
+        model.addAttribute("currentPages",currentPageList);
 
         Bodies bodies = bodyService.getArchive(pageId1);
         List<BodyResponseDto> bodyArchive = new ArrayList<>();
@@ -146,8 +152,8 @@ public class EditController {
             BodyContent bodyContent = new BodyContent(form.getContent());
             BodyHtml bodyHtml = new BodyHtml(form.getHtml());
             Body body = BodyFactory.create(bodyContent,bodyHtml);
-
-            bodyAndPageSaveService.save(body,menuId1, newPage);
+            BodyAndPage bodyAndPage = new BodyAndPage(menuId1,newPage,body);
+            bodyAndPageService.save(bodyAndPage);
         }catch(RuntimeException e) {
             log.error("error:",e);
             attr.addFlashAttribute("error",true);
@@ -170,8 +176,9 @@ public class EditController {
         model.addAttribute("user",true);
 
         //全メニューリスト+ルートページの取得
-        List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
-        model.addAttribute("menus",menuLists);
+        MainMenus  menuLists = mainMenuService.list();
+        List<MainMenuResponseDto> menuResponseList = menuLists.responseList();
+        model.addAttribute("menus",menuResponseList);
 
         MenuId menuId1 = new MenuId(menuId);
         Menu menu = menuService.getById(menuId1);
@@ -188,7 +195,8 @@ public class EditController {
         BodyResponseDto bodyResponseDto = new BodyResponseDto(body);
         model.addAttribute("body",bodyResponseDto);
 
-        List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(pageId1);
+        PageHierarchies pageHierarchies = pageHierarchyService.getCurrentPath(pageId1);
+        List<PageHierarchyResponseDto> currentPages = pageHierarchies.responseList();
         model.addAttribute("currentPages",currentPages);
 
         System system = systemService.get();

@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class SystemDto {
-    String id;
-    String name;
+    private String id;
+    private String name;
 
     public SystemDto(){
 

@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class OriginalHtmlDto {
-    String id;
-    String body;
+    private String id;
+    private String body;
 
     public OriginalHtmlDto() {
     }

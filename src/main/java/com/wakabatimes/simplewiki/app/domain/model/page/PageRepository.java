@@ -26,4 +26,5 @@ public interface PageRepository {
     Page getHomePage(MenuId menuId);
 
     Page getParent(PageId pageId);
+
 }

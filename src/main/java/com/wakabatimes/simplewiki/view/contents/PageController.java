@@ -1,10 +1,13 @@
 package com.wakabatimes.simplewiki.view.contents;
 
-import com.wakabatimes.simplewiki.app.aggregates.BranchPageCreateService;
-import com.wakabatimes.simplewiki.app.aggregates.MainMenuShowService;
-import com.wakabatimes.simplewiki.app.aggregates.PageHierarchyShowService;
-import com.wakabatimes.simplewiki.app.aggregates.RootPageCreateService;
-import com.wakabatimes.simplewiki.app.application.user.UserDetailsServiceImpl;
+import com.wakabatimes.simplewiki.app.application.branch_page.BranchPageServiceImpl;
+import com.wakabatimes.simplewiki.app.application.main_menu.MainMenuServiceImpl;
+import com.wakabatimes.simplewiki.app.application.page_hierarchy.PageHierarchyServiceImpl;
+import com.wakabatimes.simplewiki.app.application.root_page.RootPageServiceImpl;
+import com.wakabatimes.simplewiki.app.domain.aggregates.branch_page.BranchPage;
+import com.wakabatimes.simplewiki.app.domain.aggregates.main_menu.MainMenus;
+import com.wakabatimes.simplewiki.app.domain.aggregates.page_hierarchy.PageHierarchies;
+import com.wakabatimes.simplewiki.app.domain.aggregates.root_page.RootPage;
 import com.wakabatimes.simplewiki.app.domain.model.body.Body;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
@@ -15,10 +18,14 @@ import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
+import com.wakabatimes.simplewiki.app.domain.service.branch_page.BranchPageService;
+import com.wakabatimes.simplewiki.app.domain.service.main_menu.MainMenuService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
 import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
+import com.wakabatimes.simplewiki.app.domain.service.page_hierarchy.PageHierarchyService;
+import com.wakabatimes.simplewiki.app.domain.service.root_page.RootPageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.infrastructure.original_html.dto.OriginalHtmlDto;
@@ -35,7 +42,6 @@ import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.AntPathMatcher;
@@ -68,16 +74,16 @@ public class PageController {
     private BodyService bodyService;
 
     @Autowired
-    private MainMenuShowService mainMenuShowService;
+    private MainMenuService mainMenuService;
 
     @Autowired
-    private RootPageCreateService rootPageCreateService;
+    private RootPageService rootPageService;
 
     @Autowired
-    private BranchPageCreateService branchPageCreateService;
+    private BranchPageService branchPageService;
 
     @Autowired
-    private PageHierarchyShowService pageHierarchyShowService;
+    private PageHierarchyService pageHierarchyService;
 
     @Autowired
     private SystemService systemService;
@@ -102,11 +108,13 @@ public class PageController {
             model.addAttribute("user",true);
 
             //全メニューリスト+ルートページの取得
-            List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
+            MainMenus mainMenus = mainMenuService.list();
+            List<MainMenuResponseDto> menuLists = mainMenus.responseList();
             model.addAttribute("menus",menuLists);
         }else {
             //限定されたメニューリストの取得
-            List<MainMenuResponseDto> menuLists = mainMenuShowService.listByMenuLimit(MenuLimit.PUBLIC);
+            MainMenus mainMenus = mainMenuService.listByMenuLimit(MenuLimit.PUBLIC);
+            List<MainMenuResponseDto> menuLists = mainMenus.responseList();
             model.addAttribute("menus",menuLists);
             model.addAttribute("user",false);
         }
@@ -140,11 +148,12 @@ public class PageController {
         BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
         model.addAttribute("currentBody",bodyResponseDto);
 
-        List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
+        PageHierarchies pageHierarchies = pageHierarchyService.getCurrentPath(currentPage.getPageId());
+        List<PageHierarchyResponseDto> currentPages = pageHierarchies.responseList();
         model.addAttribute("currentPages",currentPages);
 
-
-        List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
+        PageHierarchies pageHierarchies1 = pageHierarchyService.list(current.getMenuId());
+        List<PageHierarchyResponseDto> pages = pageHierarchies1.responseList();
         model.addAttribute("pages",pages);
 
         System system = systemService.get();
@@ -175,7 +184,8 @@ public class PageController {
         model.addAttribute("user",true);
 
         //全メニューリスト+ルートページの取得
-        List<MainMenuResponseDto> menuLists = mainMenuShowService.list();
+        MainMenus mainMenus = mainMenuService.list();
+        List<MainMenuResponseDto> menuLists = mainMenus.responseList();
         model.addAttribute("menus",menuLists);
 
         MenuName currentMenuName = new MenuName(menuName);
@@ -207,10 +217,12 @@ public class PageController {
         BodyResponseDto bodyResponseDto = new BodyResponseDto(currentBody);
         model.addAttribute("currentBody",bodyResponseDto);
 
-        List<PageHierarchyResponseDto> currentPages = pageHierarchyShowService.getCurrentPath(currentPage.getPageId());
+        PageHierarchies pageHierarchies = pageHierarchyService.getCurrentPath(currentPage.getPageId());
+        List<PageHierarchyResponseDto> currentPages = pageHierarchies.responseList();
         model.addAttribute("currentPages",currentPages);
 
-        List<PageHierarchyResponseDto> pages = pageHierarchyShowService.list(current.getMenuId());
+        PageHierarchies pageHierarchies1 = pageHierarchyService.list(current.getMenuId());
+        List<PageHierarchyResponseDto> pages = pageHierarchies1.responseList();
         model.addAttribute("pages",pages);
 
         System system = systemService.get();
@@ -248,7 +260,8 @@ public class PageController {
             PageType pageType = PageType.ROOT;
             Page page = PageFactory.create(pageName,pageType);
 
-            rootPageCreateService.save(page,menuId);
+            RootPage rootPage = new RootPage(menuId,page);
+            rootPageService.save(rootPage);
 
             attr.addFlashAttribute("success",true);
             attr.addFlashAttribute("successMessage","ページを作成しました");
@@ -273,7 +286,8 @@ public class PageController {
             PageName pageName = new PageName(form.getName());
             PageType pageType = PageType.BRANCH;
             Page page = PageFactory.create(pageName,pageType);
-            branchPageCreateService.save(page,parentId);
+            BranchPage branchPage = new BranchPage(parentId,page);
+            branchPageService.save(branchPage);
 
             attr.addFlashAttribute("success",true);
             attr.addFlashAttribute("successMessage","ページを作成しました");
@@ -321,8 +335,12 @@ public class PageController {
             Page parentPage = pageService.get(parentPageId1);
 
             Page page = PageFactory.createNewPage(parentPage.getPageType());
-            branchPageCreateService.save(page,parentPageId1);
-            List<PageHierarchyResponseDto> pagePath = pageHierarchyShowService.getCurrentPath(page.getPageId());
+
+            BranchPage branchPage = new BranchPage(parentPageId1,page);
+            branchPageService.save(branchPage);
+
+            PageHierarchies pageHierarchies = pageHierarchyService.getCurrentPath(page.getPageId());
+            List<PageHierarchyResponseDto> pagePath = pageHierarchies.responseList();
             String path = "";
             for(PageHierarchyResponseDto pageHierarchyResponseDto: pagePath){
                 if(pageHierarchyResponseDto.getId().equals(page.getPageId().getValue())){

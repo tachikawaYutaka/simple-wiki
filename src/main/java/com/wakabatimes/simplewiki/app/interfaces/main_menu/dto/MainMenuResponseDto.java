@@ -1,5 +1,6 @@
 package com.wakabatimes.simplewiki.app.interfaces.main_menu.dto;
 
+import com.wakabatimes.simplewiki.app.domain.aggregates.main_menu.MainMenu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.interfaces.page.dto.PageResponseDto;
 import lombok.Data;
@@ -13,9 +14,9 @@ public class MainMenuResponseDto {
     String menuLimit;
     List<PageResponseDto> pages;
 
-    public MainMenuResponseDto(Menu menu) {
-        this.menuId = menu.getMenuId().getValue();
-        this.menuName = menu.getMenuName().getValue();
-        this.menuLimit = menu.getMenuLimit().name();
+    public MainMenuResponseDto(MainMenu mainMenu) {
+        this.menuId = mainMenu.getMenu().getMenuId().getValue();
+        this.menuName = mainMenu.getMenu().getMenuName().getValue();
+        this.menuLimit = mainMenu.getMenu().getMenuLimit().name();
     }
 }
