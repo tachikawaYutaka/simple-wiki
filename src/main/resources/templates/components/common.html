@@ -89,7 +89,10 @@
     <nav class="module-menu-lists">
         <ul th:each="menu : ${menus}">
             <li>
-                <p><a th:class="${currentMenu.id == menu.menuId ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><i  th:if="${currentMenu.id == menu.menuId}" class="fas fa-angle-right"></i><span th:text="${menu.menuName}"></span></a></p>
+                <p>
+                    <a th:if="${currentMenu != null}" th:class="${currentMenu.id == menu.menuId ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><i  th:if="${currentMenu.id == menu.menuId}" class="fas fa-angle-right"></i><span th:text="${menu.menuName}"></span></a>
+                    <a th:if="${currentMenu == null}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><span th:text="${menu.menuName}"></span></a>
+                </p>
                 <ul th:each="page : ${menu.pages}">
                     <li>
                         <p th:if="${rootPage != null}"><a th:class="${rootPage.id == page.id ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName} + '/' + ${page.name}"><i th:if="${rootPage.id == page.id}" class="fas fa-angle-right"></i><span th:text="${page.name}"></span></a></p>

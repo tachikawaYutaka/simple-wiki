@@ -71,4 +71,5 @@ public class PageServiceImpl implements PageService {
     public Page getParent(PageId pageId) {
         return pageRepository.getParent(pageId);
     }
+
 }

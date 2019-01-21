@@ -97,7 +97,7 @@ public class BodyAndPageServiceTest {
         PageType pageType = PageType.ROOT;
         Page page = PageFactory.create(pageName,pageType);
 
-        RootPage rootPage = new RootPage(menu.getMenuId(),page);
+        RootPage rootPage = new RootPage(menu,page);
         rootPageService.save(rootPage);
 
         BodyContent bodyContent = new BodyContent("hogehoge");
@@ -120,7 +120,7 @@ public class BodyAndPageServiceTest {
         PageType pageType = PageType.ROOT;
         Page page = PageFactory.create(pageName,pageType);
 
-        RootPage rootPage = new RootPage(menu.getMenuId(),page);
+        RootPage rootPage = new RootPage(menu,page);
         rootPageService.save(rootPage);
 
         BodyContent bodyContent = new BodyContent("hogehoge");

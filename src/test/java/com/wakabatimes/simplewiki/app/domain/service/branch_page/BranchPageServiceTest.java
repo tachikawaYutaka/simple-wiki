@@ -84,7 +84,7 @@ public class BranchPageServiceTest {
         PageName pageName = new PageName("hogehoge");
         PageType pageType = PageType.ROOT;
         Page page = PageFactory.create(pageName,pageType);
-        RootPage rootPage = new RootPage(menu.getMenuId(),page);
+        RootPage rootPage = new RootPage(menu,page);
         rootPageService.save(rootPage);
 
         PageName pageName2 = new PageName("hogehoge2");

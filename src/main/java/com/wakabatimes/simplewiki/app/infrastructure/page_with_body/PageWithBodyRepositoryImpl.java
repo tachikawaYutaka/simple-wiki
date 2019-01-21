@@ -23,7 +23,8 @@ public class PageWithBodyRepositoryImpl implements PageWithBodyRepository{
 
     @Override
     public PageWithBodies search(Search search) {
-        List<PageWithBodyDto> results = pageWithBodyMapper.search(search.getSearchInput().getValue());
+        String input = "%" + search.getSearchInput().getValue() + "%";
+        List<PageWithBodyDto> results = pageWithBodyMapper.search(input);
 
         PageWithBodies pageWithBodies = new PageWithBodies();
         for(PageWithBodyDto result : results){

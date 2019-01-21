@@ -260,7 +260,7 @@ public class PageController {
             PageType pageType = PageType.ROOT;
             Page page = PageFactory.create(pageName,pageType);
 
-            RootPage rootPage = new RootPage(menuId,page);
+            RootPage rootPage = new RootPage(menu,page);
             rootPageService.save(rootPage);
 
             attr.addFlashAttribute("success",true);
@@ -334,7 +334,7 @@ public class PageController {
             PageId parentPageId1 = new PageId(parentPageId);
             Page parentPage = pageService.get(parentPageId1);
 
-            Page page = PageFactory.createNewPage(parentPage.getPageType());
+            Page page = PageFactory.createNewPage(PageType.BRANCH);
 
             BranchPage branchPage = new BranchPage(parentPageId1,page);
             branchPageService.save(branchPage);

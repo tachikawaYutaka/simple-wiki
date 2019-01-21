@@ -1,10 +1,7 @@
 package com.wakabatimes.simplewiki.app.domain.service.page;
 
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
-import com.wakabatimes.simplewiki.app.domain.model.page.Page;
-import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
-import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
-import com.wakabatimes.simplewiki.app.domain.model.page.Pages;
+import com.wakabatimes.simplewiki.app.domain.model.page.*;
 
 public interface PageService {
     /**
@@ -90,4 +87,5 @@ public interface PageService {
      * @return
      */
     Page getParent(PageId pageId);
+
 }

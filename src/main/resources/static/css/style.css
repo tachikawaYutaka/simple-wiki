@@ -1496,3 +1496,19 @@ template {
     justify-content: flex-end; }
     .module-users-list .menu li {
       margin-left: 2px; }
+
+.module-search-result {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0; }
+  .module-search-result li {
+    margin-bottom: 20px; }
+    .module-search-result li .head {
+      font-size: 1.5rem;
+      padding-bottom: 5px;
+      display: block; }
+    .module-search-result li .page-content {
+      max-height: 300px;
+      overflow: hidden;
+      border: 1px solid #222;
+      padding: 15px; }
