@@ -23,31 +23,32 @@ public class PageHierarchyServiceImpl implements PageHierarchyService{
 
     @Override
     public PageHierarchies list(MenuId menuId) {
-        PageHierarchies result = new PageHierarchies();
+        List<PageHierarchy> result = new ArrayList<>();
         Pages pages = pageService.listRoot(menuId);
         for(Page page : pages.list()){
             String path = "";
             path += page.getPageName().getValue() + "/";
 
             PagePath pagePath = new PagePath(path);
-            PageHierarchies children = getChildren(page.getPageId(), path);
+            List<PageHierarchy> children = getChildren(page.getPageId(), path);
 
-            PageHierarchy pageHierarchy = new PageHierarchy(page,pagePath,children);
+            PageHierarchy pageHierarchy = new PageHierarchy(page,pagePath,new PageHierarchies(children));
             result.add(pageHierarchy);
         }
-        return result;
+        PageHierarchies results = new PageHierarchies(result);
+        return results;
     }
 
-    private PageHierarchies getChildren(PageId pageId, String path) {
-        PageHierarchies result = new PageHierarchies();
+    private List<PageHierarchy> getChildren(PageId pageId, String path) {
+        List<PageHierarchy> result = new ArrayList<>();
         Pages pages = pageService.listBranch(pageId);
         for(Page page : pages.list()){
             String childPath = path;
             childPath += page.getPageName().getValue() + "/";
 
             PagePath pagePath = new PagePath(childPath);
-            PageHierarchies children = getChildren(page.getPageId(), childPath);
-            PageHierarchy pageHierarchy = new PageHierarchy(page,pagePath,children);
+            List<PageHierarchy> children = getChildren(page.getPageId(), childPath);
+            PageHierarchy pageHierarchy = new PageHierarchy(page,pagePath,new PageHierarchies(children));
             result.add(pageHierarchy);
         }
         return result;
@@ -55,55 +56,58 @@ public class PageHierarchyServiceImpl implements PageHierarchyService{
 
     @Override
     public PageHierarchies getCurrentPath(PageId pageId) {
-        PageHierarchies result = new PageHierarchies();
+        List<PageHierarchy> result = new ArrayList<>();
 
         Page page = pageService.get(pageId);
         String path =  "/" + page.getPageName().getValue() ;
+        PagePath pagePath = new PagePath(path);
+        PageHierarchy pageHierarchy = new PageHierarchy(page,pagePath,new PageHierarchies());
+        result.add(pageHierarchy);
 
-        PageHierarchies parent = new PageHierarchies();
-
+        List<PageHierarchy> parent = new ArrayList<>();
         if(page.getPageType().getId() == PageType.BRANCH.getId()){
             parent = getParents(path,page.getPageId());
         }
-        List<PageHierarchy> results = Stream.concat(result.list().stream(), parent.list().stream()).collect(Collectors.toList());
+        List<PageHierarchy> results = Stream.concat(result.stream(), parent.stream()).collect(Collectors.toList());
         Collections.reverse(results);
 
-        String mainPath = results.get(0).getPagePath().getValue();
-        String[] split = mainPath.split("/");
-
-        int i = 1;
         PageHierarchies pageHierarchies = new PageHierarchies();
-        for(PageHierarchy resultPage : results) {
-            String modPath = "";
-            int j = 0;
-            while (j < i + 1){
-                modPath += split[j] + "/";
-                j++;
+        if(results.size() > 0){
+            String mainPath = results.get(0).getPagePath().getValue();
+            String[] split = mainPath.split("/");
+
+            int i = 1;
+            for(PageHierarchy resultPage : results) {
+                String modPath = "";
+                int j = 0;
+                while (j < i + 1){
+                    modPath += split[j] + "/";
+                    j++;
+                }
+                PagePath pagePath2 = new PagePath(modPath);
+                PageHierarchy pageHierarchy2 = new PageHierarchy(resultPage.getPage(),pagePath2,resultPage.getPageHierarchies());
+                pageHierarchies.add(pageHierarchy2);
+                i++;
             }
-            PagePath pagePath = new PagePath(modPath);
-            PageHierarchy pageHierarchy = new PageHierarchy(resultPage.getPage(),pagePath,resultPage.getPageHierarchies());
-            pageHierarchies.add(pageHierarchy);
-            i++;
         }
         return pageHierarchies;
     }
 
-    private PageHierarchies getParents(String path, PageId pageId) {
-        PageHierarchies result = new PageHierarchies();
+    private List<PageHierarchy> getParents(String path, PageId pageId) {
+        List<PageHierarchy> result = new ArrayList<>();
         Page page = pageService.getParent(pageId);
 
         String currentPath = "/" + page.getPageName().getValue() + path;
         PagePath pagePath = new PagePath(currentPath);
+        PageHierarchy pageHierarchy = new PageHierarchy(page,pagePath,new PageHierarchies());
+        result.add(pageHierarchy);
 
-        PageHierarchies parent = new PageHierarchies();
+        List<PageHierarchy> parent = new ArrayList<>();
         if(page.getPageType().getId() == PageType.BRANCH.getId()){
             parent = getParents(currentPath,page.getPageId());
         }
-        PageHierarchy pageHierarchy = new PageHierarchy(page,pagePath,parent);
-        result.add(pageHierarchy);
 
-        List<PageHierarchy> lists = Stream.concat(result.list().stream(), parent.list().stream()).collect(Collectors.toList());
-        PageHierarchies results = new PageHierarchies(lists);
+        List<PageHierarchy> results = Stream.concat(result.stream(), parent.stream()).collect(Collectors.toList());
         return results;
     }
 }

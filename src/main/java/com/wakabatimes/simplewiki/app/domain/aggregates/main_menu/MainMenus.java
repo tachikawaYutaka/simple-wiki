@@ -61,6 +61,7 @@ public class MainMenus {
                 pageResponseDtos.add(pageResponseDto);
             }
             mainMenuResponseDto.setPages(pageResponseDtos);
+            result.add(mainMenuResponseDto);
         }
         return result;
     }
