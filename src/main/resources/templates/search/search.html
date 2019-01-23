@@ -24,7 +24,7 @@
             <div  class="base-article-body article">
                 <ul class="module-search-result">
                     <li th:each="result : ${results}">
-                        <a class="head" th:href="@{/search/} + ${result.pageId}"><span th:text="${result.pageName}"></span></a>
+                        <a target="_blank" class="head" th:href="@{/search/} + ${result.pageId}"><span th:text="${result.pageName}"></span></a>
                         <div class="page-content" th:utext="${result.bodyHtml}"></div>
                     </li>
                 </ul>
@@ -37,7 +37,7 @@
 </main>
 <footer th:replace="components/common :: common-footer"></footer>
 <div th:if="${originalHtml != null}" th:utext="${originalHtml.body}"></div>
-
+<div th:replace="components/common :: menu-add-form"></div>
 <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

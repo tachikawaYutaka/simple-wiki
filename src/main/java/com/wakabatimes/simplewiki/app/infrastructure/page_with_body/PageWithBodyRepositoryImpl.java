@@ -37,7 +37,8 @@ public class PageWithBodyRepositoryImpl implements PageWithBodyRepository{
             BodyContent bodyContent = new BodyContent(result.getBodyContent());
             BodyHtml bodyHtml = new BodyHtml(result.getBodyHtml());
             BodyType bodytype =  BodyType.getById(result.getBodyType());
-            Body body = new Body(bodyId,bodyContent,bodyHtml,bodytype);
+            BodyCreatedDate bodyCreatedDate = new BodyCreatedDate(result.getBodyCreatedDate());
+            Body body = new Body(bodyId,bodyContent,bodyHtml,bodytype, bodyCreatedDate);
 
             PageWithBody pageWithBody = new PageWithBody(page,body);
             pageWithBodies.add(pageWithBody);

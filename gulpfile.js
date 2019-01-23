@@ -9,7 +9,7 @@ var rename = require('gulp-rename');
 gulp.task('convertToCss', function() {
   return gulp.src('./assets/scss/**/*.scss')
       .pipe(plumber())
-      .pipe(sass())
+      .pipe(sass({outputStyle: 'compressed'}))
       .pipe(autoprefixer())
       .pipe(gulp.dest('./src/main/resources/static/css/'));
 });

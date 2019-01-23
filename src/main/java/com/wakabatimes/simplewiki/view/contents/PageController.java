@@ -7,6 +7,7 @@ import com.wakabatimes.simplewiki.app.application.root_page.RootPageServiceImpl;
 import com.wakabatimes.simplewiki.app.domain.aggregates.branch_page.BranchPage;
 import com.wakabatimes.simplewiki.app.domain.aggregates.main_menu.MainMenus;
 import com.wakabatimes.simplewiki.app.domain.aggregates.page_hierarchy.PageHierarchies;
+import com.wakabatimes.simplewiki.app.domain.aggregates.page_with_body.PageWithBody;
 import com.wakabatimes.simplewiki.app.domain.aggregates.root_page.RootPage;
 import com.wakabatimes.simplewiki.app.domain.model.body.Body;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
@@ -25,6 +26,7 @@ import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlS
 import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.page_hierarchy.PageHierarchyService;
+import com.wakabatimes.simplewiki.app.domain.service.page_with_body.PageWithBodyService;
 import com.wakabatimes.simplewiki.app.domain.service.root_page.RootPageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
@@ -53,6 +55,8 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
@@ -93,6 +97,9 @@ public class PageController {
 
     @Autowired
     private OriginalHtmlService originalHtmlService;
+
+    @Autowired
+    private PageWithBodyService pageWithBodyService;
 
     @GetMapping("/contents/public/{menuName}/**")
     public String contentPublicPage(HttpServletRequest request, @PathVariable String menuName, Model model, Principal principal){
@@ -357,6 +364,35 @@ public class PageController {
             attr.addFlashAttribute("successMessage","ページを作成しました。");
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8") +  pageUrl;
         }catch(RuntimeException e){
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+
+            Menu menu = menuService.getHomeMenu();
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }
+    }
+
+    @PostMapping("/pages/{menuId}/{pageId}/pdf")
+    public String pageToPdf(@PathVariable String pageId,RedirectAttributes attr, HttpServletResponse res) throws UnsupportedEncodingException {
+        PageId pageId1 = new PageId(pageId);
+        Page page = pageService.get(pageId1);
+        Body body = bodyService.getCurrent(pageId1);
+        PageWithBody pageWithBody = new PageWithBody(page, body);
+
+        try {
+            pageWithBodyService.pdfExport(pageWithBody,res);
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+
+            Menu menu = menuService.getHomeMenu();
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
             log.error("Error :",e);
             attr.addFlashAttribute("error",true);
             attr.addFlashAttribute("errorMessage",e.getMessage());

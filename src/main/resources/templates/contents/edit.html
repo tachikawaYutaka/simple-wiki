@@ -50,7 +50,7 @@
                 <div class="head">改訂履歴</div>
                 <ul>
                     <li th:each="body : ${bodyArchive}">
-                        <div class="name" th:text="${body.id}">
+                        <div class="name" th:text="${#dates.format(body.created,'yyyy年MM月dd日 hh:mm:ss')}">
                             admin:2018/xx/xx xx:xx
                         </div>
                         <div class="menu">

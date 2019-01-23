@@ -133,6 +133,7 @@ public class SearchController {
             PageHierarchies pageHierarchies = pageHierarchyService.getCurrentPath(pageId1);
             String path = "";
             for(PageHierarchyResponseDto pageHierarchyResponseDto: pageHierarchies.responseList()){
+
                 if(pageHierarchyResponseDto.getId().equals(pageId1.getValue())){
                     path = pageHierarchyResponseDto.getPath();
                 }

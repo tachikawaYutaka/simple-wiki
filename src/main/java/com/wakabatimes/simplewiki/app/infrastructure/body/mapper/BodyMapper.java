@@ -20,7 +20,7 @@ public interface BodyMapper {
 
     @Insert("INSERT \n" +
             "INTO body(id, content, html, type, created, updated) \n" +
-            "VALUES (#{id}, #{content}, #{html}, #{type}, now(),now())\n")
+            "VALUES (#{id}, #{content}, #{html}, #{type}, #{created},#{created})\n")
     void save(BodyDto input);
 
     @Select("SELECT * FROM body b \n" +

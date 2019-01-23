@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Date;
 
 /**
  * root entity
@@ -23,12 +26,16 @@ public class Body {
     @Getter
     @NonNull
     BodyType bodyType;
+    @Getter
+    @NonNull
+    BodyCreatedDate bodyCreatedDate;
 
-    public Body(BodyId bodyId, BodyContent bodyContent,BodyHtml bodyHtml,BodyType bodyType) {
+    public Body(BodyId bodyId, BodyContent bodyContent,BodyHtml bodyHtml,BodyType bodyType, BodyCreatedDate bodyCreatedDate) {
         this.bodyId = bodyId;
         this.bodyContent = bodyContent;
         this.bodyHtml = bodyHtml;
         this.bodyType = bodyType;
+        this.bodyCreatedDate = bodyCreatedDate;
     }
 
     public boolean isCurrent(Body body) {
