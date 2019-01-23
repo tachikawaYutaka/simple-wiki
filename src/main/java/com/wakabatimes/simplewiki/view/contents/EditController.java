@@ -157,7 +157,7 @@ public class EditController {
         }catch(RuntimeException e) {
             log.error("error:",e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
             return "redirect:/contents/edit/" + menuId + "/" + pageId;
         }
         attr.addFlashAttribute("success",true);
@@ -229,7 +229,7 @@ public class EditController {
         }catch(RuntimeException e) {
             log.error("error: ", e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
             return "redirect:/contents/edit/" + menuId + "/" + pageId;
         }
 
@@ -247,7 +247,7 @@ public class EditController {
         }catch(RuntimeException e) {
             log.error("error: ", e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
             return "redirect:/contents/edit/" + menuId + "/" + pageId;
         }
 

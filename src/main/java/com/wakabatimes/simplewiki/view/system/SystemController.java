@@ -90,7 +90,7 @@ public class SystemController {
         } catch(RuntimeException e) {
             log.error("error: ", e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
             return "redirect:/system/name";
         }
         attr.addFlashAttribute("success",true);
@@ -145,7 +145,7 @@ public class SystemController {
         } catch(RuntimeException e) {
             log.error("error: ", e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
             return "redirect:/system/style";
         }
         attr.addFlashAttribute("success",true);
@@ -200,7 +200,7 @@ public class SystemController {
         } catch(RuntimeException e) {
             log.error("error: ", e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
             return "redirect:/system/html";
         }
         attr.addFlashAttribute("success",true);

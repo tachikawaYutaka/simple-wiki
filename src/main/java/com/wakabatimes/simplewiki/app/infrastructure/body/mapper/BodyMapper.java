@@ -26,12 +26,15 @@ public interface BodyMapper {
     @Select("SELECT * FROM body b \n" +
             "LEFT JOIN relate_body_to_page rbtp on b.id = rbtp.body_id\n" +
             "WHERE rbtp.page_id = #{pageId}\n" +
-            "AND b.type = 0")
+            "AND b.type = 0 \n" +
+            "ORDER BY b.created desc;")
     BodyDto getCurrent(String pageId);
 
     @Select("SELECT * FROM body b \n" +
             "LEFT JOIN relate_body_to_page rbtp on b.id = rbtp.body_id\n" +
-            "WHERE rbtp.page_id = #{pageId}")
+            "WHERE rbtp.page_id = #{pageId} \n" +
+            "AND b.type = 1 \n" +
+            "ORDER BY b.created desc;")
     List<BodyDto> getArchive(String pageId);
 
     @Delete("DELETE \n" +

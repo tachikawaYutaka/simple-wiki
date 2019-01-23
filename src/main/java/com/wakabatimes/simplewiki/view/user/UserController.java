@@ -83,7 +83,7 @@ public class UserController {
         }catch(RuntimeException e){
             log.error("Error",e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
             return "redirect:/user/name";
         }
         attr.addFlashAttribute("success",true);
@@ -128,7 +128,7 @@ public class UserController {
         }catch(RuntimeException e){
             log.error("Error",e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
             return "redirect:/user/password";
         }
         attr.addFlashAttribute("success",true);

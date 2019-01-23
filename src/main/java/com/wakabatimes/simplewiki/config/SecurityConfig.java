@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 認可の設定
         http.authorizeRequests()
-                .antMatchers("/", "/index","/login","/start","/home","/contents/public/**","/puml_image/**").permitAll() // indexは全ユーザーアクセス許可
+                .antMatchers("/", "/index","/login*","/start","/home","/contents/public/**","/puml_image/**").permitAll() // indexは全ユーザーアクセス許可
                 // ロールが必要なURL
                 .antMatchers("/search").hasRole("USER")
                 .antMatchers("/contents/private/**").hasRole("USER")
@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")   // 認証処理のパス
                 .loginPage("/login")            // ログインフォームのパス
                 .defaultSuccessUrl("/")     // 認証成功時の遷移先
+                .failureUrl("/login-error")
                 .usernameParameter("userName").passwordParameter("userPassword")  // ユーザー名、パスワードのパラメータ名
                 .and();
 

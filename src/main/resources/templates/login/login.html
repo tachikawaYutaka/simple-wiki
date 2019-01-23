@@ -8,6 +8,7 @@
         <form th:action="@{/login}" method="post">
             <h1 th:text="${system.name}">Simple Wiki</h1>
             <div class="module-alert true" th:if="${success}">システムの初期設定が完了しました。</div>
+            <div class="module-alert" th:if="${error}" th:text="${errorMessage}"></div>
             <p><input name="userName" placeholder="ID" type="text" class="module-input-text" /></p>
             <p><input name="userPassword" placeholder="PASSWORD" type="password" class="module-input-text" /></p>
             <button type="submit" class="module-submit-button">

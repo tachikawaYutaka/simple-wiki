@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('エラー')"></head>
+<body class="base-body">
+<header th:replace="components/common :: start-header"></header>
+<main class="base-main">
+    <div class="module-login">
+        <h1 th:text="${status} + ' ' + ${error}">Get Started!</h1>
+    </div>
+</main>
+<footer class="base-footer">
+    <small class="module-copy">Simple Wiki</small>
+</footer>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/script_min.js}"></script>
+</body>
+</html>
