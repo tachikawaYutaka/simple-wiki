@@ -1,13 +1,8 @@
 package com.wakabatimes.simplewiki.view.contents;
 
-import com.wakabatimes.simplewiki.app.application.branch_page.BranchPageServiceImpl;
-import com.wakabatimes.simplewiki.app.application.main_menu.MainMenuServiceImpl;
-import com.wakabatimes.simplewiki.app.application.page_hierarchy.PageHierarchyServiceImpl;
-import com.wakabatimes.simplewiki.app.application.root_page.RootPageServiceImpl;
 import com.wakabatimes.simplewiki.app.domain.aggregates.branch_page.BranchPage;
 import com.wakabatimes.simplewiki.app.domain.aggregates.main_menu.MainMenus;
 import com.wakabatimes.simplewiki.app.domain.aggregates.page_hierarchy.PageHierarchies;
-import com.wakabatimes.simplewiki.app.domain.aggregates.page_with_body.PageWithBody;
 import com.wakabatimes.simplewiki.app.domain.aggregates.root_page.RootPage;
 import com.wakabatimes.simplewiki.app.domain.model.body.Body;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
@@ -55,8 +50,6 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
@@ -136,9 +129,9 @@ public class PageController {
         for(String path : splitPath){
             PageName pageName = new PageName(path);
             if(parentId.equals("")){
-                Page rootPage = pageService.getRootPageByName(pageName);
-                PageResponseDto rootPageDto = new PageResponseDto(rootPage);
-                parentId = rootPage.getPageId().getValue();
+                RootPage rootPage = rootPageService.getRootPageByName(current.getMenuId(),pageName);
+                PageResponseDto rootPageDto = new PageResponseDto(rootPage.getPage());
+                parentId = rootPage.getPage().getPageId().getValue();
                 model.addAttribute("rootPage",rootPageDto);
             }else {
                 PageId parentPageId = new PageId(parentId);
@@ -205,9 +198,9 @@ public class PageController {
         for(String path : splitPath){
             PageName pageName = new PageName(path);
             if(parentId.equals("")){
-                Page rootPage = pageService.getRootPageByName(pageName);
-                PageResponseDto rootPageDto = new PageResponseDto(rootPage);
-                parentId = rootPage.getPageId().getValue();
+                RootPage rootPage = rootPageService.getRootPageByName(current.getMenuId(), pageName);
+                PageResponseDto rootPageDto = new PageResponseDto(rootPage.getPage());
+                parentId = rootPage.getPage().getPageId().getValue();
                 model.addAttribute("rootPage",rootPageDto);
             }else {
                 PageId parentPageId = new PageId(parentId);
@@ -373,32 +366,4 @@ public class PageController {
         }
     }
 
-    @PostMapping("/pages/{menuId}/{pageId}/pdf")
-    public String pageToPdf(@PathVariable String pageId,RedirectAttributes attr, HttpServletResponse res) throws UnsupportedEncodingException {
-        PageId pageId1 = new PageId(pageId);
-        Page page = pageService.get(pageId1);
-        Body body = bodyService.getCurrent(pageId1);
-        PageWithBody pageWithBody = new PageWithBody(page, body);
-
-        try {
-            pageWithBodyService.pdfExport(pageWithBody,res);
-            return null;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            log.error("Error :",e);
-            attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e.getMessage());
-
-            Menu menu = menuService.getHomeMenu();
-            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-            log.error("Error :",e);
-            attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e.getMessage());
-
-            Menu menu = menuService.getHomeMenu();
-            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
-        }
-    }
 }

@@ -132,18 +132,21 @@ public class SearchController {
             PageId pageId1 = new PageId(pageId);
             PageHierarchies pageHierarchies = pageHierarchyService.getCurrentPath(pageId1);
             String path = "";
+            String id = "";
+            int i = 0;
             for(PageHierarchyResponseDto pageHierarchyResponseDto: pageHierarchies.responseList()){
-
+                if(i == 0){
+                    id = pageHierarchyResponseDto.getId();
+                }
                 if(pageHierarchyResponseDto.getId().equals(pageId1.getValue())){
                     path = pageHierarchyResponseDto.getPath();
                 }
+                i++;
             }
             String pageUrl = "";
             String[] pathList = path.split("/");
-            String rootPageName = pathList[1].replace("/","");
-            PageName pageName = new PageName(rootPageName);
-            Page page = pageService.getRootPageByName(pageName);
-            RootPage rootPage = rootPageService.getByPageId(page.getPageId());
+            PageId rootPageId = new PageId(id);
+            RootPage rootPage = rootPageService.getByPageId(rootPageId);
 
             for(String  pathItem : pathList){
                 pageUrl += URLEncoder.encode(pathItem.replace("/",""),"UTF-8") + "/";

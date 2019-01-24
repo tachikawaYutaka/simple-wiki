@@ -60,13 +60,6 @@ public interface PageService {
     Page get(PageId pageId);
 
     /**
-     * ページ名からのルートページの検索
-     * @param pageName
-     * @return
-     */
-    Page getRootPageByName(PageName pageName);
-
-    /**
      * 親ページIDと子ページ名からのページの検索
      * @param parentId
      * @param pageName

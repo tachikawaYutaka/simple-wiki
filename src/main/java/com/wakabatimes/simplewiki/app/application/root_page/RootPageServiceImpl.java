@@ -7,6 +7,7 @@ import com.wakabatimes.simplewiki.app.domain.model.body.BodyFactory;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuId;
 import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
+import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.root_page.RootPageService;
@@ -35,4 +36,10 @@ public class RootPageServiceImpl implements RootPageService{
     public RootPage getByPageId(PageId pageId) {
         return rootPageRepository.getByPageId(pageId);
     }
+
+    @Override
+    public RootPage getRootPageByName(MenuId menuId, PageName pageName) {
+        return rootPageRepository.getRootPageByName(menuId, pageName);
+    }
+
 }

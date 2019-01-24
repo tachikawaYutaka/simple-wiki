@@ -155,7 +155,7 @@
         <p><input name="name" type="text" class="module-input-text" placeholder="メニュー名" /></p>
         <label class="module-input-radio" for="public"><input name="viewLimit" id="public" type="radio" value="0" checked />全員に公開</label>
         <label class="module-input-radio" for="private"><input name="viewLimit" id="private" type="radio" value="1" />ログインユーザーにのみ公開</label>
-        <button class="module-submit-button bg-black-2" type="submit">
+        <button class="module-submit-button" type="submit">
             保存
         </button>
     </form>
@@ -167,7 +167,7 @@
         <p><input name="menuName" type="text" class="module-input-text" placeholder="メニュー名" th:value="${menu.name}" /></p>
         <label class="module-input-radio" for="editPublic"><input name="menuViewLimit" id="editPublic" type="radio" value="0" th:checked="${menu.limit} == 'PUBLIC'" />全員に公開</label>
         <label class="module-input-radio" for="editPrivate"><input name="menuViewLimit" id="editPrivate" type="radio" value="1" th:checked="${menu.limit} == 'PRIVATE'" />ログインユーザーにのみ公開</label>
-        <button class="module-submit-button bg-black-2" type="submit">
+        <button class="module-submit-button" type="submit">
             保存
         </button>
     </form>
@@ -178,7 +178,7 @@
         <h1>メニュー削除</h1>
         <p>「<span th:text="${menu.name}"></span>」を削除してもよろしいですか？</p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2" type="submit">
+            <button class="module-submit-button" type="submit">
                 はい
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -193,7 +193,7 @@
         <h1>ページ削除</h1>
         <p>「<span class="page-name"></span>」を削除してもよろしいですか？</p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2">
+            <button class="module-submit-button ">
                 はい
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -208,7 +208,7 @@
         <h1>ユーザー名変更</h1>
         <p><input name="userName" type="text" class="module-input-text" placeholder="ユーザー名" /></p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2">
+            <button class="module-submit-button">
                 保存
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -223,7 +223,7 @@
         <h1>パスワード変更</h1>
         <p><input name="userPassword" type="password" class="module-input-text" placeholder="パスワード" /></p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2">
+            <button class="module-submit-button">
                 保存
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -239,7 +239,7 @@
         <h1>ユーザー削除</h1>
         <p>「<span class="user-name"></span>」を削除してもよろしいですか？</p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2" type="submit">
+            <button class="module-submit-button" type="submit">
                 はい
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -261,7 +261,7 @@
         <label class="module-input-radio" for="roleEditor"><input name="userRole" id="roleEditor" type="radio" value="1" checked />編集者</label>
         <label class="module-input-radio" for="roleViewer"><input name="userRole" id="roleViewer" type="radio" value="2" />閲覧者</label>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2" type="submit">
+            <button class="module-submit-button" type="submit">
                 保存
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">

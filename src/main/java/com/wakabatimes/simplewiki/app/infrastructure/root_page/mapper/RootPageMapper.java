@@ -18,4 +18,18 @@ public interface RootPageMapper {
             "LEFT JOIN menu m ON m.id = rpm.menu_id\n" +
             "WHERE p.id = #{pageId};")
     RootPageDto getByPageId(RootPageDto input);
+
+    @Select("SELECT \n" +
+            "m.id AS menu_id ,\n" +
+            "m.name AS menu_name,\n" +
+            "m.view_limit AS menu_view_limit,\n" +
+            "p.id AS pageId,\n" +
+            "p.name AS page_name,\n" +
+            "p.type AS page_type\n" +
+            "FROM page p\n" +
+            "LEFT JOIN relate_page_to_menu rpm ON p.id = rpm.page_id\n" +
+            "LEFT JOIN menu m ON m.id = rpm.menu_id\n" +
+            "WHERE m.id = #{menuId}" +
+            "   AND p.name = #{pageName};")
+    RootPageDto getByRootPageByName(RootPageDto input);
 }

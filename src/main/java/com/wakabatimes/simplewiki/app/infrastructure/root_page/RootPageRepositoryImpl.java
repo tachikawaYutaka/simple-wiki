@@ -10,6 +10,7 @@ import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageType;
+import com.wakabatimes.simplewiki.app.infrastructure.page.dto.PageDto;
 import com.wakabatimes.simplewiki.app.infrastructure.root_page.dto.RootPageDto;
 import com.wakabatimes.simplewiki.app.infrastructure.root_page.mapper.RootPageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,26 @@ public class RootPageRepositoryImpl implements RootPageRepository{
         }else {
             throw new RuntimeException("メニューまたはページが存在しません");
         }
+    }
+
+    @Override
+    public RootPage getRootPageByName(MenuId menuId, PageName pageName) {
+        RootPageDto input = new RootPageDto();
+        input.setMenuId(menuId.getValue());
+        input.setPageName(pageName.getValue());
+        RootPageDto result = rootPageMapper.getByRootPageByName(input);
+
+        MenuId menuId1 = new MenuId(result.getMenuId());
+        MenuName menuName = new MenuName(result.getMenuName());
+        MenuLimit menuLimit = MenuLimit.getById(result.getMenuViewLimit());
+        Menu menu = new Menu(menuId1,menuName,menuLimit);
+
+        PageId pageId = new PageId(result.getPageId());
+        PageName pageName1 = new PageName(result.getPageName());
+        PageType pageType = PageType.getById(result.getPageType());
+        Page page = new Page(pageId,pageName1,pageType);
+
+        RootPage rootPage = new RootPage(menu,page);
+        return rootPage;
     }
 }

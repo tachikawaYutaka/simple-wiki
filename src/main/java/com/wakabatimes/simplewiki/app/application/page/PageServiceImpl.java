@@ -53,11 +53,6 @@ public class PageServiceImpl implements PageService {
     }
 
     @Override
-    public Page getRootPageByName(PageName pageName) {
-        return pageRepository.getRootPageByName(pageName);
-    }
-
-    @Override
     public Page getPageByParentAndChildName(PageId parentId, PageName pageName) {
         return pageRepository.getPageByParentAndChildName(parentId, pageName);
     }
