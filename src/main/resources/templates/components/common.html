@@ -79,9 +79,11 @@
                 </ul>
             </li>
         </ul>
-        <div class="module-button bg-gray" th:if="${user}">
-            <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
-        </div>
+        <th:block th:if="${user}">
+            <div class="module-button bg-gray" th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}">
+                <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
+            </div>
+        </th:block>
     </nav>
 </div>
 
@@ -101,9 +103,11 @@
                 </ul>
             </li>
         </ul>
-        <div class="module-button bg-gray" th:if="${user}">
+        <th:block th:if="${user}">
+        <div class="module-button bg-gray" th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}">
             <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
         </div>
+        </th:block>
     </nav>
 </div>
 
@@ -276,7 +280,7 @@
 <ul th:fragment="menu-pages-list (id,lists,menu)">
     <li class="add-under-page" th:if="${id != null}">
         <div th:if="${user}">
-            <div class="text-area">
+            <div th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}" class="text-area">
                 <form method="post" th:action="'/pages/branch'"><input name="name" type="text" class="module-input-text" />
                     <input type="hidden" name="parentId" th:value="${id}">
                     <input type="hidden" name="menuId" th:value="${menu.id}">
@@ -294,9 +298,9 @@
                 <p><a th:text="${list.name}" th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + '/' + ${list.path}">メインページ</a></p>
             </div>
             <ul class="menu-area" th:if="${user}">
-                <li><div class="module-button bg-gray small"><a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${list.id}"><i class="fas fa-edit"></i>編集</a></div></li>
-                <li><div class="module-button bg-gray small"><a href="#" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
-                <li><div class="module-button bg-gray small"><a href="#" th:data-menu-id="${menu.id}" th:data-page-id="${list.id}" th:data-page-name="${list.name}" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${list.id}"><i class="fas fa-edit"></i>編集</a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" th:data-menu-id="${menu.id}" th:data-page-id="${list.id}" th:data-page-name="${list.name}" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
             </ul>
         </div>
         <ul th:replace="components/common :: menu-pages-list(${list.id},${list.pages},${menu})"></ul>

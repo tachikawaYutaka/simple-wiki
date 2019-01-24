@@ -21,15 +21,15 @@
         </div>
         <div class="base-content-article max">
             <div class="base-content-head-menu max">
-                <ul class="module-head-menu">
-                    <li th:if="${user}"><div class="module-button bg-gray"><a href="" class="script-add-root-page-show"><i class="fas fa-plus"></i>ページ追加</a></div></li>
-                    <li th:if="${user}"><div class="module-button bg-gray"><a class="script-edit-menu" href=""><i class="fas fa-cog"></i>メニュー編集</a></div></li>
-                    <li th:if="${user}"><div class="module-button bg-gray"><a href="" class="script-menu-delete"><i class="fas fa-minus"></i></i>メニュー削除</a></div></li>
+                <ul class="module-head-menu" th:if="${user}">
+                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a href="" class="script-add-root-page-show"><i class="fas fa-plus"></i>ページ追加</a></div></li>
+                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a class="script-edit-menu" href=""><i class="fas fa-cog"></i>メニュー編集</a></div></li>
+                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a href="" class="script-menu-delete"><i class="fas fa-minus"></i></i>メニュー削除</a></div></li>
                 </ul>
             </div>
             <div class="base-article-body">
-                <div class="module-add-root-page">
-                    <form method="post" th:action="'/pages/root'"><input type="text" name="name" class="module-input-text" />
+                <div class="module-add-root-page" th:if="${user}">
+                    <form th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}" method="post" th:action="'/pages/root'"><input type="text" name="name" class="module-input-text" />
                         <input type="hidden" name="menuId" th:value="${currentMenu.id}">
                     <button class="module-submit-button">保存</button><button class="module-submit-button bg-gray script-add-root-page-hidden">キャンセル</button></form>
                 </div>
