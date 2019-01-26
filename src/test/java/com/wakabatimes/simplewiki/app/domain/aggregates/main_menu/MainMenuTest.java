@@ -52,15 +52,15 @@ public class MainMenuTest {
 
         MainMenu mainMenu = new MainMenu(menu,pages);
 
-        MenuName menuName2 = new MenuName("hogehoge");
+        MenuName menuName2 = new MenuName("hogehoge3");
         MenuLimit menuLimit2 = MenuLimit.PUBLIC;
         Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
 
-        PageName pageName3 = new PageName("hogehoge");
+        PageName pageName3 = new PageName("hogehoge3");
         PageType pageType3 = PageType.ROOT;
         Page page3 = PageFactory.create(pageName3,pageType3);
 
-        PageName pageName4 = new PageName("hogehoge2");
+        PageName pageName4 = new PageName("hogehoge3");
         PageType pageType4 = PageType.ROOT;
         Page page4 = PageFactory.create(pageName4,pageType4);
 

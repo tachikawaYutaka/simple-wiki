@@ -38,11 +38,11 @@ public class MainMenusTest {
         MenuLimit menuLimit2 = MenuLimit.PUBLIC;
         Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
 
-        PageName pageName3 = new PageName("hogehoge");
+        PageName pageName3 = new PageName("hogehoge3");
         PageType pageType3 = PageType.ROOT;
         Page page3 = PageFactory.create(pageName3,pageType3);
 
-        PageName pageName4 = new PageName("hogehoge2");
+        PageName pageName4 = new PageName("hogehoge4");
         PageType pageType4 = PageType.ROOT;
         Page page4 = PageFactory.create(pageName4,pageType4);
 
@@ -83,11 +83,11 @@ public class MainMenusTest {
         MenuLimit menuLimit2 = MenuLimit.PUBLIC;
         Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
 
-        PageName pageName3 = new PageName("hogehoge");
+        PageName pageName3 = new PageName("hogehoge3");
         PageType pageType3 = PageType.ROOT;
         Page page3 = PageFactory.create(pageName3,pageType3);
 
-        PageName pageName4 = new PageName("hogehoge2");
+        PageName pageName4 = new PageName("hogehoge4");
         PageType pageType4 = PageType.ROOT;
         Page page4 = PageFactory.create(pageName4,pageType4);
 
@@ -130,11 +130,11 @@ public class MainMenusTest {
         MenuLimit menuLimit2 = MenuLimit.PUBLIC;
         Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
 
-        PageName pageName3 = new PageName("hogehoge");
+        PageName pageName3 = new PageName("hogehoge3");
         PageType pageType3 = PageType.ROOT;
         Page page3 = PageFactory.create(pageName3,pageType3);
 
-        PageName pageName4 = new PageName("hogehoge2");
+        PageName pageName4 = new PageName("hogehoge4");
         PageType pageType4 = PageType.ROOT;
         Page page4 = PageFactory.create(pageName4,pageType4);
 
@@ -177,11 +177,11 @@ public class MainMenusTest {
         MenuLimit menuLimit2 = MenuLimit.PUBLIC;
         Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
 
-        PageName pageName3 = new PageName("hogehoge");
+        PageName pageName3 = new PageName("hogehoge3");
         PageType pageType3 = PageType.ROOT;
         Page page3 = PageFactory.create(pageName3,pageType3);
 
-        PageName pageName4 = new PageName("hogehoge2");
+        PageName pageName4 = new PageName("hogehoge4");
         PageType pageType4 = PageType.ROOT;
         Page page4 = PageFactory.create(pageName4,pageType4);
 
