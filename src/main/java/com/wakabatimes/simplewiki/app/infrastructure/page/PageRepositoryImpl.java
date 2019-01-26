@@ -162,19 +162,6 @@ public class PageRepositoryImpl implements PageRepository {
     }
 
     @Override
-    public Page getRootPageByName(PageName pageName) {
-        PageDto input = new PageDto();
-        input.setName(pageName.getValue());
-        PageDto result = pageMapper.getByRootPageByName(input);
-
-        PageId pageId = new PageId(result.getId());
-        PageName pageName1 = new PageName(result.getName());
-        PageType pageType = PageType.getById(result.getType());
-        Page page = new Page(pageId,pageName1,pageType);
-        return page;
-    }
-
-    @Override
     public Page getPageByParentAndChildName(PageId parentId, PageName pageName) {
         PageDto input = new PageDto();
         input.setId(parentId.getValue());

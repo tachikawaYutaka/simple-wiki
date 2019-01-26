@@ -19,8 +19,6 @@ public interface PageRepository {
 
     Page getByPageId(PageId pageId);
 
-    Page getRootPageByName(PageName pageName);
-
     Page getPageByParentAndChildName(PageId parentId, PageName pageName);
 
     Page getHomePage(MenuId menuId);

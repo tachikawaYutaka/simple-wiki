@@ -45,11 +45,6 @@ public interface PageMapper {
             "WHERE id = #{id}")
     PageDto getByPageId(PageDto pageDto);
 
-    @Select("SELECT * FROM  page \n" +
-            "WHERE name = #{name} \n" +
-            "  AND type = '0';")
-    PageDto getByRootPageByName(PageDto input);
-
     @Select("SELECT * FROM page p\n" +
             "LEFT JOIN relate_child_page_to_parent_page rcptpp ON p.id = rcptpp.child_page_id\n" +
             "WHERE rcptpp.parent_page_id = #{id}" +

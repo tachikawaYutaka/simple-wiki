@@ -1,9 +1,5 @@
 package com.wakabatimes.simplewiki.view.contents;
 
-import com.wakabatimes.simplewiki.app.application.branch_page.BranchPageServiceImpl;
-import com.wakabatimes.simplewiki.app.application.main_menu.MainMenuServiceImpl;
-import com.wakabatimes.simplewiki.app.application.page_hierarchy.PageHierarchyServiceImpl;
-import com.wakabatimes.simplewiki.app.application.root_page.RootPageServiceImpl;
 import com.wakabatimes.simplewiki.app.domain.aggregates.branch_page.BranchPage;
 import com.wakabatimes.simplewiki.app.domain.aggregates.main_menu.MainMenus;
 import com.wakabatimes.simplewiki.app.domain.aggregates.page_hierarchy.PageHierarchies;
@@ -25,6 +21,7 @@ import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlS
 import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.page_hierarchy.PageHierarchyService;
+import com.wakabatimes.simplewiki.app.domain.service.page_with_body.PageWithBodyService;
 import com.wakabatimes.simplewiki.app.domain.service.root_page.RootPageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
@@ -94,6 +91,9 @@ public class PageController {
     @Autowired
     private OriginalHtmlService originalHtmlService;
 
+    @Autowired
+    private PageWithBodyService pageWithBodyService;
+
     @GetMapping("/contents/public/{menuName}/**")
     public String contentPublicPage(HttpServletRequest request, @PathVariable String menuName, Model model, Principal principal){
         final String resourcePath = extractPathFromPattern(request);
@@ -129,9 +129,9 @@ public class PageController {
         for(String path : splitPath){
             PageName pageName = new PageName(path);
             if(parentId.equals("")){
-                Page rootPage = pageService.getRootPageByName(pageName);
-                PageResponseDto rootPageDto = new PageResponseDto(rootPage);
-                parentId = rootPage.getPageId().getValue();
+                RootPage rootPage = rootPageService.getRootPageByName(current.getMenuId(),pageName);
+                PageResponseDto rootPageDto = new PageResponseDto(rootPage.getPage());
+                parentId = rootPage.getPage().getPageId().getValue();
                 model.addAttribute("rootPage",rootPageDto);
             }else {
                 PageId parentPageId = new PageId(parentId);
@@ -198,9 +198,9 @@ public class PageController {
         for(String path : splitPath){
             PageName pageName = new PageName(path);
             if(parentId.equals("")){
-                Page rootPage = pageService.getRootPageByName(pageName);
-                PageResponseDto rootPageDto = new PageResponseDto(rootPage);
-                parentId = rootPage.getPageId().getValue();
+                RootPage rootPage = rootPageService.getRootPageByName(current.getMenuId(), pageName);
+                PageResponseDto rootPageDto = new PageResponseDto(rootPage.getPage());
+                parentId = rootPage.getPage().getPageId().getValue();
                 model.addAttribute("rootPage",rootPageDto);
             }else {
                 PageId parentPageId = new PageId(parentId);
@@ -260,7 +260,7 @@ public class PageController {
             PageType pageType = PageType.ROOT;
             Page page = PageFactory.create(pageName,pageType);
 
-            RootPage rootPage = new RootPage(menuId,page);
+            RootPage rootPage = new RootPage(menu,page);
             rootPageService.save(rootPage);
 
             attr.addFlashAttribute("success",true);
@@ -334,7 +334,7 @@ public class PageController {
             PageId parentPageId1 = new PageId(parentPageId);
             Page parentPage = pageService.get(parentPageId1);
 
-            Page page = PageFactory.createNewPage(parentPage.getPageType());
+            Page page = PageFactory.createNewPage(PageType.BRANCH);
 
             BranchPage branchPage = new BranchPage(parentPageId1,page);
             branchPageService.save(branchPage);
@@ -365,4 +365,5 @@ public class PageController {
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
         }
     }
+
 }

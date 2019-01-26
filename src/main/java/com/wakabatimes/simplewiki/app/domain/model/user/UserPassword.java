@@ -34,7 +34,7 @@ public class UserPassword {
 
         Integer count = value.length();
         if(count < 8 || count > 255) {
-            throw new RuntimeException("パスワードの入力が正しくありません。 8～255字内で入力してください。n");
+            throw new RuntimeException("パスワードの入力が正しくありません。 8～255字内で入力してください。");
         }
     }
 

@@ -127,7 +127,7 @@
             padding: 5px 15px;
             padding-left: 30px;
             font-size: 0.8rem;
-            background-color: $black-3;
+            background-color: $black-4;
             position: relative;
             overflow: visible;
             z-index: 1;
@@ -138,7 +138,7 @@
                 left: -15px;
                 bottom: 0;
                 position: absolute;
-                background-color: $black-4;
+                background-color: $black-0;
             }
             &:before {
                 content: ' ';
@@ -164,7 +164,8 @@
                 i {
                     position: absolute;
                     left: 15px;
-                    top: 8px;
+                    top: 10px;
+
                 }
             }
         }
@@ -177,7 +178,7 @@
     > ul {
         padding-left: 0;
         > li {
-            background-color: $black-3;
+            background-color: $black-4;
             > p > a {
                 background-color: $black-2;
                 font-size: 0.9rem;
@@ -199,6 +200,7 @@
     ul {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
         justify-content: flex-end;
         list-style-type: none;
         padding-left: 0;
@@ -218,6 +220,7 @@
 
 .module-title {
     margin-bottom: 0;
+    margin-top: 20px;
 }
 
 .module-head-menu {
@@ -253,7 +256,7 @@
     overflow: hidden;
     ul {
         list-style-type: none;
-        padding-left: 15px;
+        padding-left: 10px;
         margin-bottom: 0;
     }
     a {
@@ -264,7 +267,8 @@
         font-weight: 500;
         padding: 5px 0;
         padding-left: 15px;
-        font-size: 0.9rem;
+        padding-right: 10px;
+        font-size: 0.8rem;
         &:hover {
             text-decoration: none;
             color: $white;
@@ -279,7 +283,7 @@
         &:before {
             content: ' ';
             width: 300%;
-            background-color:  $gray-1;
+            background-color:  transparent;
             height: 100%;
             position: absolute;
             left: -100%;
@@ -294,7 +298,7 @@
         &:after {
             content: ' ';
             width: 300%;
-            background-color:  $gray-0;
+            background-color:  $gray-2;
             height: 1px;
             position: absolute;
             left: -100%;
@@ -304,7 +308,7 @@
     }
     > ul > li > a {
         &:before {
-            background-color:  $black-3;
+            background-color:  $black-0;
         }
         color: $white;
     }
@@ -329,7 +333,7 @@
     }
     &.position-right {
         right: 10px;
-        bottom: 6px;
+        bottom: 10px;
     }
     &.break-point-pc {
         @include mq(pc) {
@@ -461,6 +465,12 @@
             background-color: $white;
         }
     }
+    &.bg-black-3 {
+            background-color: $black-3;
+            &:hover {
+                background-color: $white;
+            }
+        }
     &.bg-gray {
         background-color: $black-9;
         color: $white;
@@ -477,7 +487,7 @@
     max-width: 420px;
     width: 100%;
     text-align: center;
-    background-color: $black;
+    background-color: $black-3;
     color: $white;
     padding: 50px 50px 40px;
     z-index: 3;
@@ -725,11 +735,18 @@
     display: flex;
     justify-content: space-between;
     align-items :flex-start;
+    @include mq(tb) {
+        flex-direction: column;
+    }
     > div {
         width: 50%;
         height: 680px;
         overflow: hidden;
         position: relative;
+        @include mq(tb) {
+            width: 100%;
+            margin-bottom: 10px;
+        }
     }
     .menu {
         display: flex;
@@ -796,7 +813,7 @@
     color: $white;
     .head {
         background-color: $black-3;
-        padding: 3px;
+        padding: 10px;
     }
     ul {
         list-style-type: none;
@@ -809,10 +826,16 @@
             justify-content: space-around;
             background-color: $black-6;
             margin-bottom: 1px;
+            @include mq(tb) {
+                flex-wrap: wrap;
+            }
         }
         .name {
             width: calc(100% - 246px);
-            padding: 5px;
+            padding: 5px 10px;
+            @include mq(tb) {
+                width: 100%;
+            }
         }
         .menu {
             width: 100%;
@@ -825,6 +848,9 @@
                 a,button {
                     padding: 6px 10px;
                 }
+            }
+            @include mq(tb) {
+                padding-bottom: 10px;
             }
         }
     }
@@ -911,6 +937,26 @@
         justify-content: flex-end;
         li {
             margin-left: 2px;
+        }
+    }
+}
+
+.module-search-result {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    li {
+        margin-bottom: 20px;
+        .head {
+            font-size: 1.5rem;
+            padding-bottom: 5px;
+            display: block;
+        }
+        .page-content {
+            max-height: 300px;
+            overflow: hidden;
+            border: 1px solid  $black-2;
+            padding: 15px;
         }
     }
 }

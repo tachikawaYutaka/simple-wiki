@@ -92,7 +92,8 @@ public class UserAdminController {
         }catch(RuntimeException e){
             log.error("Error",e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            return "redirect:/system/users";
         }
         attr.addFlashAttribute("success",true);
         attr.addFlashAttribute("successMessage","ユーザーを追加しました。");
@@ -110,7 +111,8 @@ public class UserAdminController {
         }catch(RuntimeException e){
             log.error("Error",e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            return "redirect:/system/users";
         }
         attr.addFlashAttribute("success",true);
         attr.addFlashAttribute("successMessage","ユーザー名を更新しました。");
@@ -127,7 +129,8 @@ public class UserAdminController {
         }catch(RuntimeException e){
             log.error("Error",e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            return "redirect:/system/users";
         }
         attr.addFlashAttribute("success",true);
         attr.addFlashAttribute("successMessage","パスワードを更新しました。");
@@ -143,7 +146,8 @@ public class UserAdminController {
         }catch(RuntimeException e){
             log.error("Error",e);
             attr.addFlashAttribute("error",true);
-            attr.addFlashAttribute("errorMessage",e);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            return "redirect:/system/users";
         }
         attr.addFlashAttribute("success",true);
         attr.addFlashAttribute("successMessage","パスワードを更新しました。");

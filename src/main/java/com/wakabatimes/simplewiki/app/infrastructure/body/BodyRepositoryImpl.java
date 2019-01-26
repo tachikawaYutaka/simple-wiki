@@ -35,7 +35,8 @@ public class BodyRepositoryImpl implements BodyRepository{
         BodyContent bodyContent = new BodyContent(result.getContent());
         BodyHtml bodyHtml = new BodyHtml(result.getHtml());
         BodyType bodyType = BodyType.getById(result.getType());
-        Body body = new Body(bodyId,bodyContent,bodyHtml, bodyType);
+        BodyCreatedDate bodyCreatedDate = new BodyCreatedDate(result.getCreated());
+        Body body = new Body(bodyId,bodyContent,bodyHtml, bodyType, bodyCreatedDate);
         return body;
     }
 
@@ -48,7 +49,8 @@ public class BodyRepositoryImpl implements BodyRepository{
             BodyContent bodyContent = new BodyContent(result.getContent());
             BodyHtml bodyHtml = new BodyHtml(result.getHtml());
             BodyType bodyType = BodyType.getById(result.getType());
-            Body body = new Body(bodyId,bodyContent,bodyHtml, bodyType);
+            BodyCreatedDate bodyCreatedDate = new BodyCreatedDate(result.getCreated());
+            Body body = new Body(bodyId,bodyContent,bodyHtml, bodyType, bodyCreatedDate);
             bodies.add(body);
         }
         return bodies;
@@ -74,7 +76,8 @@ public class BodyRepositoryImpl implements BodyRepository{
             BodyContent bodyContent = new BodyContent(result.getContent());
             BodyHtml bodyHtml = new BodyHtml(result.getHtml());
             BodyType bodyType = BodyType.getById(result.getType());
-            Body body = new Body(bodyId1,bodyContent,bodyHtml, bodyType);
+            BodyCreatedDate bodyCreatedDate = new BodyCreatedDate(result.getCreated());
+            Body body = new Body(bodyId1,bodyContent,bodyHtml, bodyType, bodyCreatedDate);
             return body;
         }else {
             throw new RuntimeException("指定したボディが存在しません。");

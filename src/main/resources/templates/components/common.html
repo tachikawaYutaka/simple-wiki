@@ -79,9 +79,11 @@
                 </ul>
             </li>
         </ul>
-        <div class="module-button bg-gray" th:if="${user}">
-            <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
-        </div>
+        <th:block th:if="${user}">
+            <div class="module-button bg-gray" th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}">
+                <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
+            </div>
+        </th:block>
     </nav>
 </div>
 
@@ -89,7 +91,10 @@
     <nav class="module-menu-lists">
         <ul th:each="menu : ${menus}">
             <li>
-                <p><a th:class="${currentMenu.id == menu.menuId ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><i  th:if="${currentMenu.id == menu.menuId}" class="fas fa-angle-right"></i><span th:text="${menu.menuName}"></span></a></p>
+                <p>
+                    <a th:if="${currentMenu != null}" th:class="${currentMenu.id == menu.menuId ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><i  th:if="${currentMenu.id == menu.menuId}" class="fas fa-angle-right"></i><span th:text="${menu.menuName}"></span></a>
+                    <a th:if="${currentMenu == null}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><span th:text="${menu.menuName}"></span></a>
+                </p>
                 <ul th:each="page : ${menu.pages}">
                     <li>
                         <p th:if="${rootPage != null}"><a th:class="${rootPage.id == page.id ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName} + '/' + ${page.name}"><i th:if="${rootPage.id == page.id}" class="fas fa-angle-right"></i><span th:text="${page.name}"></span></a></p>
@@ -98,9 +103,11 @@
                 </ul>
             </li>
         </ul>
-        <div class="module-button bg-gray" th:if="${user}">
+        <th:block th:if="${user}">
+        <div class="module-button bg-gray" th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}">
             <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
         </div>
+        </th:block>
     </nav>
 </div>
 
@@ -152,7 +159,7 @@
         <p><input name="name" type="text" class="module-input-text" placeholder="メニュー名" /></p>
         <label class="module-input-radio" for="public"><input name="viewLimit" id="public" type="radio" value="0" checked />全員に公開</label>
         <label class="module-input-radio" for="private"><input name="viewLimit" id="private" type="radio" value="1" />ログインユーザーにのみ公開</label>
-        <button class="module-submit-button bg-black-2" type="submit">
+        <button class="module-submit-button" type="submit">
             保存
         </button>
     </form>
@@ -164,7 +171,7 @@
         <p><input name="menuName" type="text" class="module-input-text" placeholder="メニュー名" th:value="${menu.name}" /></p>
         <label class="module-input-radio" for="editPublic"><input name="menuViewLimit" id="editPublic" type="radio" value="0" th:checked="${menu.limit} == 'PUBLIC'" />全員に公開</label>
         <label class="module-input-radio" for="editPrivate"><input name="menuViewLimit" id="editPrivate" type="radio" value="1" th:checked="${menu.limit} == 'PRIVATE'" />ログインユーザーにのみ公開</label>
-        <button class="module-submit-button bg-black-2" type="submit">
+        <button class="module-submit-button" type="submit">
             保存
         </button>
     </form>
@@ -175,7 +182,7 @@
         <h1>メニュー削除</h1>
         <p>「<span th:text="${menu.name}"></span>」を削除してもよろしいですか？</p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2" type="submit">
+            <button class="module-submit-button" type="submit">
                 はい
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -190,7 +197,7 @@
         <h1>ページ削除</h1>
         <p>「<span class="page-name"></span>」を削除してもよろしいですか？</p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2">
+            <button class="module-submit-button ">
                 はい
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -205,7 +212,7 @@
         <h1>ユーザー名変更</h1>
         <p><input name="userName" type="text" class="module-input-text" placeholder="ユーザー名" /></p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2">
+            <button class="module-submit-button">
                 保存
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -220,7 +227,7 @@
         <h1>パスワード変更</h1>
         <p><input name="userPassword" type="password" class="module-input-text" placeholder="パスワード" /></p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2">
+            <button class="module-submit-button">
                 保存
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -236,7 +243,7 @@
         <h1>ユーザー削除</h1>
         <p>「<span class="user-name"></span>」を削除してもよろしいですか？</p>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2" type="submit">
+            <button class="module-submit-button" type="submit">
                 はい
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -258,7 +265,7 @@
         <label class="module-input-radio" for="roleEditor"><input name="userRole" id="roleEditor" type="radio" value="1" checked />編集者</label>
         <label class="module-input-radio" for="roleViewer"><input name="userRole" id="roleViewer" type="radio" value="2" />閲覧者</label>
         <div class="module-button-lists">
-            <button class="module-submit-button bg-black-2" type="submit">
+            <button class="module-submit-button" type="submit">
                 保存
             </button>
             <button class="module-submit-button bg-gray script-popup-cancel">
@@ -273,7 +280,7 @@
 <ul th:fragment="menu-pages-list (id,lists,menu)">
     <li class="add-under-page" th:if="${id != null}">
         <div th:if="${user}">
-            <div class="text-area">
+            <div th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}" class="text-area">
                 <form method="post" th:action="'/pages/branch'"><input name="name" type="text" class="module-input-text" />
                     <input type="hidden" name="parentId" th:value="${id}">
                     <input type="hidden" name="menuId" th:value="${menu.id}">
@@ -291,9 +298,9 @@
                 <p><a th:text="${list.name}" th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + '/' + ${list.path}">メインページ</a></p>
             </div>
             <ul class="menu-area" th:if="${user}">
-                <li><div class="module-button bg-gray small"><a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${list.id}"><i class="fas fa-edit"></i>編集</a></div></li>
-                <li><div class="module-button bg-gray small"><a href="#" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
-                <li><div class="module-button bg-gray small"><a href="#" th:data-menu-id="${menu.id}" th:data-page-id="${list.id}" th:data-page-name="${list.name}" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${list.id}"><i class="fas fa-edit"></i>編集</a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" th:data-menu-id="${menu.id}" th:data-page-id="${list.id}" th:data-page-name="${list.name}" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
             </ul>
         </div>
         <ul th:replace="components/common :: menu-pages-list(${list.id},${list.pages},${menu})"></ul>

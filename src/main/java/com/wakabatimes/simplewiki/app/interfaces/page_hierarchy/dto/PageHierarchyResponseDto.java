@@ -16,5 +16,6 @@ public class PageHierarchyResponseDto {
     public PageHierarchyResponseDto(PageHierarchy pageHierarchy){
         this.id = pageHierarchy.getPage().getPageId().getValue();
         this.name = pageHierarchy.getPage().getPageName().getValue();
+        this.path = pageHierarchy.getPagePath().getValue();
     }
 }

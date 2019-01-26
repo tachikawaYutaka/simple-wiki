@@ -79,7 +79,7 @@ public class RootPageServiceTest {
         PageType pageType = PageType.ROOT;
         Page page = PageFactory.create(pageName,pageType);
 
-        RootPage rootPage = new RootPage(menu.getMenuId(),page);
+        RootPage rootPage = new RootPage(menu,page);
         rootPageService.save(rootPage);
         Assert.assertNotNull(pageService.get(page.getPageId()));
         Assert.assertNotNull(bodyService.getCurrent(page.getPageId()));

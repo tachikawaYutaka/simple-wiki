@@ -21,7 +21,7 @@ public interface PageWithBodyMapper {
             "LEFT JOIN relate_body_to_page r ON r.page_id = p.id\n" +
             "LEFT JOIN body b ON b.id = r.body_id\n" +
             "WHERE b.type = 0\n" +
-            "AND (p.name LIKE '%#{input}%'\n" +
-            "OR b.html LIKE '%#{input}%');")
+            "AND (p.name LIKE #{input}\n" +
+            "OR b.html LIKE #{input});")
     List<PageWithBodyDto> search(String input);
 }

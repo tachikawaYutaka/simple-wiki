@@ -3,6 +3,8 @@ package com.wakabatimes.simplewiki.app.domain.model.body;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Date;
+
 public class BodyTest {
     @Test
     public void createInsntace_success() {
@@ -68,7 +70,9 @@ public class BodyTest {
         BodyHtml bodyHtml = new BodyHtml("hogehoge");
         Body body = BodyFactory.create(bodyContent, bodyHtml);
         BodyId bodyId = body.getBodyId();
-        Body newBody = new Body(bodyId,bodyContent, bodyHtml,BodyType.ARCHIVE);
+        Date date = new Date();
+        BodyCreatedDate bodyCreatedDate = new BodyCreatedDate(date);
+        Body newBody = new Body(bodyId,bodyContent, bodyHtml,BodyType.ARCHIVE, bodyCreatedDate);
         boolean isCurrent = body.isCurrent(newBody);
         Assert.assertFalse(isCurrent);
     }

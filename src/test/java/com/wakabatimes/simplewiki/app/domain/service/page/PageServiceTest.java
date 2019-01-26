@@ -311,22 +311,6 @@ public class PageServiceTest {
     }
 
     @Test
-    public void getRootPageByName(){
-        MenuName menuName = new MenuName("menu");
-        MenuLimit menuLimit = MenuLimit.PUBLIC;
-        Menu menu = MenuFactory.create(menuName,menuLimit);
-        menuService.save(menu);
-
-        PageName pageName = new PageName("hogehoge");
-        PageType pageType = PageType.ROOT;
-        Page page = PageFactory.create(pageName,pageType);
-        pageService.saveRoot(page,menu.getMenuId());
-
-        Page getPage = pageService.getRootPageByName(page.getPageName());
-        assertNotNull(getPage);
-    }
-
-    @Test
     public void getPageByParentAndChildName(){
         MenuName menuName = new MenuName("menu");
         MenuLimit menuLimit = MenuLimit.PUBLIC;

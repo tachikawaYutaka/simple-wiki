@@ -16,6 +16,8 @@
     width: 100%;
     justify-content: space-between;
     position: relative;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+    z-index: 2;
     a {
         color: $white;
         text-decoration: none;
@@ -97,7 +99,7 @@
 .base-content-body-head {
     width: 100%;
     padding: 0 30px 40px ;
-    background-color: $black-4;
+    background-color: $black-3;
     color: $white;
     a {
         color: $white;
@@ -108,7 +110,7 @@
 }
 
 .base-content-article {
-    width: calc(100% - 300px);
+    width: calc(100% - 250px);
     padding: 50px;
     position: relative;
     @include mq(pc) {
@@ -128,7 +130,7 @@
     left: 0;
     width: 100%;
     @include mq(pc) {
-        top: -35px;
+        top: -39px;
         padding-right: 50px;
     }
     &.max {
@@ -735,7 +737,7 @@
 }
 
 .base-content-side {
-    width: 300px;
+    width: 250px;
     background-color: $gray-0;
     @include mq(pc) {
         position: absolute;
