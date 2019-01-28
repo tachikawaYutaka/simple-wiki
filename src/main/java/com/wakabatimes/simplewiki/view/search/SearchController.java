@@ -99,13 +99,13 @@ public class SearchController {
         model.addAttribute("menus",menuLists);
         if(input != null){
             try{
-                List<PageWithBodyResponseDto> results = new ArrayList<>();
                 SearchInput searchInput = new SearchInput(input);
                 Search search = new Search(searchInput);
                 PageWithBodies pageWithBodies = pageWithBodyService.search(search);
-                results = pageWithBodies.responseList();
+                List<PageWithBodyResponseDto> results = pageWithBodies.responseList();
                 model.addAttribute("results",results);
             } catch (RuntimeException e) {
+                log.error("error:", e);
                 model.addAttribute("error", true);
                 model.addAttribute("errorMessage", e.getMessage());
             }

@@ -1,7 +1,7 @@
-package com.wakabatimes.simplewiki.app.domain.service.root_page;
+package com.wakabatimes.simplewiki.app.domain.service.page_with_body;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
-import com.wakabatimes.simplewiki.app.application.root_page.RootPageServiceImpl;
+import com.wakabatimes.simplewiki.app.domain.aggregates.page_with_body.PageWithBodies;
 import com.wakabatimes.simplewiki.app.domain.aggregates.root_page.RootPage;
 import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
 import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
@@ -11,9 +11,12 @@ import com.wakabatimes.simplewiki.app.domain.model.page.Page;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageFactory;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
 import com.wakabatimes.simplewiki.app.domain.model.page.PageType;
+import com.wakabatimes.simplewiki.app.domain.model.search.Search;
+import com.wakabatimes.simplewiki.app.domain.model.search.SearchInput;
 import com.wakabatimes.simplewiki.app.domain.service.body.BodyService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
+import com.wakabatimes.simplewiki.app.domain.service.root_page.RootPageService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
@@ -28,7 +31,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = SimpleWikiApplication.class)
-public class RootPageServiceTest {
+public class PageWithBodyServiceTest {
     @Autowired
     private PageService pageService;
 
@@ -40,6 +43,9 @@ public class RootPageServiceTest {
 
     @Autowired
     private RootPageService rootPageService;
+
+    @Autowired
+    private PageWithBodyService pageWithBodyService;
 
     @Autowired
     private JdbcOperations jdbcOperations; // 各テスト前処理用
@@ -69,24 +75,7 @@ public class RootPageServiceTest {
     }
 
     @Test
-    public void save(){
-        MenuName menuName = new MenuName("menu");
-        MenuLimit menuLimit = MenuLimit.PUBLIC;
-        Menu menu = MenuFactory.create(menuName,menuLimit);
-        menuService.save(menu);
-
-        PageName pageName = new PageName("hogehoge");
-        PageType pageType = PageType.ROOT;
-        Page page = PageFactory.create(pageName,pageType);
-
-        RootPage rootPage = new RootPage(menu,page);
-        rootPageService.save(rootPage);
-        Assert.assertNotNull(pageService.get(page.getPageId()));
-        Assert.assertNotNull(bodyService.getCurrent(page.getPageId()));
-    }
-
-    @Test
-    public void getByPageId(){
+    public void search(){
         MenuName menuName = new MenuName("menu");
         MenuLimit menuLimit = MenuLimit.PUBLIC;
         Menu menu = MenuFactory.create(menuName,menuLimit);
@@ -99,39 +88,9 @@ public class RootPageServiceTest {
         RootPage rootPage = new RootPage(menu,page);
         rootPageService.save(rootPage);
 
-        RootPage rootPage1 = rootPageService.getByPageId(page.getPageId());
-        Assert.assertNotNull(rootPage1);
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void getByPageId_fail(){
-        MenuName menuName = new MenuName("menu");
-        MenuLimit menuLimit = MenuLimit.PUBLIC;
-        Menu menu = MenuFactory.create(menuName,menuLimit);
-        menuService.save(menu);
-
-        PageName pageName = new PageName("hogehoge");
-        PageType pageType = PageType.ROOT;
-        Page page = PageFactory.create(pageName,pageType);
-
-        RootPage rootPage1 = rootPageService.getByPageId(page.getPageId());
-    }
-
-    @Test
-    public void getRootPageByName(){
-        MenuName menuName = new MenuName("menu");
-        MenuLimit menuLimit = MenuLimit.PUBLIC;
-        Menu menu = MenuFactory.create(menuName,menuLimit);
-        menuService.save(menu);
-
-        PageName pageName = new PageName("hogehoge");
-        PageType pageType = PageType.ROOT;
-        Page page = PageFactory.create(pageName,pageType);
-
-        RootPage rootPage = new RootPage(menu,page);
-        rootPageService.save(rootPage);
-
-        RootPage rootPage1 = rootPageService.getRootPageByName(menu.getMenuId(),page.getPageName());
-        Assert.assertNotNull(rootPage1);
+        SearchInput searchInput = new SearchInput("hogehoge");
+        Search search = new Search(searchInput);
+        PageWithBodies pageWithBodies = pageWithBodyService.search(search);
+        Assert.assertTrue(pageWithBodies.size() == 1);
     }
 }

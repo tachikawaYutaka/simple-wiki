@@ -18,13 +18,4 @@ public class RootPageDto {
     public RootPageDto() {
 
     }
-
-    public RootPageDto(Menu menu, Page page) {
-        this.menuId = menu.getMenuId().getValue();
-        this.menuName = menu.getMenuName().getValue();
-        this.menuViewLimit = menu.getMenuLimit().getId();
-        this.pageId = page.getPageId().getValue();
-        this.pageName = page.getPageName().getValue();
-        this.pageType = page.getPageType().getId();
-    }
 }

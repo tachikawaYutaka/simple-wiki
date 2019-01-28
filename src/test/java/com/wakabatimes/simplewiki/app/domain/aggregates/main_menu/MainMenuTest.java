@@ -60,7 +60,7 @@ public class MainMenuTest {
         PageType pageType3 = PageType.ROOT;
         Page page3 = PageFactory.create(pageName3,pageType3);
 
-        PageName pageName4 = new PageName("hogehoge3");
+        PageName pageName4 = new PageName("hogehoge4");
         PageType pageType4 = PageType.ROOT;
         Page page4 = PageFactory.create(pageName4,pageType4);
 

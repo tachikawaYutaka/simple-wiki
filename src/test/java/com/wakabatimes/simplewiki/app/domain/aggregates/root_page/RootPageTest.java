@@ -22,7 +22,7 @@ public class RootPageTest {
         MenuLimit menuLimit = MenuLimit.PUBLIC;
         Menu menu = MenuFactory.create(menuName,menuLimit);
 
-        RootPage rootPage = new RootPage(menu.getMenuId(),page);
+        RootPage rootPage = new RootPage(menu,page);
 
         Assert.assertNotNull(rootPage);
     }
@@ -37,7 +37,7 @@ public class RootPageTest {
         MenuLimit menuLimit = MenuLimit.PUBLIC;
         Menu menu = MenuFactory.create(menuName,menuLimit);
 
-        RootPage rootPage = new RootPage(menu.getMenuId(),page);
+        RootPage rootPage = new RootPage(menu,page);
 
         PageName pageName2 = new PageName("hogehoge");
         PageType pageType2 = PageType.ROOT;
@@ -47,7 +47,7 @@ public class RootPageTest {
         MenuLimit menuLimit2 = MenuLimit.PUBLIC;
         Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
 
-        RootPage rootPage2 = new RootPage(menu2.getMenuId(),page2);
+        RootPage rootPage2 = new RootPage(menu2,page2);
 
         Assert.assertFalse(rootPage.equals(rootPage2));
     }
@@ -62,7 +62,7 @@ public class RootPageTest {
         MenuLimit menuLimit = MenuLimit.PUBLIC;
         Menu menu = MenuFactory.create(menuName,menuLimit);
 
-        RootPage rootPage = new RootPage(menu.getMenuId(),page);
+        RootPage rootPage = new RootPage(menu,page);
 
         Assert.assertEquals("hogehoge", rootPage.getPage().getPageName().getValue());
     }

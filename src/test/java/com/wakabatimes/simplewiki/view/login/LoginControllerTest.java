@@ -152,4 +152,14 @@ public class LoginControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("login/login"));
     }
+
+    @Test
+    public void loginError() throws Exception {
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        mockMvc.perform(get("/login-error"))
+                .andExpect(status().is3xxRedirection());
+    }
 }

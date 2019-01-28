@@ -72,23 +72,21 @@ public class PageHierarchyServiceImpl implements PageHierarchyService{
         Collections.reverse(results);
 
         PageHierarchies pageHierarchies = new PageHierarchies();
-        if(results.size() > 0){
-            String mainPath = results.get(0).getPagePath().getValue();
-            String[] split = mainPath.split("/");
+        String mainPath = results.get(0).getPagePath().getValue();
+        String[] split = mainPath.split("/");
 
-            int i = 1;
-            for(PageHierarchy resultPage : results) {
-                String modPath = "";
-                int j = 0;
-                while (j < i + 1){
-                    modPath += split[j] + "/";
-                    j++;
-                }
-                PagePath pagePath2 = new PagePath(modPath);
-                PageHierarchy pageHierarchy2 = new PageHierarchy(resultPage.getPage(),pagePath2,resultPage.getPageHierarchies());
-                pageHierarchies.add(pageHierarchy2);
-                i++;
+        int i = 1;
+        for(PageHierarchy resultPage : results) {
+            String modPath = "";
+            int j = 0;
+            while (j < i + 1){
+                modPath += split[j] + "/";
+                j++;
             }
+            PagePath pagePath2 = new PagePath(modPath);
+            PageHierarchy pageHierarchy2 = new PageHierarchy(resultPage.getPage(),pagePath2,resultPage.getPageHierarchies());
+            pageHierarchies.add(pageHierarchy2);
+            i++;
         }
         return pageHierarchies;
     }
