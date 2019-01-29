@@ -5,6 +5,7 @@ import com.wakabatimes.simplewiki.app.application.page_hierarchy.PageHierarchySe
 import com.wakabatimes.simplewiki.app.domain.aggregates.main_menu.MainMenus;
 import com.wakabatimes.simplewiki.app.domain.aggregates.page_hierarchy.PageHierarchies;
 import com.wakabatimes.simplewiki.app.domain.model.menu.*;
+import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.user.User;
 import com.wakabatimes.simplewiki.app.domain.model.user.UserName;
@@ -12,6 +13,7 @@ import com.wakabatimes.simplewiki.app.domain.service.main_menu.MainMenuService;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import com.wakabatimes.simplewiki.app.domain.service.original_html.OriginalHtmlService;
 import com.wakabatimes.simplewiki.app.domain.service.original_style.OriginalStyleService;
+import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.page_hierarchy.PageHierarchyService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
@@ -20,7 +22,9 @@ import com.wakabatimes.simplewiki.app.infrastructure.original_style.dto.Original
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.dto.MenuResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSaveForm;
+import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSortForm;
 import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuUpdateForm;
+import com.wakabatimes.simplewiki.app.interfaces.page.form.PageSortForm;
 import com.wakabatimes.simplewiki.app.interfaces.page_hierarchy.dto.PageHierarchyResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.system.dto.SystemResponseDto;
 import com.wakabatimes.simplewiki.app.interfaces.user.dto.UserResponseDto;
@@ -50,6 +54,9 @@ public class MenuController {
 
     @Autowired
     private MainMenuService mainMenuService;
+
+    @Autowired
+    private PageService pageService;
 
     @Autowired
     private PageHierarchyService pageHierarchyService;
@@ -206,6 +213,48 @@ public class MenuController {
             menuService.update(menu);
             attr.addFlashAttribute("success",true);
             attr.addFlashAttribute("successMessage","メニューを更新しました");
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }catch(RuntimeException e){
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            Menu home = menuService.getHomeMenu();
+            return "redirect:/contents/" + home.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(home.getMenuName().getValue(),"UTF-8");
+        }
+    }
+
+    @PostMapping("/menu/{menuId}/sort")
+    public String sortMenu(@PathVariable String menuId, @ModelAttribute MenuSortForm form, RedirectAttributes attr) throws UnsupportedEncodingException {
+        try{
+            MenuId first = new MenuId(form.getFirstMenuId());
+            MenuId second = new MenuId(form.getSecondMenuId());
+            menuService.replaceSort(first,second);
+
+            MenuId menuId1 = new MenuId(menuId);
+            Menu menu = menuService.getById(menuId1);
+            attr.addFlashAttribute("success",true);
+            attr.addFlashAttribute("successMessage","メニューを並び替えました。");
+            return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+        }catch(RuntimeException e){
+            log.error("Error :",e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            Menu home = menuService.getHomeMenu();
+            return "redirect:/contents/" + home.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(home.getMenuName().getValue(),"UTF-8");
+        }
+    }
+
+    @PostMapping("/menu/{menuId}/pages/sort")
+    public String sortPage(@PathVariable String menuId, @ModelAttribute PageSortForm form, RedirectAttributes attr) throws UnsupportedEncodingException {
+        try{
+            PageId firstPageId = new PageId(form.getFirstPageId());
+            PageId secondPageId = new PageId(form.getSecondPageId());
+            pageService.replaceSort(firstPageId,secondPageId);
+
+            MenuId menuId1 = new MenuId(menuId);
+            Menu menu = menuService.getById(menuId1);
+            attr.addFlashAttribute("success",true);
+            attr.addFlashAttribute("successMessage","ページを並び替えました。");
             return "redirect:/contents/" + menu.getMenuLimit().name().toLowerCase() + '/' + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
         }catch(RuntimeException e){
             log.error("Error :",e);

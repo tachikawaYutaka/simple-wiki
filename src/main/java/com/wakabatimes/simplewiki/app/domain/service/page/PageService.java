@@ -81,4 +81,11 @@ public interface PageService {
      */
     Page getParent(PageId pageId);
 
+    /**
+     * ソート番号の入れ替え
+     * @param first
+     * @param second
+     */
+    void replaceSort(PageId first, PageId second);
+
 }

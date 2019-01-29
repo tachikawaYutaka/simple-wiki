@@ -25,4 +25,5 @@ public interface PageRepository {
 
     Page getParent(PageId pageId);
 
+    void replaceSort(PageId first, PageId second);
 }

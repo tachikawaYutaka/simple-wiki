@@ -6,6 +6,7 @@ import com.wakabatimes.simplewiki.app.domain.model.page.*;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PageServiceImpl implements PageService {
@@ -65,6 +66,12 @@ public class PageServiceImpl implements PageService {
     @Override
     public Page getParent(PageId pageId) {
         return pageRepository.getParent(pageId);
+    }
+
+    @Override
+    @Transactional
+    public void replaceSort(PageId first, PageId second) {
+        pageRepository.replaceSort(first,second);
     }
 
 }

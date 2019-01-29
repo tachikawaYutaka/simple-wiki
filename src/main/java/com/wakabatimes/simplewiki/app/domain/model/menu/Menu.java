@@ -23,9 +23,20 @@ public class Menu {
     @NonNull
     MenuLimit menuLimit;
 
+    @Getter
+    @NonNull
+    MenuSortNumber menuSortNumber;
+
     public Menu(MenuId menuId, MenuName menuName, MenuLimit menuLimit) {
         this.menuId = menuId;
         this.menuName = menuName;
         this.menuLimit = menuLimit;
+    }
+
+    public Menu(MenuId menuId, MenuName menuName, MenuLimit menuLimit, MenuSortNumber menuSortNumber) {
+        this.menuId = menuId;
+        this.menuName = menuName;
+        this.menuLimit = menuLimit;
+        this.menuSortNumber = menuSortNumber;
     }
 }

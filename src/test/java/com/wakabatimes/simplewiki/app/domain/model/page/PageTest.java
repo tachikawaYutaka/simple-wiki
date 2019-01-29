@@ -20,6 +20,16 @@ public class PageTest {
     }
 
     @Test
+    public void createInsntace_success3() {
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        Page page = PageFactory.create(pageName,pageType);
+        PageSortNumber pageSortNumber = new PageSortNumber(1);
+        Page page2 = new Page(page.getPageId(),page.getPageName(),page.getPageType(),pageSortNumber);
+        Assert.assertNotNull(page2);
+    }
+
+    @Test
     public void equals() {
         PageName pageName = new PageName("hogehoge");
         PageType pageType = PageType.ROOT;

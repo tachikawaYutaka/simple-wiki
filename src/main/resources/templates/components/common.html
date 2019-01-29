@@ -18,11 +18,11 @@
             <div></div>
             <div></div>
         </div>
-        <div class="module-logo"><a th:href="@{/}" th:text="${system.name}">Simple Wiki</a></div>
+        <div class="module-logo"><a class="no-barba" th:href="@{/}" th:text="${system.name}">Simple Wiki</a></div>
         <div class="module-search"></div>
     </div>
     <div class="base-header-right">
-        <div class="module-button bg-black border-white"><a th:href="@{/login}">Login</a></div>
+        <div class="module-button bg-black border-white"><a class="no-barba" th:href="@{/login}">Login</a></div>
     </div>
 </header>
 
@@ -33,17 +33,17 @@
             <div></div>
             <div></div>
         </div>
-        <div class="module-logo"><a th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
+        <div class="module-logo"><a class="no-barba" th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
         <div class="module-search"><form th:action="@{/search}"><input name="q" type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
     </div>
     <div class="base-header-right">
         <div class="module-user-menu script-user-menu-toggle">
             <div class="user-name"><i class="fas fa-user"></i><span th:text="${userInfo.name}"></span></div>
             <ul class="user-list">
-                <li th:if="${userInfo.role == 'ROLE_ADMIN'}"><a th:href="@{/system/name}">システム設定</a></li>
-                <li><a th:href="@{/user/name}">ユーザー名変更</a></li>
-                <li><a th:href="@{/user/password}">パスワード変更</a></li>
-                <li><a th:href="@{/logout}">ログアウト</a></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN'}"><a class="no-barba" th:href="@{/system/name}">システム設定</a></li>
+                <li><a class="no-barba" th:href="@{/user/name}">ユーザー名変更</a></li>
+                <li><a class="no-barba" th:href="@{/user/password}">パスワード変更</a></li>
+                <li><a class="no-barba" th:href="@{/logout}">ログアウト</a></li>
             </ul>
         </div>
     </div>
@@ -51,7 +51,7 @@
 
 <header th:fragment="login-header" class="base-header">
     <div class="base-header-left">
-        <div class="module-logo"><a th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
+        <div class="module-logo"><a class="no-barba" th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
     </div>
     <div class="base-header-right">
 
@@ -60,7 +60,7 @@
 
 <header th:fragment="start-header" class="base-header">
     <div class="base-header-left">
-        <div class="module-logo"><a th:href="@{/}">Simple Wiki</a></div>
+        <div class="module-logo"><a class="no-barba" th:href="@{/}">Simple Wiki</a></div>
     </div>
     <div class="base-header-right">
 
@@ -89,7 +89,7 @@
 
 <div th:fragment="base-menu(currentMenu,rootPage)" class="base-menu">
     <nav class="module-menu-lists">
-        <ul th:each="menu : ${menus}">
+        <ul th:each="menu : ${menus}" th:data-id="${menu.menuId}">
             <li>
                 <p>
                     <a th:if="${currentMenu != null}" th:class="${currentMenu.id == menu.menuId ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><i  th:if="${currentMenu.id == menu.menuId}" class="fas fa-angle-right"></i><span th:text="${menu.menuName}"></span></a>
@@ -121,10 +121,10 @@
                         <p><a th:class="${page == 'name' ? 'active': ''}" th:href="@{/system/name}"><i  th:if="${page == 'name'}" class="fas fa-angle-right"></i><span>システム名称</span></a></p>
                     </li>
                     <li>
-                        <p><a th:class="${page == 'style' ? 'active': ''}" th:href="@{/system/style}"><i  th:if="${page == 'style'}" class="fas fa-angle-right"></i><span>独自スタイル</span></a></p>
+                        <p><a  class="" th:class="${page == 'style' ? 'active no-barba': 'no-barba'}" th:href="@{/system/style}"><i  th:if="${page == 'style'}" class="fas fa-angle-right"></i><span>独自スタイル</span></a></p>
                     </li>
                     <li>
-                        <p><a th:class="${page == 'html' ? 'active': ''}" th:href="@{/system/html}"><i  th:if="${page == 'html'}" class="fas fa-angle-right"></i><span>独自HTML</span></a></p>
+                        <p><a th:class="${page == 'html' ? 'active no-barba': 'no-barba'}" th:href="@{/system/html}"><i  th:if="${page == 'html'}" class="fas fa-angle-right"></i><span>独自HTML</span></a></p>
                     </li>
                 </ul>
             </li>
@@ -292,15 +292,17 @@
             </div>
         </div>
     </li>
-    <li th:each="list : ${lists}">
+    <li th:each="list : ${lists}" th:data-page-id="${list.id}">
         <div>
             <div class="text-area">
                 <p><a th:text="${list.name}" th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + '/' + ${list.path}">メインページ</a></p>
             </div>
             <ul class="menu-area" th:if="${user}">
-                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${list.id}"><i class="fas fa-edit"></i>編集</a></div></li>
-                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" class="script-add-page-show"><i class="fas fa-plus"></i>追加</a></div></li>
-                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" th:data-menu-id="${menu.id}" th:data-page-id="${list.id}" th:data-page-name="${list.name}" class="script-page-delete"><i class="fas fa-minus"></i></i>削除</a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><form  th:action="'/menu/' + ${menu.id} + '/pages/sort'" method="post"><button class="script-page-sort-up" type="button"><i class="fas fa-sort-up"></i><span>上へ</span></button><input type="hidden" name="firstPageId" th:value="${list.id}"><input type="hidden" name="secondPageId"></form></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><form  th:action="'/menu/' + ${menu.id} + '/pages/sort'" method="post"><button class="script-page-sort-down" type="button"><i class="fas fa-sort-down"></i><span>下へ</span></button><input type="hidden" name="firstPageId" th:value="${list.id}"><input type="hidden" name="secondPageId"></form></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${list.id}"><i class="fas fa-edit"></i><span>編集</span></a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" class="script-add-page-show"><i class="fas fa-plus"></i><span>追加</span></a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" th:data-menu-id="${menu.id}" th:data-page-id="${list.id}" th:data-page-name="${list.name}" class="script-page-delete"><i class="fas fa-minus"></i></i><span>削除</span></a></div></li>
             </ul>
         </div>
         <ul th:replace="components/common :: menu-pages-list(${list.id},${list.pages},${menu})"></ul>

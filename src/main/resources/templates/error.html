@@ -3,11 +3,11 @@
 <head th:replace="components/common :: common-head('エラー')"></head>
 <body class="base-body">
 <header th:replace="components/common :: start-header"></header>
-<main class="base-main">
+<main class="base-main" id="barba-wrapper"><div class="barba-container">
     <div class="module-login">
         <h1 th:text="${status} + ' ' + ${error}">Get Started!</h1>
     </div>
-</main>
+</div></main>
 <footer class="base-footer">
     <small class="module-copy">Simple Wiki</small>
 </footer>
@@ -15,6 +15,7 @@
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
 <script th:src="@{/js/script_min.js}"></script>
 </body>
 </html>

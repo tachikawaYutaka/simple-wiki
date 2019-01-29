@@ -23,7 +23,8 @@ public class MenuRepositoryImpl implements MenuRepository {
             MenuId menuId = new MenuId(menuDto.getId());
             MenuName menuName = new MenuName(menuDto.getName());
             MenuLimit menuLimit = MenuLimit.getById(menuDto.getViewLimit());
-            Menu thisMenu = new Menu(menuId,menuName,menuLimit);
+            MenuSortNumber menuSortNumber = new MenuSortNumber(menuDto.getSortNumber());
+            Menu thisMenu = new Menu(menuId,menuName,menuLimit, menuSortNumber);
             menus.add(thisMenu);
             i++;
         }
@@ -45,7 +46,8 @@ public class MenuRepositoryImpl implements MenuRepository {
             MenuId menuId = new MenuId(menuDto.getId());
             MenuName menuName = new MenuName(menuDto.getName());
             MenuLimit menuLimit = MenuLimit.getById(menuDto.getViewLimit());
-            Menu thisMenu = new Menu(menuId,menuName,menuLimit);
+            MenuSortNumber menuSortNumber = new MenuSortNumber(menuDto.getSortNumber());
+            Menu thisMenu = new Menu(menuId,menuName,menuLimit, menuSortNumber);
             menus.add(thisMenu);
         }
 
@@ -75,7 +77,8 @@ public class MenuRepositoryImpl implements MenuRepository {
             MenuId menuId = new MenuId(menuDto.getId());
             MenuName menuName = new MenuName(menuDto.getName());
             MenuLimit menuLimit = MenuLimit.getById(menuDto.getViewLimit());
-            Menu thisMenu = new Menu(menuId,menuName,menuLimit);
+            MenuSortNumber menuSortNumber = new MenuSortNumber(menuDto.getSortNumber());
+            Menu thisMenu = new Menu(menuId,menuName,menuLimit, menuSortNumber);
             menus.add(thisMenu);
         }
         return menus;
@@ -89,7 +92,8 @@ public class MenuRepositoryImpl implements MenuRepository {
         MenuId menuId = new MenuId(result.getId());
         MenuName menuName1 = new MenuName(result.getName());
         MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
-        Menu menu = new Menu(menuId,menuName1,menuLimit);
+        MenuSortNumber menuSortNumber = new MenuSortNumber(result.getSortNumber());
+        Menu menu = new Menu(menuId,menuName1,menuLimit,menuSortNumber);
         return menu;
     }
 
@@ -103,7 +107,8 @@ public class MenuRepositoryImpl implements MenuRepository {
             MenuId menuId = new MenuId(menuDto.getId());
             MenuName menuName = new MenuName(menuDto.getName());
             MenuLimit menuLimit1 = MenuLimit.getById(menuDto.getViewLimit());
-            Menu thisMenu = new Menu(menuId,menuName,menuLimit1);
+            MenuSortNumber menuSortNumber = new MenuSortNumber(menuDto.getSortNumber());
+            Menu thisMenu = new Menu(menuId,menuName,menuLimit1, menuSortNumber);
             menus.add(thisMenu);
         }
         return menus;
@@ -118,7 +123,8 @@ public class MenuRepositoryImpl implements MenuRepository {
             MenuId menuId1 = new MenuId(result.getId());
             MenuName menuName = new MenuName(result.getName());
             MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
-            Menu menu = new Menu(menuId1,menuName,menuLimit);
+            MenuSortNumber menuSortNumber = new MenuSortNumber(result.getSortNumber());
+            Menu menu = new Menu(menuId1,menuName,menuLimit,menuSortNumber);
             return menu;
         }else {
             throw new RuntimeException("指定したメニューが存在しません。");
@@ -131,8 +137,32 @@ public class MenuRepositoryImpl implements MenuRepository {
         MenuId menuId1 = new MenuId(result.getId());
         MenuName menuName = new MenuName(result.getName());
         MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
-        Menu menu = new Menu(menuId1,menuName,menuLimit);
+        MenuSortNumber menuSortNumber = new MenuSortNumber(result.getSortNumber());
+        Menu menu = new Menu(menuId1,menuName,menuLimit,menuSortNumber);
         return menu;
+    }
+
+    @Override
+    public void replaceSort(MenuId first, MenuId second) {
+        MenuDto firstInput = new MenuDto();
+        firstInput.setId(first.getValue());
+        MenuDto firstResult = menuMapper.getById(firstInput);
+        Integer firstSort = firstResult.getSortNumber();
+
+        MenuDto secondInput = new MenuDto();
+        secondInput.setId(second.getValue());
+        MenuDto secondResult = menuMapper.getById(secondInput);
+        Integer secondSort = secondResult.getSortNumber();
+
+        MenuDto menuFirst = new MenuDto();
+        menuFirst.setId(firstResult.getId());
+        menuFirst.setSortNumber(secondSort);
+        menuMapper.updateSort(menuFirst);
+
+        MenuDto menuSecond = new MenuDto();
+        menuSecond.setId(secondResult.getId());
+        menuSecond.setSortNumber(firstSort);
+        menuMapper.updateSort(menuSecond);
     }
 
 }

@@ -45,4 +45,12 @@ public interface MenuMapper {
             "WHERE sort_number = 1\n" +
             "limit 1")
     MenuDto getHomeMenu();
+
+    @Update("UPDATE menu \n" +
+            "SET\n" +
+            "  sort_number = #{sortNumber}\n" +
+            "  , updated = now()\n" +
+            "WHERE\n" +
+            "  id = #{id}")
+    void updateSort(MenuDto menuFirst);
 }

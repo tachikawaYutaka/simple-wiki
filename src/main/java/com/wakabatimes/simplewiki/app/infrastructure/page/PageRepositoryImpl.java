@@ -125,12 +125,15 @@ public class PageRepositoryImpl implements PageRepository {
     public Pages listByMenuId(MenuId menuId) {
         List<PageDto> pageDtoList = pageMapper.listByMenuId(menuId.getValue());
         Pages pages = new Pages();
+        int i = 0;
         for(PageDto pageDto : pageDtoList) {
             PageId pageId = new PageId(pageDto.getId());
             PageName pageName = new PageName(pageDto.getName());
             PageType pageType = PageType.getById(pageDto.getType());
-            Page thisPage = new Page(pageId,pageName,pageType);
+            PageSortNumber pageSortNumber = new PageSortNumber(pageDto.getSortNumber());
+            Page thisPage = new Page(pageId,pageName,pageType, pageSortNumber);
             pages.add(thisPage);
+            i++;
         }
         return pages;
     }
@@ -139,12 +142,15 @@ public class PageRepositoryImpl implements PageRepository {
     public Pages listByParentPageId(PageId parentId) {
         List<PageDto> pageDtoList = pageMapper.listByParentPageId(parentId.getValue());
         Pages pages = new Pages();
+        int i = 0;
         for(PageDto pageDto : pageDtoList) {
             PageId pageId = new PageId(pageDto.getId());
             PageName pageName = new PageName(pageDto.getName());
             PageType pageType = PageType.getById(pageDto.getType());
-            Page thisPage = new Page(pageId,pageName,pageType);
+            PageSortNumber pageSortNumber = new PageSortNumber(pageDto.getSortNumber());
+            Page thisPage = new Page(pageId,pageName,pageType,pageSortNumber);
             pages.add(thisPage);
+            i++;
         }
         return pages;
     }
@@ -157,7 +163,8 @@ public class PageRepositoryImpl implements PageRepository {
         PageId thisPageId = new PageId(result.getId());
         PageName thisPageName = new PageName(result.getName());
         PageType thisPageType = PageType.getById(result.getType());
-        Page thisPage = new Page(thisPageId,thisPageName,thisPageType);
+        PageSortNumber pageSortNumber = new PageSortNumber(pageDto.getSortNumber());
+        Page thisPage = new Page(thisPageId,thisPageName,thisPageType, pageSortNumber);
         return thisPage;
     }
 
@@ -171,19 +178,24 @@ public class PageRepositoryImpl implements PageRepository {
         PageId pageId = new PageId(result.getId());
         PageName pageName1 = new PageName(result.getName());
         PageType pageType = PageType.getById(result.getType());
-        Page page = new Page(pageId,pageName1,pageType);
+        PageSortNumber pageSortNumber = new PageSortNumber(result.getSortNumber());
+        Page page = new Page(pageId,pageName1,pageType, pageSortNumber);
         return page;
     }
 
     @Override
     public Page getHomePage(MenuId menuId) {
         PageDto result = pageMapper.getHomePage(menuId.getValue());
-
-        PageId pageId = new PageId(result.getId());
-        PageName pageName1 = new PageName(result.getName());
-        PageType pageType = PageType.getById(result.getType());
-        Page page = new Page(pageId,pageName1,pageType);
-        return page;
+        if(result != null){
+            PageId pageId = new PageId(result.getId());
+            PageName pageName1 = new PageName(result.getName());
+            PageType pageType = PageType.getById(result.getType());
+            PageSortNumber pageSortNumber = new PageSortNumber(result.getSortNumber());
+            Page page = new Page(pageId,pageName1,pageType,pageSortNumber);
+            return page;
+        }else {
+            throw new RuntimeException("ページが存在しません。");
+        }
     }
 
     @Override
@@ -195,7 +207,33 @@ public class PageRepositoryImpl implements PageRepository {
         PageId pageId1 = new PageId(result.getId());
         PageName pageName1 = new PageName(result.getName());
         PageType pageType = PageType.getById(result.getType());
-        Page page = new Page(pageId1,pageName1,pageType);
+        PageSortNumber pageSortNumber = new PageSortNumber(result.getSortNumber());
+        Page page = new Page(pageId1,pageName1,pageType, pageSortNumber);
         return page;
+    }
+
+    @Override
+    public void replaceSort(PageId first, PageId second) {
+        PageDto inputFirst = new PageDto();
+        inputFirst.setId(first.getValue());
+        PageDto firstResult = pageMapper.getByPageId(inputFirst);
+        Integer firstSort = firstResult.getSortNumber();
+
+        PageDto inputSecond = new PageDto();
+        inputSecond.setId(second.getValue());
+        PageDto secondResult = pageMapper.getByPageId(inputSecond);
+        Integer secondSort = secondResult.getSortNumber();
+
+        PageDto pageFirst = new PageDto();
+        pageFirst.setId(first.getValue());
+        pageFirst.setSortNumber(secondSort);
+
+        pageMapper.updateSort(pageFirst);
+
+        PageDto pageSecond = new PageDto();
+        pageSecond.setId(second.getValue());
+        pageSecond.setSortNumber(firstSort);
+
+        pageMapper.updateSort(pageSecond);
     }
 }

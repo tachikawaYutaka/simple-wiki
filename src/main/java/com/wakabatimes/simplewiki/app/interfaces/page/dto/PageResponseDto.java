@@ -8,10 +8,12 @@ public class PageResponseDto {
     String id;
     String name;
     String type;
+    Integer sort;
 
     public PageResponseDto(Page page) {
         this.id = page.getPageId().getValue();
         this.name = page.getPageName().getValue();
         this.type = page.getPageType().name();
+        this.sort = page.getPageSortNumber().getValue();
     }
 }

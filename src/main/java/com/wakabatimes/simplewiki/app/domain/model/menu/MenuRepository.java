@@ -17,4 +17,6 @@ public interface MenuRepository {
     Menu getById(MenuId menuId);
 
     Menu getHomeMenu();
+
+    void replaceSort(MenuId first, MenuId second);
 }

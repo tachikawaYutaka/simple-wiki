@@ -4,7 +4,7 @@
 <body class="base-body">
 <th:block th:if="${user}"><header th:replace="components/common :: user-header"></header></th:block>
 <th:block th:unless="${user}"><header th:replace="components/common :: no-login-header"></header></th:block>
-<main class="base-main">
+<main class="base-main" id="barba-wrapper"><div class="barba-container">
     <div th:replace="components/common :: base-menu(${currentMenu},null)"></div>
     <div class="base-content-body">
         <div class="base-content-body-head">
@@ -22,25 +22,26 @@
         <div class="base-content-article max">
             <div class="base-content-head-menu max">
                 <ul class="module-head-menu" th:if="${user}">
-                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a href="" class="script-add-root-page-show"><i class="fas fa-plus"></i>ページ追加</a></div></li>
-                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a class="script-edit-menu" href=""><i class="fas fa-cog"></i>メニュー編集</a></div></li>
-                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a href="" class="script-menu-delete"><i class="fas fa-minus"></i></i>メニュー削除</a></div></li>
+                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a href="" class="script-add-root-page-show"><i class="fas fa-plus"></i><span>ページ追加</span></a></div></li>
+                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a class="script-edit-menu" href=""><i class="fas fa-cog"></i><span>メニュー編集</span></a></div></li>
+                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><a href="" class="script-menu-delete"><i class="fas fa-minus"></i></i><span>メニュー削除</span></a></div></li>
+                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><form  th:action="'/menu/' + ${currentMenu.id} + '/sort'" method="post"><button class="script-menu-sort-up" type="button"><i class="fas fa-sort-up"></i><span>上へ</span></button><input type="hidden" name="firstMenuId" th:value="${currentMenu.id}"><input type="hidden" name="secondMenuId"></form></div></li>
+                    <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray"><form  th:action="'/menu/' + ${currentMenu.id} + '/sort'" method="post"><button class="script-menu-sort-down" type="button"><i class="fas fa-sort-down"></i><span>下へ</span></button><input type="hidden" name="firstMenuId" th:value="${currentMenu.id}"><input type="hidden" name="secondMenuId"></form></div></li>
                 </ul>
             </div>
             <div class="base-article-body">
                 <div class="module-add-root-page" th:if="${user}">
                     <form th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}" method="post" th:action="'/pages/root'"><input type="text" name="name" class="module-input-text" />
                         <input type="hidden" name="menuId" th:value="${currentMenu.id}">
-                    <button class="module-submit-button">保存</button><button class="module-submit-button bg-gray script-add-root-page-hidden">キャンセル</button></form>
+                        <div class="module-button-lists m-0"><button class="module-submit-button">保存</button><button class="module-submit-button bg-gray script-add-root-page-hidden">キャンセル</button></div></form>
                 </div>
-                <div class="module-alert" th:if="${error}" th:text="${errorMessage}"></div>
                 <div class="module-menu-index-list">
                     <ul th:replace="components/common :: menu-pages-list(null ,${pages},${currentMenu})"></ul>
                 </div>
             </div>
         </div>
     </div>
-</main>
+</div></main>
 <div th:replace="components/common :: menu-add-form"></div>
 <div th:replace="components/common :: menu-edit-form(${currentMenu})"></div>
 <div th:replace="components/common :: menu-delete-form(${currentMenu})"></div>
@@ -52,6 +53,7 @@
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
 <script th:src="@{/js/script_min.js}"></script>
 <style th:if="${originalStyle != null}" th:utext="${originalStyle.body}"></style>
 </body>

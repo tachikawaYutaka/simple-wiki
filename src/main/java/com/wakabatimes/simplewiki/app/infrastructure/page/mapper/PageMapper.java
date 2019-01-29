@@ -67,4 +67,11 @@ public interface PageMapper {
     PageDto getParent(PageDto input);
 
 
+    @Update("UPDATE page \n" +
+            "SET\n" +
+            "   sort_number = #{sortNumber}\n" +
+            "  , updated = now()\n" +
+            "WHERE\n" +
+            "  id = #{id}\n")
+    void updateSort(PageDto pageFirst);
 }

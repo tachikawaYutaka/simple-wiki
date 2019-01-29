@@ -52,4 +52,11 @@ public interface MenuService {
      * @return
      */
     Menu getHomeMenu();
+
+    /**
+     * ソート番号の入れ替え
+     * @param first
+     * @param second
+     */
+    void replaceSort(MenuId first,MenuId second);
 }

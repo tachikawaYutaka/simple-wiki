@@ -13,6 +13,16 @@ public class MenuTest {
     }
 
     @Test
+    public void createInsntace_success2() {
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        Menu menu2 = new Menu(menu.getMenuId(),menuName,menuLimit,menuSortNumber);
+        Assert.assertNotNull(menu2);
+    }
+
+    @Test
     public void equals() {
         MenuName menuName = new MenuName("hogehoge");
         MenuLimit menuLimit = MenuLimit.PUBLIC;

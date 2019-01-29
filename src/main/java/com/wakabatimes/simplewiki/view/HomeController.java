@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -42,17 +43,25 @@ public class HomeController {
     private PageService pageService;
 
     @GetMapping("/")
-    public String home(Principal principal, Model model) throws UnsupportedEncodingException {
+    public String home(RedirectAttributes attr) throws UnsupportedEncodingException {
         Users users = userService.list();
         if(users.size() == 0){
             return "start/start";
         }
 
         Menu menu = menuService.getHomeMenu();
+        try{
         Page page = pageService.getHomePage(menu.getMenuId());
         String url = "/contents/" + menu.getMenuLimit().name().toLowerCase() + "/" + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8") + "/" + URLEncoder.encode(page.getPageName().getValue(),"UTF-8");
 
         return "redirect:" + url;
+        } catch (RuntimeException e){
+            log.error("Error:", e);
+            attr.addFlashAttribute("error",true);
+            attr.addFlashAttribute("errorMessage",e.getMessage());
+            String url = "/contents/" + menu.getMenuLimit().name().toLowerCase() + "/" + URLEncoder.encode(menu.getMenuName().getValue(),"UTF-8");
+            return "redirect:" + url;
+        }
     }
 
     @ResponseBody

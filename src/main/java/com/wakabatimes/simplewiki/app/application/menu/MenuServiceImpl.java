@@ -50,4 +50,9 @@ public class MenuServiceImpl implements MenuService {
         return menuRepository.getHomeMenu();
     }
 
+    @Override
+    public void replaceSort(MenuId first, MenuId second) {
+        menuRepository.replaceSort(first,second);
+    }
+
 }

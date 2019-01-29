@@ -54,6 +54,7 @@
         width: 100%;
         border: 1px solid $black;
         color: $black;
+        cursor: pointer;
         font-size: 0.9rem;
         text-decoration: none;
         font-weight: 700;
@@ -65,9 +66,20 @@
             padding: 8px 5px;
             font-size: 0.8rem;
         }
+        @include mq(tb) {
+            width: 45px;
+        }
+        span {
+            @include mq(tb) {
+                font-size: 0;
+            }
+        }
     }
     i {
         padding-right: 5px;
+        @include mq(tb) {
+            padding-left: 5px;
+        }
     }
     &.bg-black {
         a,button {
@@ -493,6 +505,11 @@
     z-index: 3;
     top: 10%;
     left: calc(50% - 210px);
+    @include mq(tb) {
+        max-width: 280px;
+        left: calc(50% - 140px);
+        padding: 35px 35px 30px;
+    }
     h1 {
         text-align: center;
         margin-bottom: 30px;
@@ -534,10 +551,16 @@
         justify-content: flex-start;
         align-items: center;
         width: 100%;
+        @include mq(tb) {
+            flex-direction: column;
+        }
         input {
             max-width: 257px;
             padding: 7px 10px;
             margin-right: 5px;
+            @include mq(tb) {
+                margin-bottom: 5px;
+            }
         }
         button {
             max-width: 80px;
@@ -548,11 +571,43 @@
 }
 
 .module-menu-index-list {
+    > ul {
+        > li:first-child {
+           > div > .menu-area {
+               li:first-child {
+                   display: none;
+               }
+           }
+        }
+        > li:last-child {
+            > div > .menu-area {
+               li:first-child {
+                   display: block !important;
+               }
+           }
+        }
+    }
     ul {
         list-style-type: none;
         padding-left: 0;
         margin-bottom: 0;
         padding-left: 20px;
+        > li {
+            &:nth-child(2) {
+                 > div > .menu-area {
+                    li:first-child {
+                        display: none;
+                    }
+                }
+            }
+            &:last-child {
+                > div > .menu-area {
+                    li:nth-child(2) {
+                        display: none;
+                    }
+                }
+            }
+        }
         li {
             > div {
                 width: 100%;
@@ -579,9 +634,13 @@
                     }
                 }
                 .menu-area {
-                    width: 178px;
+                    width: 300px;
                     display: flex;
                     padding-left: 0;
+                    justify-content: flex-end;
+                    @include mq(tb) {
+                        justify-content: flex-start;
+                    }
                     li {
                         margin-right: 1px;
                         &:last-child {
@@ -601,15 +660,26 @@
             &.active {
                 display: block;
             }
+            .text-area {
+                @include mq(tb) {
+                    width: 100%;
+                }
+            }
             form {
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
                 width: 100%;
+                @include mq(tb) {
+                    flex-direction: column;
+                }
                 input {
                     max-width: 257px;
                     padding: 7px 10px;
                     margin-right: 5px;
+                    @include mq(tb) {
+                        margin-bottom: 5px;
+                    }
                 }
                 button {
                     max-width: 80px;

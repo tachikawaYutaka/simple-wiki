@@ -23,9 +23,11 @@ public interface RootPageMapper {
             "m.id AS menu_id ,\n" +
             "m.name AS menu_name,\n" +
             "m.view_limit AS menu_view_limit,\n" +
+            "m.sort_number AS menu_sort_number,\n" +
             "p.id AS pageId,\n" +
             "p.name AS page_name,\n" +
-            "p.type AS page_type\n" +
+            "p.type AS page_type,\n" +
+            "p.sort_number AS page_sort_number\n" +
             "FROM page p\n" +
             "LEFT JOIN relate_page_to_menu rpm ON p.id = rpm.page_id\n" +
             "LEFT JOIN menu m ON m.id = rpm.menu_id\n" +

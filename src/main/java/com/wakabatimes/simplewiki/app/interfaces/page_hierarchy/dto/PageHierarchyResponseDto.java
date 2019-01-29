@@ -11,11 +11,13 @@ public class PageHierarchyResponseDto {
     String id;
     String name;
     String path;
+    Integer sort;
     List<PageHierarchyResponseDto> pages;
 
     public PageHierarchyResponseDto(PageHierarchy pageHierarchy){
         this.id = pageHierarchy.getPage().getPageId().getValue();
         this.name = pageHierarchy.getPage().getPageName().getValue();
         this.path = pageHierarchy.getPagePath().getValue();
+        this.sort = pageHierarchy.getPage().getPageSortNumber().getValue();
     }
 }
