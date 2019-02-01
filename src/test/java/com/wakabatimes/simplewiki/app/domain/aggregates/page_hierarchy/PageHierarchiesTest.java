@@ -105,7 +105,8 @@ public class PageHierarchiesTest {
     public void responseList() {
         PageName pageName = new PageName("hogehoge");
         PageType pageType = PageType.ROOT;
-        Page page = PageFactory.create(pageName,pageType);
+        PageSortNumber pageSortNumber = new PageSortNumber(1);
+        Page page = PageFactory.createWithSortNumber(pageName,pageType,pageSortNumber);
 
         PagePath pagePath = new PagePath("/hogehoge/");
 
@@ -115,7 +116,8 @@ public class PageHierarchiesTest {
 
         PageName pageName2 = new PageName("hogehoge");
         PageType pageType2 = PageType.ROOT;
-        Page page2 = PageFactory.create(pageName2,pageType2);
+        PageSortNumber pageSortNumber2 = new PageSortNumber(2);
+        Page page2 = PageFactory.createWithSortNumber(pageName2,pageType2,pageSortNumber2);
 
         PagePath pagePath2 = new PagePath("/hogehoge/");
 

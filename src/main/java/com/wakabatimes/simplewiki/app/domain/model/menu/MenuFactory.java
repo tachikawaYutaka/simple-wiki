@@ -7,4 +7,8 @@ public class MenuFactory {
         MenuId menuId = new MenuId(UUID.randomUUID().toString());
         return new Menu(menuId, menuName, menuLimit);
     }
+    public static Menu createWithSort(MenuName menuName, MenuLimit menuLimit, MenuSortNumber menuSortNumber){
+        MenuId menuId = new MenuId(UUID.randomUUID().toString());
+        return new Menu(menuId, menuName, menuLimit, menuSortNumber);
+    }
 }

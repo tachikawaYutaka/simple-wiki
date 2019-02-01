@@ -10,6 +10,11 @@ public class PageFactory {
         return new Page(pageId, pageName,pageType);
     }
 
+    public static Page createWithSortNumber(PageName pageName, PageType pageType, PageSortNumber pageSortNumber){
+        PageId pageId = new PageId(UUID.randomUUID().toString());
+        return new Page(pageId, pageName,pageType,pageSortNumber);
+    }
+
     public static Page createNewPage(PageType pageType) {
         PageId pageId = new PageId(UUID.randomUUID().toString());
         LocalDateTime nowDate = LocalDateTime.now();

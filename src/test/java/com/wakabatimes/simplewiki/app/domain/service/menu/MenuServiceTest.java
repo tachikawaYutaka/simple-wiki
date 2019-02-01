@@ -2,13 +2,11 @@ package com.wakabatimes.simplewiki.app.domain.service.menu;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
 import com.wakabatimes.simplewiki.app.domain.model.menu.*;
-import com.wakabatimes.simplewiki.app.domain.model.page.Page;
-import com.wakabatimes.simplewiki.app.domain.model.page.PageFactory;
-import com.wakabatimes.simplewiki.app.domain.model.page.PageName;
-import com.wakabatimes.simplewiki.app.domain.model.page.PageType;
+import com.wakabatimes.simplewiki.app.domain.model.page.*;
 import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +16,7 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import static sun.nio.cs.Surrogate.is;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,12 +26,16 @@ public class MenuServiceTest {
     private MenuService menuService;
 
     @Autowired
+    private PageService pageService;
+
+    @Autowired
     private JdbcOperations jdbcOperations; // 各テスト前処理用
 
     @Before
     public void eachBefore() {
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=0");
         jdbcOperations.execute("DELETE FROM menu");
+        jdbcOperations.execute("DELETE FROM page");
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=1");
     }
 
@@ -40,6 +43,7 @@ public class MenuServiceTest {
     public void eachAfter() {
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=0");
         jdbcOperations.execute("DELETE FROM menu");
+        jdbcOperations.execute("DELETE FROM page");
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=1");
     }
 
@@ -177,5 +181,51 @@ public class MenuServiceTest {
 
         Menu getMenu = menuService.getHomeMenu();
         assertNotNull(getMenu);
+    }
+
+    @Test
+    public void sortMenu(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
+        menuService.save(menu);
+
+        MenuName menuName2 = new MenuName("hogehoge2");
+        MenuLimit menuLimit2 = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber2 = new MenuSortNumber(2);
+        Menu menu2 = MenuFactory.createWithSort(menuName2,menuLimit2,menuSortNumber2);
+        menuService.save(menu2);
+
+        menuService.replaceSort(menu.getMenuId(),menu2.getMenuId());
+
+        Menu result = menuService.getById(menu.getMenuId());
+        Assert.assertTrue(result.getMenuSortNumber().getValue() == 2);
+    }
+
+    @Test
+    public void sortPage(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        PageSortNumber pageSortNumber = new PageSortNumber(1);
+        Page page = PageFactory.createWithSortNumber(pageName,pageType,pageSortNumber);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge2");
+        PageType pageType2 = PageType.ROOT;
+        PageSortNumber pageSortNumber2 = new PageSortNumber(2);
+        Page page2 = PageFactory.createWithSortNumber(pageName2,pageType2,pageSortNumber2);
+        pageService.saveRoot(page2,menu.getMenuId());
+
+        pageService.replaceSort(page.getPageId(),page2.getPageId());
+        Page result = pageService.get(page.getPageId());
+
+        Assert.assertTrue(result.getPageSortNumber().getValue() == 2);
     }
 }

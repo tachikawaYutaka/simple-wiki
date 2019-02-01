@@ -1,9 +1,6 @@
 package com.wakabatimes.simplewiki.app.domain.aggregates.main_menu;
 
-import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
+import com.wakabatimes.simplewiki.app.domain.model.menu.*;
 import com.wakabatimes.simplewiki.app.domain.model.page.*;
 import com.wakabatimes.simplewiki.app.interfaces.main_menu.dto.MainMenuResponseDto;
 import org.junit.Test;
@@ -157,15 +154,18 @@ public class MainMenusTest {
     public void responseList() {
         MenuName menuName = new MenuName("hogehoge");
         MenuLimit menuLimit = MenuLimit.PUBLIC;
-        Menu menu = MenuFactory.create(menuName,menuLimit);
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
 
         PageName pageName = new PageName("hogehoge");
         PageType pageType = PageType.ROOT;
-        Page page = PageFactory.create(pageName,pageType);
+        PageSortNumber pageSortNumber = new PageSortNumber(1);
+        Page page = PageFactory.createWithSortNumber(pageName,pageType, pageSortNumber);
 
         PageName pageName2 = new PageName("hogehoge2");
         PageType pageType2 = PageType.ROOT;
-        Page page2 = PageFactory.create(pageName2,pageType2);
+        PageSortNumber pageSortNumber2 = new PageSortNumber(2);
+        Page page2 = PageFactory.createWithSortNumber(pageName2,pageType2,pageSortNumber2);
 
         Pages pages = new Pages();
         pages.add(page);
@@ -175,15 +175,18 @@ public class MainMenusTest {
 
         MenuName menuName2 = new MenuName("hogehoge");
         MenuLimit menuLimit2 = MenuLimit.PUBLIC;
-        Menu menu2 = MenuFactory.create(menuName2,menuLimit2);
+        MenuSortNumber menuSortNumber2 = new MenuSortNumber(2);
+        Menu menu2 = MenuFactory.createWithSort(menuName2,menuLimit2,menuSortNumber2);
 
         PageName pageName3 = new PageName("hogehoge3");
         PageType pageType3 = PageType.ROOT;
-        Page page3 = PageFactory.create(pageName3,pageType3);
+        PageSortNumber pageSortNumber3 = new PageSortNumber(1);
+        Page page3 = PageFactory.createWithSortNumber(pageName3,pageType3,pageSortNumber3);
 
         PageName pageName4 = new PageName("hogehoge4");
         PageType pageType4 = PageType.ROOT;
-        Page page4 = PageFactory.create(pageName4,pageType4);
+        PageSortNumber pageSortNumber4= new PageSortNumber(2);
+        Page page4 = PageFactory.createWithSortNumber(pageName4,pageType4,pageSortNumber4);
 
         Pages pages2 = new Pages();
         pages.add(page3);

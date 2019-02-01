@@ -152,6 +152,27 @@ public class HomeControllerTest {
 
     @Test
     @WithMockCustomUser
+    public void home_userExist2() throws Exception {
+        UserName userName = new UserName("hogehoge");
+        UserPassword userPassword = new UserPassword("hogehoge");
+        User user = UserFactory.create(userName, userPassword);
+        userService.save(user);
+
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        Menu menu = MenuFactory.create(menuName,menuLimit);
+        menuService.save(menu);
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        mockMvc.perform(get("/"))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockCustomUser
     public void puml_image() throws Exception {
         mockMvc.perform(get("/puml_image?url=@startuml%0Aactor%20Promoter%0A@enduml"))
                 .andExpect(status().isOk());
