@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OriginalHtmlServiceImpl implements OriginalHtmlService{
 @Autowired
-    OriginalHtmlRepository originalHtmlRepository;
+private OriginalHtmlRepository originalHtmlRepository;
 
     @Override
     public void save(OriginalHtml originalHtml) {

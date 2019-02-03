@@ -8,11 +8,11 @@ import java.util.List;
 
 @Data
 public class PageHierarchyResponseDto {
-    String id;
-    String name;
-    String path;
-    Integer sort;
-    List<PageHierarchyResponseDto> pages;
+    private String id;
+    private String name;
+    private String path;
+    private Integer sort;
+    private List<PageHierarchyResponseDto> pages;
 
     public PageHierarchyResponseDto(PageHierarchy pageHierarchy){
         this.id = pageHierarchy.getPage().getPageId().getValue();

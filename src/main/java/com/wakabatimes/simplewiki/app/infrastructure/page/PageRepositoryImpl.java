@@ -16,13 +16,13 @@ import java.util.List;
 @Repository
 public class PageRepositoryImpl implements PageRepository {
     @Autowired
-    PageMapper pageMapper;
+    private PageMapper pageMapper;
 
     @Autowired
-    RelatePageTpMenuMapper relatePageTpMenuMapper;
+    private RelatePageTpMenuMapper relatePageTpMenuMapper;
 
     @Autowired
-    RelateChildPageToParentPageMapper relateChildPageToParentPageMapper;
+    private RelateChildPageToParentPageMapper relateChildPageToParentPageMapper;
 
     @Override
     public void save(Page page, MenuId menuId) {
@@ -163,9 +163,8 @@ public class PageRepositoryImpl implements PageRepository {
         PageId thisPageId = new PageId(result.getId());
         PageName thisPageName = new PageName(result.getName());
         PageType thisPageType = PageType.getById(result.getType());
-        PageSortNumber pageSortNumber = new PageSortNumber(pageDto.getSortNumber());
-        Page thisPage = new Page(thisPageId,thisPageName,thisPageType, pageSortNumber);
-        return thisPage;
+        PageSortNumber pageSortNumber = new PageSortNumber(result.getSortNumber());
+        return new Page(thisPageId,thisPageName,thisPageType, pageSortNumber);
     }
 
     @Override
@@ -179,8 +178,7 @@ public class PageRepositoryImpl implements PageRepository {
         PageName pageName1 = new PageName(result.getName());
         PageType pageType = PageType.getById(result.getType());
         PageSortNumber pageSortNumber = new PageSortNumber(result.getSortNumber());
-        Page page = new Page(pageId,pageName1,pageType, pageSortNumber);
-        return page;
+        return new Page(pageId,pageName1,pageType, pageSortNumber);
     }
 
     @Override
@@ -191,8 +189,7 @@ public class PageRepositoryImpl implements PageRepository {
             PageName pageName1 = new PageName(result.getName());
             PageType pageType = PageType.getById(result.getType());
             PageSortNumber pageSortNumber = new PageSortNumber(result.getSortNumber());
-            Page page = new Page(pageId,pageName1,pageType,pageSortNumber);
-            return page;
+            return new Page(pageId,pageName1,pageType,pageSortNumber);
         }else {
             throw new RuntimeException("ページが存在しません。");
         }
@@ -208,8 +205,7 @@ public class PageRepositoryImpl implements PageRepository {
         PageName pageName1 = new PageName(result.getName());
         PageType pageType = PageType.getById(result.getType());
         PageSortNumber pageSortNumber = new PageSortNumber(result.getSortNumber());
-        Page page = new Page(pageId1,pageName1,pageType, pageSortNumber);
-        return page;
+        return new Page(pageId1,pageName1,pageType, pageSortNumber);
     }
 
     @Override

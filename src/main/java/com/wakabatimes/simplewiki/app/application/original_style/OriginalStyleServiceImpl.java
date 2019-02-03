@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OriginalStyleServiceImpl implements OriginalStyleService{
     @Autowired
-    OriginalStyleRepository originalStyleRepository;
+    private OriginalStyleRepository originalStyleRepository;
 
     @Override
     public void save(OriginalStyle originalStyle) {

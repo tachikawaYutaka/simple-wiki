@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MenuServiceImpl implements MenuService {
     @Autowired
-    MenuRepository menuRepository;
+    private MenuRepository menuRepository;
 
     @Override
     public void save(Menu menu) {

@@ -1,14 +1,12 @@
 package com.wakabatimes.simplewiki.app.domain.service.page;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
-import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
+import com.wakabatimes.simplewiki.app.domain.model.menu.*;
 import com.wakabatimes.simplewiki.app.domain.model.page.*;
 import com.wakabatimes.simplewiki.app.domain.service.menu.MenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -366,5 +364,30 @@ public class PageServiceTest {
 
         Page getPage = pageService.getParent(page2.getPageId());
         assertNotNull(getPage);
+    }
+
+    @Test
+    public void sortPage(){
+        MenuName menuName = new MenuName("hogehoge");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        PageSortNumber pageSortNumber = new PageSortNumber(1);
+        Page page = PageFactory.createWithSortNumber(pageName,pageType,pageSortNumber);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge2");
+        PageType pageType2 = PageType.ROOT;
+        PageSortNumber pageSortNumber2 = new PageSortNumber(2);
+        Page page2 = PageFactory.createWithSortNumber(pageName2,pageType2,pageSortNumber2);
+        pageService.saveRoot(page2,menu.getMenuId());
+
+        pageService.replaceSort(page.getPageId(),page2.getPageId());
+        Page result = pageService.get(page.getPageId());
+        Assert.assertTrue(result.getPageSortNumber().getValue() == 2);
     }
 }

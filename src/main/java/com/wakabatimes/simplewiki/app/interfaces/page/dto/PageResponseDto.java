@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class PageResponseDto {
-    String id;
-    String name;
-    String type;
-    Integer sort;
+    private String id;
+    private String name;
+    private String type;
+    private Integer sort;
 
     public PageResponseDto(Page page) {
         this.id = page.getPageId().getValue();

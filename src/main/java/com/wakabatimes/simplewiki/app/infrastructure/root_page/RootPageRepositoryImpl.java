@@ -31,8 +31,7 @@ public class RootPageRepositoryImpl implements RootPageRepository{
             PageType pageType = PageType.getById(result.getPageType());
             Page page = new Page(pageId1,pageName,pageType);
 
-            RootPage rootPage = new RootPage(menu,page);
-            return rootPage;
+            return new RootPage(menu,page);
         }else {
             throw new RuntimeException("メニューまたはページが存在しません");
         }
@@ -57,7 +56,6 @@ public class RootPageRepositoryImpl implements RootPageRepository{
         PageSortNumber pageSortNumber = new PageSortNumber(result.getPageSortNumber());
         Page page = new Page(pageId,pageName1,pageType,pageSortNumber);
 
-        RootPage rootPage = new RootPage(menu,page);
-        return rootPage;
+        return new RootPage(menu,page);
     }
 }

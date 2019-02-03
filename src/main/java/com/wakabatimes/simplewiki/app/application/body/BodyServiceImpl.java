@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BodyServiceImpl implements BodyService{
     @Autowired
-    BodyRepository bodyRepository;
+    private BodyRepository bodyRepository;
 
     @Override
     public void save(Body body, PageId pageId) {

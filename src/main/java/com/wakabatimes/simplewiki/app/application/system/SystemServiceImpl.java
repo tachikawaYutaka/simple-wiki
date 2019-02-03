@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemServiceImpl implements SystemService{
     @Autowired
-    SystemRepository systemRepository;
+    private SystemRepository systemRepository;
 
     @Override
     public void save(System system) {

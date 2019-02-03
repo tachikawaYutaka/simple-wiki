@@ -35,7 +35,6 @@ public class MenuServiceTest {
     public void eachBefore() {
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=0");
         jdbcOperations.execute("DELETE FROM menu");
-        jdbcOperations.execute("DELETE FROM page");
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=1");
     }
 
@@ -43,7 +42,6 @@ public class MenuServiceTest {
     public void eachAfter() {
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=0");
         jdbcOperations.execute("DELETE FROM menu");
-        jdbcOperations.execute("DELETE FROM page");
         jdbcOperations.execute("SET FOREIGN_KEY_CHECKS=1");
     }
 
@@ -203,29 +201,5 @@ public class MenuServiceTest {
         Assert.assertTrue(result.getMenuSortNumber().getValue() == 2);
     }
 
-    @Test
-    public void sortPage(){
-        MenuName menuName = new MenuName("hogehoge");
-        MenuLimit menuLimit = MenuLimit.PUBLIC;
-        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
-        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
-        menuService.save(menu);
 
-        PageName pageName = new PageName("hogehoge");
-        PageType pageType = PageType.ROOT;
-        PageSortNumber pageSortNumber = new PageSortNumber(1);
-        Page page = PageFactory.createWithSortNumber(pageName,pageType,pageSortNumber);
-        pageService.saveRoot(page,menu.getMenuId());
-
-        PageName pageName2 = new PageName("hogehoge2");
-        PageType pageType2 = PageType.ROOT;
-        PageSortNumber pageSortNumber2 = new PageSortNumber(2);
-        Page page2 = PageFactory.createWithSortNumber(pageName2,pageType2,pageSortNumber2);
-        pageService.saveRoot(page2,menu.getMenuId());
-
-        pageService.replaceSort(page.getPageId(),page2.getPageId());
-        Page result = pageService.get(page.getPageId());
-
-        Assert.assertTrue(result.getPageSortNumber().getValue() == 2);
-    }
 }

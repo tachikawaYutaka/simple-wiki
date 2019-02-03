@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class UserResponseDto {
-    String id;
-    String name;
-    String role;
+    private String id;
+    private String name;
+    private String role;
 
     public UserResponseDto(User user) {
         this.id = user.getUserId().getValue();

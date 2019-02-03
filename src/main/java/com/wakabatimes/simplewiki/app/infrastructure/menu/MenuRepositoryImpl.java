@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class MenuRepositoryImpl implements MenuRepository {
     @Autowired
-    MenuMapper menuMapper;
+    private MenuMapper menuMapper;
 
     @Override
     public void save(Menu menu) {
@@ -93,8 +93,7 @@ public class MenuRepositoryImpl implements MenuRepository {
         MenuName menuName1 = new MenuName(result.getName());
         MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
         MenuSortNumber menuSortNumber = new MenuSortNumber(result.getSortNumber());
-        Menu menu = new Menu(menuId,menuName1,menuLimit,menuSortNumber);
-        return menu;
+        return new Menu(menuId,menuName1,menuLimit,menuSortNumber);
     }
 
     @Override
@@ -124,8 +123,7 @@ public class MenuRepositoryImpl implements MenuRepository {
             MenuName menuName = new MenuName(result.getName());
             MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
             MenuSortNumber menuSortNumber = new MenuSortNumber(result.getSortNumber());
-            Menu menu = new Menu(menuId1,menuName,menuLimit,menuSortNumber);
-            return menu;
+            return new Menu(menuId1,menuName,menuLimit,menuSortNumber);
         }else {
             throw new RuntimeException("指定したメニューが存在しません。");
         }
@@ -138,8 +136,7 @@ public class MenuRepositoryImpl implements MenuRepository {
         MenuName menuName = new MenuName(result.getName());
         MenuLimit menuLimit = MenuLimit.getById(result.getViewLimit());
         MenuSortNumber menuSortNumber = new MenuSortNumber(result.getSortNumber());
-        Menu menu = new Menu(menuId1,menuName,menuLimit,menuSortNumber);
-        return menu;
+        return new Menu(menuId1,menuName,menuLimit,menuSortNumber);
     }
 
     @Override

@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public class BodyRepositoryImpl implements BodyRepository{
     @Autowired
-    BodyMapper bodyMapper;
+    private BodyMapper bodyMapper;
     @Autowired
-    RelateBodyToPageMapper relateBodyToPageMapper;
+    private RelateBodyToPageMapper relateBodyToPageMapper;
 
     @Override
     public void save(Body body, PageId pageId) {
@@ -36,8 +36,7 @@ public class BodyRepositoryImpl implements BodyRepository{
         BodyHtml bodyHtml = new BodyHtml(result.getHtml());
         BodyType bodyType = BodyType.getById(result.getType());
         BodyCreatedDate bodyCreatedDate = new BodyCreatedDate(result.getCreated());
-        Body body = new Body(bodyId,bodyContent,bodyHtml, bodyType, bodyCreatedDate);
-        return body;
+        return new Body(bodyId,bodyContent,bodyHtml, bodyType, bodyCreatedDate);
     }
 
     @Override
@@ -77,8 +76,7 @@ public class BodyRepositoryImpl implements BodyRepository{
             BodyHtml bodyHtml = new BodyHtml(result.getHtml());
             BodyType bodyType = BodyType.getById(result.getType());
             BodyCreatedDate bodyCreatedDate = new BodyCreatedDate(result.getCreated());
-            Body body = new Body(bodyId1,bodyContent,bodyHtml, bodyType, bodyCreatedDate);
-            return body;
+            return new Body(bodyId1,bodyContent,bodyHtml, bodyType, bodyCreatedDate);
         }else {
             throw new RuntimeException("指定したボディが存在しません。");
         }

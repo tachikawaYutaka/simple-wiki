@@ -7,11 +7,11 @@ import java.util.Date;
 
 @Data
 public class BodyResponseDto {
-    String id;
-    String content;
-    String html;
-    Integer type;
-    Date created;
+    private String id;
+    private String content;
+    private String html;
+    private Integer type;
+    private Date created;
 
     public BodyResponseDto(Body body){
         this.id = body.getBodyId().getValue();

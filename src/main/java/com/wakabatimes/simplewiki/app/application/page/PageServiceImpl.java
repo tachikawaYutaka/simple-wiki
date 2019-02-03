@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PageServiceImpl implements PageService {
     @Autowired
-    PageRepository pageRepository;
+    private PageRepository pageRepository;
 
     @Override
     public void saveRoot(Page page, MenuId menuId) {

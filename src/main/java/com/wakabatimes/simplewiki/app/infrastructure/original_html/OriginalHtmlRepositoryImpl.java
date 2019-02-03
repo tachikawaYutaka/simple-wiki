@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class OriginalHtmlRepositoryImpl implements OriginalHtmlRepository{
     @Autowired
-    OriginalHtmlMapper originalHtmlMapper;
+    private OriginalHtmlMapper originalHtmlMapper;
 
     @Override
     public void save(OriginalHtml originalHtml) {
@@ -44,10 +44,7 @@ public class OriginalHtmlRepositoryImpl implements OriginalHtmlRepository{
     @Override
     public boolean exist() {
         Integer count = originalHtmlMapper.count();
-        if(count > 0){
-            return true;
-        }
-        return false;
+        return count > 0;
     }
 
     @Override
@@ -55,7 +52,6 @@ public class OriginalHtmlRepositoryImpl implements OriginalHtmlRepository{
         OriginalHtmlDto result = originalHtmlMapper.get();
         OriginalHtmlId originalHtmlId = new OriginalHtmlId(result.getId());
         OriginalHtmlBody originalHtmlBody = new OriginalHtmlBody(result.getBody());
-        OriginalHtml originalHtml = new OriginalHtml(originalHtmlId,originalHtmlBody);
-        return originalHtml;
+        return new OriginalHtml(originalHtmlId,originalHtmlBody);
     }
 }

@@ -2,16 +2,14 @@ package com.wakabatimes.simplewiki.view.contents;
 
 import com.wakabatimes.simplewiki.SimpleWikiApplication;
 import com.wakabatimes.simplewiki.WithMockCustomUser;
-import com.wakabatimes.simplewiki.app.domain.model.menu.Menu;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuFactory;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuLimit;
-import com.wakabatimes.simplewiki.app.domain.model.menu.MenuName;
+import com.wakabatimes.simplewiki.app.domain.model.menu.*;
 import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtml;
 import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlBody;
 import com.wakabatimes.simplewiki.app.domain.model.original_html.OriginalHtmlFactory;
 import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyle;
 import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleBody;
 import com.wakabatimes.simplewiki.app.domain.model.original_style.OriginalStyleFactory;
+import com.wakabatimes.simplewiki.app.domain.model.page.*;
 import com.wakabatimes.simplewiki.app.domain.model.system.System;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemFactory;
 import com.wakabatimes.simplewiki.app.domain.model.system.SystemName;
@@ -23,7 +21,9 @@ import com.wakabatimes.simplewiki.app.domain.service.page.PageService;
 import com.wakabatimes.simplewiki.app.domain.service.system.SystemService;
 import com.wakabatimes.simplewiki.app.domain.service.user.UserService;
 import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSaveForm;
+import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuSortForm;
 import com.wakabatimes.simplewiki.app.interfaces.menu.form.MenuUpdateForm;
+import com.wakabatimes.simplewiki.app.interfaces.page.form.PageSortForm;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
@@ -387,6 +387,149 @@ public class MenuControllerTest{
                         .param("menuViewLimit",menuUpdateForm.getMenuViewLimit().toString()))
                 .andExpect(model().hasNoErrors())
                 .andExpect(flash().attribute("error",true))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void menuSort() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
+        menuService.save(menu);
+
+        MenuName menuName2 = new MenuName("menu2");
+        MenuLimit menuLimit2 = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber2 = new MenuSortNumber(2);
+        Menu menu2 = MenuFactory.createWithSort(menuName2,menuLimit2,menuSortNumber2);
+        menuService.save(menu2);
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        MenuSortForm menuSortForm = new MenuSortForm();
+        menuSortForm.setFirstMenuId(menu.getMenuId().getValue());
+        menuSortForm.setSecondMenuId(menu2.getMenuId().getValue());
+
+        mockMvc.perform(
+                post("/menu/" + menu.getMenuId().getValue() + "/sort")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .param("firstMenuId",menuSortForm.getFirstMenuId())
+                        .param("secondMenuId",menuSortForm.getSecondMenuId()))
+                .andExpect(model().hasNoErrors())
+                .andExpect(flash().attribute("success",true))
+                .andExpect(status().is3xxRedirection());
+
+        Assert.assertTrue(menuService.getById(menu.getMenuId()).getMenuSortNumber().getValue() == 2);
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void menuSort_fail() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
+        menuService.save(menu);
+
+        MenuName menuName2 = new MenuName("menu2");
+        MenuLimit menuLimit2 = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber2 = new MenuSortNumber(2);
+        Menu menu2 = MenuFactory.createWithSort(menuName2,menuLimit2,menuSortNumber2);
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        MenuSortForm menuSortForm = new MenuSortForm();
+        menuSortForm.setFirstMenuId(menu.getMenuId().getValue());
+        menuSortForm.setSecondMenuId(menu2.getMenuId().getValue());
+
+        mockMvc.perform(
+                post("/menu/" + menu.getMenuId().getValue() + "/sort")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .param("firstMenuId",menuSortForm.getFirstMenuId())
+                        .param("secondMenuId",menuSortForm.getSecondMenuId()))
+                .andExpect(model().hasNoErrors())
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void sortPage() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        PageSortNumber pageSortNumber = new PageSortNumber(1);
+        Page page = PageFactory.createWithSortNumber(pageName,pageType,pageSortNumber);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge2");
+        PageType pageType2 = PageType.ROOT;
+        PageSortNumber pageSortNumber2 = new PageSortNumber(2);
+        Page page2 = PageFactory.createWithSortNumber(pageName2,pageType2,pageSortNumber2);
+        pageService.saveRoot(page2,menu.getMenuId());
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        PageSortForm pageSortForm = new PageSortForm();
+        pageSortForm.setFirstPageId(page.getPageId().getValue());
+        pageSortForm.setSecondPageId(page2.getPageId().getValue());
+
+        mockMvc.perform(
+                post("/menu/" + menu.getMenuId().getValue() + "/pages/sort")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .param("firstPageId",pageSortForm.getFirstPageId())
+                        .param("secondPageId",pageSortForm.getSecondPageId()))
+                .andExpect(model().hasNoErrors())
+                .andExpect(flash().attribute("success",true))
+                .andExpect(status().is3xxRedirection());
+
+        Assert.assertTrue(pageService.get(page.getPageId()).getPageSortNumber().getValue() == 2);
+    }
+
+    @Test
+    @WithMockCustomUser
+    public void sortPage_fail() throws Exception {
+        MenuName menuName = new MenuName("menu");
+        MenuLimit menuLimit = MenuLimit.PUBLIC;
+        MenuSortNumber menuSortNumber = new MenuSortNumber(1);
+        Menu menu = MenuFactory.createWithSort(menuName,menuLimit,menuSortNumber);
+        menuService.save(menu);
+
+        PageName pageName = new PageName("hogehoge");
+        PageType pageType = PageType.ROOT;
+        PageSortNumber pageSortNumber = new PageSortNumber(1);
+        Page page = PageFactory.createWithSortNumber(pageName,pageType,pageSortNumber);
+        pageService.saveRoot(page,menu.getMenuId());
+
+        PageName pageName2 = new PageName("hogehoge2");
+        PageType pageType2 = PageType.ROOT;
+        PageSortNumber pageSortNumber2 = new PageSortNumber(2);
+        Page page2 = PageFactory.createWithSortNumber(pageName2,pageType2,pageSortNumber2);
+
+        SystemName systemName = new SystemName("Simple Wiki");
+        System system = SystemFactory.create(systemName);
+        systemService.save(system);
+
+        PageSortForm pageSortForm = new PageSortForm();
+        pageSortForm.setFirstPageId(page.getPageId().getValue());
+        pageSortForm.setSecondPageId(page2.getPageId().getValue());
+
+        mockMvc.perform(
+                post("/menu/" + menu.getMenuId().getValue() + "/pages/sort")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .param("firstPageId",pageSortForm.getFirstPageId())
+                        .param("secondPageId",pageSortForm.getSecondPageId()))
                 .andExpect(status().is3xxRedirection());
     }
 }

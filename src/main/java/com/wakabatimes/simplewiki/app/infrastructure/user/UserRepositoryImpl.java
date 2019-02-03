@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Override
     public User getUserByUserName(String userName) {
@@ -24,8 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
             UserName userName1 = new UserName(userDto.getName());
             UserPassword userPassword = new UserPassword(userDto.getPassword());
             UserRole userRole = UserRole.getById(userDto.getRole());
-            User user = new User(userId,userName1,userPassword,userRole);
-            return user;
+            return new User(userId,userName1,userPassword,userRole);
         }else {
             throw new RuntimeException("指定したユーザーが存在しません。");
         }
@@ -128,8 +127,7 @@ public class UserRepositoryImpl implements UserRepository {
         UserName userName1 = new UserName(userDto.getName());
         UserPassword userPassword = new UserPassword(userDto.getPassword());
         UserRole userRole = UserRole.getById(userDto.getRole());
-        User user = new User(userId1,userName1,userPassword,userRole);
-        return user;
+        return new User(userId1,userName1,userPassword,userRole);
     }
 }
 

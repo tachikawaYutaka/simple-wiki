@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class OriginalStyleRepositoryImpl implements OriginalStyleRepository{
     @Autowired
-    OriginalStyleMapper originalStyleMapper;
+    private OriginalStyleMapper originalStyleMapper;
 
     @Override
     public void save(OriginalStyle originalStyle) {
@@ -45,10 +45,7 @@ public class OriginalStyleRepositoryImpl implements OriginalStyleRepository{
     @Override
     public boolean exist() {
         Integer count = originalStyleMapper.count();
-        if(count > 0){
-            return true;
-        }
-        return false;
+        return count > 0;
     }
 
     @Override
@@ -56,7 +53,6 @@ public class OriginalStyleRepositoryImpl implements OriginalStyleRepository{
         OriginalStyleDto result = originalStyleMapper.get();
         OriginalStyleId originalStyleId = new OriginalStyleId(result.getId());
         OriginalStyleBody originalStyleBody = new OriginalStyleBody(result.getBody());
-        OriginalStyle originalStyle = new OriginalStyle(originalStyleId,originalStyleBody);
-        return originalStyle;
+        return new OriginalStyle(originalStyleId,originalStyleBody);
     }
 }

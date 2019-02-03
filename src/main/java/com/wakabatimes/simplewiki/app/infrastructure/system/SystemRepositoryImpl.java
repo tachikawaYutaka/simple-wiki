@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SystemRepositoryImpl implements SystemRepository{
     @Autowired
-    SystemMapper systemMapper;
+    private SystemMapper systemMapper;
 
     @Override
     public void save(System system) {
@@ -34,10 +34,7 @@ public class SystemRepositoryImpl implements SystemRepository{
     @Override
     public boolean exist() {
         Integer count = systemMapper.count();
-        if(count > 0){
-            return true;
-        }
-        return false;
+        return count > 0;
     }
 
     @Override
@@ -45,7 +42,6 @@ public class SystemRepositoryImpl implements SystemRepository{
         SystemDto result = systemMapper.get();
         SystemId systemId = new SystemId(result.getId());
         SystemName systemName = new SystemName(result.getName());
-        System system = new System(systemId,systemName);
-        return system;
+        return new System(systemId,systemName);
     }
 }

@@ -9,11 +9,11 @@ import java.util.List;
 
 @Data
 public class MainMenuResponseDto {
-    String menuId;
-    String menuName;
-    String menuLimit;
-    Integer menuSortNumber;
-    List<PageResponseDto> pages;
+    private String menuId;
+    private String menuName;
+    private String menuLimit;
+    private Integer menuSortNumber;
+    private List<PageResponseDto> pages;
 
     public MainMenuResponseDto(MainMenu mainMenu) {
         this.menuId = mainMenu.getMenu().getMenuId().getValue();
