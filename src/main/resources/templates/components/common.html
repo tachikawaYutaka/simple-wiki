@@ -1,0 +1,325 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="common-head (title)">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/highlight/default.css}" type="text/css">
+</head>
+
+<header th:fragment="no-login-header" class="base-header">
+    <div class="base-header-left">
+        <div class="module-sp-menu-button script-toggle-base-menu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="module-logo"><a class="no-barba" th:href="@{/}" th:text="${system.name}">Simple Wiki</a></div>
+        <div class="module-search"></div>
+    </div>
+    <div class="base-header-right">
+        <div class="module-button bg-black border-white"><a class="no-barba" th:href="@{/login}">Login</a></div>
+    </div>
+</header>
+
+<header th:fragment="user-header" class="base-header">
+    <div class="base-header-left">
+        <div class="module-sp-menu-button script-toggle-base-menu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="module-logo"><a class="no-barba" th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
+        <div class="module-search"><form th:action="@{/search}"><input name="q" type="text" placeholder="Search..." /><button type="submit"><i class="fas fa-search"></i></button></form></div>
+    </div>
+    <div class="base-header-right">
+        <div class="module-user-menu script-user-menu-toggle">
+            <div class="user-name"><i class="fas fa-user"></i><span th:text="${userInfo.name}"></span></div>
+            <ul class="user-list">
+                <li th:if="${userInfo.role == 'ROLE_ADMIN'}"><a class="no-barba" th:href="@{/system/name}">システム設定</a></li>
+                <li><a class="no-barba" th:href="@{/user/name}">ユーザー名変更</a></li>
+                <li><a class="no-barba" th:href="@{/user/password}">パスワード変更</a></li>
+                <li><a class="no-barba" th:href="@{/logout}">ログアウト</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<header th:fragment="login-header" class="base-header">
+    <div class="base-header-left">
+        <div class="module-logo"><a class="no-barba" th:text="${system.name}" th:href="@{/}">Simple Wiki</a></div>
+    </div>
+    <div class="base-header-right">
+
+    </div>
+</header>
+
+<header th:fragment="start-header" class="base-header">
+    <div class="base-header-left">
+        <div class="module-logo"><a class="no-barba" th:href="@{/}">Simple Wiki</a></div>
+    </div>
+    <div class="base-header-right">
+
+    </div>
+</header>
+
+<div th:fragment="preview-menu" class="base-menu">
+    <nav class="module-menu-lists">
+        <ul th:each="menu : ${menus}">
+            <li>
+                <p><a th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><span th:text="${menu.menuName}"></span></a></p>
+                <ul th:each="page : ${menu.pages}">
+                    <li>
+                        <p><a th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName} + '/' + ${page.name}"><span th:text="${page.name}"></span></a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <th:block th:if="${user}">
+            <div class="module-button bg-gray" th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}">
+                <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
+            </div>
+        </th:block>
+    </nav>
+</div>
+
+<div th:fragment="base-menu(currentMenu,rootPage)" class="base-menu">
+    <nav class="module-menu-lists">
+        <ul th:each="menu : ${menus}" th:data-id="${menu.menuId}">
+            <li>
+                <p>
+                    <a th:if="${currentMenu != null}" th:class="${currentMenu.id == menu.menuId ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><i  th:if="${currentMenu.id == menu.menuId}" class="fas fa-angle-right"></i><span th:text="${menu.menuName}"></span></a>
+                    <a th:if="${currentMenu == null}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName}"><span th:text="${menu.menuName}"></span></a>
+                </p>
+                <ul th:each="page : ${menu.pages}">
+                    <li>
+                        <p th:if="${rootPage != null}"><a th:class="${rootPage.id == page.id ? 'active': ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName} + '/' + ${page.name}"><i th:if="${rootPage.id == page.id}" class="fas fa-angle-right"></i><span th:text="${page.name}"></span></a></p>
+                        <p th:if="${rootPage == null}"><a th:href="'/contents/' + ${#strings.toLowerCase(menu.menuLimit)} + '/' + ${menu.menuName} + '/' + ${page.name}"><span th:text="${page.name}"></span></a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <th:block th:if="${user}">
+        <div class="module-button bg-gray" th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}">
+            <a class="script-add-menu" href=""><i class="fas fa-plus"></i>メニュー追加</a>
+        </div>
+        </th:block>
+    </nav>
+</div>
+
+<div th:fragment="system-menu(menu,page)" class="base-menu">
+    <nav class="module-menu-lists">
+        <ul>
+            <li>
+                <p><a th:class="${menu == 'system' ? 'active': ''}" th:href="@{/system/name}"><i  th:if="${menu == 'system'}" class="fas fa-angle-right"></i><span>システム設定</span></a></p>
+                <ul>
+                    <li>
+                        <p><a th:class="${page == 'name' ? 'active': ''}" th:href="@{/system/name}"><i  th:if="${page == 'name'}" class="fas fa-angle-right"></i><span>システム名称</span></a></p>
+                    </li>
+                    <li>
+                        <p><a  class="" th:class="${page == 'style' ? 'active no-barba': 'no-barba'}" th:href="@{/system/style}"><i  th:if="${page == 'style'}" class="fas fa-angle-right"></i><span>独自スタイル</span></a></p>
+                    </li>
+                    <li>
+                        <p><a th:class="${page == 'html' ? 'active no-barba': 'no-barba'}" th:href="@{/system/html}"><i  th:if="${page == 'html'}" class="fas fa-angle-right"></i><span>独自HTML</span></a></p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <p><a th:class="${menu == 'user' ? 'active': ''}" th:href="@{/system/users}"><i  th:if="${menu == 'user'}" class="fas fa-angle-right"></i><span>ユーザー管理</span></a></p>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div th:fragment="user-menu(menu,page)" class="base-menu">
+    <nav class="module-menu-lists">
+        <ul>
+            <li>
+                <p><a th:class="${menu == 'user' ? 'active': ''}" th:href="@{/user/name}"><i  th:if="${menu == 'user'}" class="fas fa-angle-right"></i><span>ユーザー設定</span></a></p>
+                <ul>
+                    <li>
+                        <p><a th:class="${page == 'name' ? 'active': ''}" th:href="@{/user/name}"><i th:if="${page == 'name'}" class="fas fa-angle-right"></i><span>ユーザー名変更</span></a></p>
+                    </li>
+                    <li>
+                        <p><a th:class="${page == 'password' ? 'active': ''}" th:href="@{/user/password}"><i  th:if="${page == 'password'}" class="fas fa-angle-right"></i><span>パスワード変更</span></a></p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div th:fragment="menu-add-form" class="module-popup script-add-menu-popup">
+    <form th:action="@{/menu}" method="post">
+        <h1>メニュー追加</h1>
+        <p><input name="name" type="text" class="module-input-text" placeholder="メニュー名" /></p>
+        <label class="module-input-radio" for="public"><input name="viewLimit" id="public" type="radio" value="0" checked />全員に公開</label>
+        <label class="module-input-radio" for="private"><input name="viewLimit" id="private" type="radio" value="1" />ログインユーザーにのみ公開</label>
+        <button class="module-submit-button" type="submit">
+            保存
+        </button>
+    </form>
+</div>
+
+<div th:fragment="menu-edit-form(menu)" class="module-popup script-edit-menu-popup">
+    <form th:action="'/menu/' + ${menu.id} + '/update'" method="post">
+        <h1>メニュー編集</h1>
+        <p><input name="menuName" type="text" class="module-input-text" placeholder="メニュー名" th:value="${menu.name}" /></p>
+        <label class="module-input-radio" for="editPublic"><input name="menuViewLimit" id="editPublic" type="radio" value="0" th:checked="${menu.limit} == 'PUBLIC'" />全員に公開</label>
+        <label class="module-input-radio" for="editPrivate"><input name="menuViewLimit" id="editPrivate" type="radio" value="1" th:checked="${menu.limit} == 'PRIVATE'" />ログインユーザーにのみ公開</label>
+        <button class="module-submit-button" type="submit">
+            保存
+        </button>
+    </form>
+</div>
+
+<div th:fragment="menu-delete-form(menu)" class="module-popup script-menu-delete-popup">
+    <form th:action="'/menu/' + ${menu.id} + '/delete'" method="post">
+        <h1>メニュー削除</h1>
+        <p>「<span th:text="${menu.name}"></span>」を削除してもよろしいですか？</p>
+        <div class="module-button-lists">
+            <button class="module-submit-button" type="submit">
+                はい
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                いいえ
+            </button>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="page-delete-form" class="module-popup script-page-delete-popup">
+    <form th:action="'/pages/##MENUID##/##PAGEID##/delete'" data-action="/pages/##MENUID##/##PAGEID##/delete" method="post">
+        <h1>ページ削除</h1>
+        <p>「<span class="page-name"></span>」を削除してもよろしいですか？</p>
+        <div class="module-button-lists">
+            <button class="module-submit-button ">
+                はい
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                いいえ
+            </button>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="user-name-mod-form" class="module-popup script-user-name-mod-popup">
+    <form th:action="'/system/users/##USERID##/userName'" data-action="/system/users/##USERID##/userName" method="post">
+        <h1>ユーザー名変更</h1>
+        <p><input name="userName" type="text" class="module-input-text" placeholder="ユーザー名" /></p>
+        <div class="module-button-lists">
+            <button class="module-submit-button">
+                保存
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                キャンセル
+            </button>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="user-password-mod-form" class="module-popup script-user-password-mod-popup">
+    <form th:action="'/system/users/##USERID##/userPassword'" data-action="/system/users/##USERID##/userPassword" method="post">
+        <h1>パスワード変更</h1>
+        <p><input name="userPassword" type="password" class="module-input-text" placeholder="パスワード" /></p>
+        <div class="module-button-lists">
+            <button class="module-submit-button">
+                保存
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                キャンセル
+            </button>
+        </div>
+    </form>
+</div>
+
+
+<div th:fragment="user-delete-form" class="module-popup script-user-delete-popup">
+    <form th:action="'/system/users/##USERID##/delete'" data-action="/system/users/##USERID##/delete" method="post">
+        <h1>ユーザー削除</h1>
+        <p>「<span class="user-name"></span>」を削除してもよろしいですか？</p>
+        <div class="module-button-lists">
+            <button class="module-submit-button" type="submit">
+                はい
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                いいえ
+            </button>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="user-add-form" class="module-popup script-user-add-popup">
+    <form th:action="'/system/users'" method="post">
+        <h1>ユーザー追加</h1>
+        <p>
+            <input id="userId" name="userName" placeholder="ユーザー名（半角英数）" type="text" class="module-input-text" />
+        </p>
+        <p>
+            <input id="userPassword" name="userPassword" placeholder="パスワード" type="password" class="module-input-text" />
+        </p>
+        <label class="module-input-radio" for="roleEditor"><input name="userRole" id="roleEditor" type="radio" value="1" checked />編集者</label>
+        <label class="module-input-radio" for="roleViewer"><input name="userRole" id="roleViewer" type="radio" value="2" />閲覧者</label>
+        <div class="module-button-lists">
+            <button class="module-submit-button" type="submit">
+                保存
+            </button>
+            <button class="module-submit-button bg-gray script-popup-cancel">
+                キャンセル
+            </button>
+        </div>
+    </form>
+</div>
+
+
+
+<ul th:fragment="menu-pages-list (id,lists,menu)">
+    <li class="add-under-page" th:if="${id != null}">
+        <div th:if="${user}">
+            <div th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}" class="text-area">
+                <form method="post" th:action="'/pages/branch'"><input name="name" type="text" class="module-input-text" />
+                    <input type="hidden" name="parentId" th:value="${id}">
+                    <input type="hidden" name="menuId" th:value="${menu.id}">
+                    <div class="module-button-lists m-0">
+                        <button type="submit" class="module-submit-button">保存</button>
+                        <button class="module-submit-button bg-gray script-add-page-hidden">キャンセル</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </li>
+    <li th:each="list : ${lists}" th:data-page-id="${list.id}">
+        <div>
+            <div class="text-area">
+                <p><a th:text="${list.name}" th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + '/' + ${list.path}">メインページ</a></p>
+            </div>
+            <ul class="menu-area" th:if="${user}">
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><form  th:action="'/menu/' + ${menu.id} + '/pages/sort'" method="post"><button class="script-page-sort-up" type="button"><i class="fas fa-sort-up"></i><span>上へ</span></button><input type="hidden" name="firstPageId" th:value="${list.id}"><input type="hidden" name="secondPageId"></form></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><form  th:action="'/menu/' + ${menu.id} + '/pages/sort'" method="post"><button class="script-page-sort-down" type="button"><i class="fas fa-sort-down"></i><span>下へ</span></button><input type="hidden" name="firstPageId" th:value="${list.id}"><input type="hidden" name="secondPageId"></form></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a target="_blank" th:href="'/contents/edit/' + ${menu.id} + '/' + ${list.id}"><i class="fas fa-edit"></i><span>編集</span></a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" class="script-add-page-show"><i class="fas fa-plus"></i><span>追加</span></a></div></li>
+                <li th:if="${userInfo.role == 'ROLE_ADMIN' || userInfo.role == 'ROLE_EDITOR'}"><div class="module-button bg-gray small"><a href="#" th:data-menu-id="${menu.id}" th:data-page-id="${list.id}" th:data-page-name="${list.name}" class="script-page-delete"><i class="fas fa-minus"></i></i><span>削除</span></a></div></li>
+            </ul>
+        </div>
+        <ul th:replace="components/common :: menu-pages-list(${list.id},${list.pages},${menu})"></ul>
+    </li>
+</ul>
+
+<ul th:fragment="side-pages-list (id,lists,menu,rootPage,currentPage)">
+    <li th:if="${rootPage.id == list.id || id != null}" th:each="list : ${lists}">
+        <a th:class="${rootPage.id == list.id || currentPage.id == list.id ? 'active' : ''}" th:href="'/contents/' + ${#strings.toLowerCase(menu.limit)} + '/' + ${menu.name} + '/' + ${list.path}"><i th:if="${rootPage.id == list.id}" class="fas fa-angle-right"></i><i th:if="${currentPage.id == list.id}" class="fas fa-angle-right"></i><span th:text="${list.name}"></span></a>
+        <ul th:replace="components/common :: side-pages-list(${list.id},${list.pages},${menu},${rootPage},${currentPage})"></ul>
+    </li>
+</ul>
+
+<footer th:fragment="common-footer" class="base-footer">
+    <small class="module-copy" th:text="${system.name}">Simple Wiki</small>
+</footer>
+
+</body>
+
+</html>

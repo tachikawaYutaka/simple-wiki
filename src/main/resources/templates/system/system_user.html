@@ -1,0 +1,68 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('ユーザー管理')"></head>
+<body class="base-body">
+<th:block th:if="${user}"><header th:replace="components/common :: user-header"></header></th:block>
+<th:block th:unless="${user}"><header th:replace="components/common :: no-login-header"></header></th:block>
+<main class="base-main" id="barba-wrapper"><div class="barba-container">
+    <div th:replace="components/common :: system-menu('user','')"></div>
+    <div class="base-content-body">
+        <div class="base-content-body-head">
+            <div class="module-alert bg-white mt-10" th:if="${error}" th:text="${errorMessage}"></div>
+            <div class="module-alert true bg-white mt-10" th:if="${success}" th:text="${successMessage}"></div>
+            <div class="module-bread">
+                <ul>
+                    <li><a th:href="@{/system/users}">ユーザー管理</a></li>
+                </ul>
+            </div>
+            <h1 class="module-title">
+                ユーザー管理
+            </h1>
+        </div>
+        <div class="base-content-article max">
+            <div class="base-content-head-menu max">
+                <ul class="module-head-menu">
+                    <li><div class="module-button bg-gray"><a target="_blank" href="#" class="script-user-add"><i class="fas fa-edit"></i>ユーザー追加</a></div></li>
+                </ul>
+            </div>
+            <div  class="base-article-body">
+                <ul class="module-users-list">
+                    <li th:each="item : ${users}" th:data-user-id="${item.id}" th:data-user-name="${item.name}">
+                        <div class="name" th:text="${item.name}">hogehoge</div>
+                        <div class="role">
+                            <span th:if="${item.role == 'ROLE_ADMIN'}">管理者</span>
+                            <span th:if="${item.role == 'ROLE_EDITOR'}">編集者</span>
+                            <span th:if="${item.role == 'ROLE_VIEWER'}">閲覧者</span>
+                        </div>
+                        <ul class="menu">
+                            <li class="module-button bg-gray small">
+                                <a target="_blank" href="#" class="script-user-name-mod">ユーザー名変更</a>
+                            </li>
+                            <li class="module-button bg-gray small">
+                                <a target="_blank"  href="#" class="script-user-password-mod">パスワード変更</a>
+                            </li>
+                            <li class="module-button bg-gray small" th:if="${item.role != 'ROLE_ADMIN'}">
+                                <a target="_blank"  href="#" class="script-user-delete">削除</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div></main>
+<div th:replace="components/common :: user-name-mod-form"></div>
+<div th:replace="components/common :: user-password-mod-form"></div>
+<div th:replace="components/common :: user-delete-form"></div>
+<div th:replace="components/common :: user-add-form"></div>
+<div th:if="${originalHtml != null}" th:utext="${originalHtml.body}"></div>
+<footer th:replace="components/common :: common-footer"></footer>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
+<script th:src="@{/js/script_min.js}"></script>
+<style th:if="${originalStyle != null}" th:utext="${originalStyle.body}"></style>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('初期設定')"></head>
+<body class="base-body">
+<header th:replace="components/common :: start-header"></header>
+<main class="base-main bg-black-4" id="barba-wrapper"><div class="barba-container">
+    <div class="module-login">
+        <form th:action="@{/start}" method="post">
+            <h1>Get Started!</h1>
+            <div class="module-alert" th:if="${error}" th:text="${errorMessage}"></div>
+            <p>
+                <label for="systemName">システム名称</label>
+                <input id="systemName" name="systemName" placeholder="Simple Wiki" type="text" class="module-input-text" value="Simple Wiki" /></p>
+            <p>
+                <label for="userId">管理者ユーザー名（半角英数）</label>
+                <input id="userId" name="userName" placeholder="userId" type="text" class="module-input-text" />
+            </p>
+            <p>
+                <label for="userPassword">管理者パスワード</label>
+                <input id="userPassword" name="userPassword" placeholder="password" type="password" class="module-input-text" />
+            </p>
+            <button class="module-submit-button" type="submit">
+                スタート
+            </button>
+        </form>
+    </div>
+</div></main>
+<footer class="base-footer">
+    <small class="module-copy">Simple Wiki</small>
+</footer>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
+<script th:src="@{/js/script_min.js}"></script>
+</body>
+</html>

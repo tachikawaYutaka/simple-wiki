@@ -1,0 +1,78 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('独自HTML設定')"></head>
+<body class="base-body">
+<th:block th:if="${user}"><header th:replace="components/common :: user-header"></header></th:block>
+<th:block th:unless="${user}"><header th:replace="components/common :: no-login-header"></header></th:block>
+<main class="base-main" id="barba-wrapper"><div class="barba-container">
+    <div th:replace="components/common :: system-menu('system','html')"></div>
+    <div class="base-content-body">
+        <div class="base-content-body-head">
+            <div class="module-alert bg-white mt-10" th:if="${error}" th:text="${errorMessage}"></div>
+            <div class="module-alert true bg-white mt-10" th:if="${success}" th:text="${successMessage}"></div>
+            <div class="module-bread">
+                <ul>
+                    <li><a th:href="@{/system/name}">システム設定</a></li>
+                    <li><a th:href="@{/system/style}" >独自HTML設定</a></li>
+                </ul>
+            </div>
+            <h1 class="module-title">
+                独自HTML設定
+            </h1>
+        </div>
+        <div class="base-content-article ">
+            <div  class="base-article-body">
+                <div class="module-editor" id="editor">
+
+                </div>
+                <form class="script-edit-save" th:action="@{/system/html}" method="post">
+                    <input type="hidden" name="body" />
+                    <div class="module-button-lists">
+                        <button class="module-submit-button" type="submit">
+                            保存
+                        </button>
+                        <button class="module-submit-button bg-gray script-screen-reload">
+                            キャンセル
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <aside class="base-content-side">
+
+        </aside>
+    </div>
+</div></main>
+<footer th:replace="components/common :: common-footer"></footer>
+<div th:if="${originalHtml != null}" th:utext="${originalHtml.body}"></div>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
+<script th:src="@{/js/script_min.js}"></script>
+<script th:src="@{/js/ace/ace.js}"></script>
+<script th:src="@{/js/ace/ext-emmet.js}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var value = /*[[${html != null ? html.body : ''} ]]*/;
+    var fontSize = 16;
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.setFontSize(fontSize);
+    editor.getSession().setMode("ace/mode/html");
+    editor.setOption("enableEmmet", true);
+    editor.getSession().setUseWrapMode(true);
+    editor.getSession().setTabSize(2);
+    editor.$blockScrolling = Infinity;
+    editor.setValue(value, -1);
+
+    $('.script-edit-save').on('submit',function(e){
+        $('[name="body"]').val(editor.getValue());
+    });
+</script>
+<style th:if="${originalStyle != null}" th:utext="${originalStyle.body}"></style>
+</body>
+</html>

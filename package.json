@@ -1,0 +1,31 @@
+{
+  "name": "simple-wiki",
+  "version": "1.0.0",
+  "description": "``` ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp",
+    "watch": "gulp watch"
+  },
+  "repository": "git+https://github.com/tachikawaYutaka/simple-wiki.git",
+  "author": "tachikawaYutaka <tachikawa.yutaka.web@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tachikawaYutaka/simple-wiki/issues"
+  },
+  "homepage": "https://github.com/tachikawaYutaka/simple-wiki#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1",
+    "yarn": "^1.12.3"
+  },
+  "dependencies": {
+    "marked": "^0.5.2"
+  }
+}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="components/common :: common-head('システム名称')"></head>
+<body class="base-body">
+<th:block th:if="${user}"><header th:replace="components/common :: user-header"></header></th:block>
+<th:block th:unless="${user}"><header th:replace="components/common :: no-login-header"></header></th:block>
+<main class="base-main" id="barba-wrapper"><div class="barba-container">
+    <div th:replace="components/common :: system-menu('system','name')"></div>
+    <div class="base-content-body">
+        <div class="base-content-body-head">
+            <div class="module-alert bg-white mt-10" th:if="${error}" th:text="${errorMessage}"></div>
+            <div class="module-alert true bg-white mt-10" th:if="${success}" th:text="${successMessage}"></div>
+            <div class="module-bread">
+                <ul>
+                    <li><a th:href="@{/system/name}">システム設定</a></li>
+                    <li><a th:href="@{/system/name}" >システム名称</a></li>
+                </ul>
+            </div>
+            <h1 class="module-title">
+                システム名称
+            </h1>
+        </div>
+        <div class="base-content-article ">
+            <form class="base-article-body" th:action="@{/system/name}" method="post">
+                <p>
+                    <label for="systemName">システム名称</label>
+                    <input id="systemName" name="systemName" type="text" class="module-input-text" th:value="${system.name}" /></p>
+                <p>
+                <div class="module-button-lists">
+                    <button class="module-submit-button" type="submit">
+                        保存
+                    </button>
+                    <button class="module-submit-button bg-gray script-screen-reload">
+                        キャンセル
+                    </button>
+                </div>
+            </form>
+        </div>
+        <aside class="base-content-side">
+
+        </aside>
+    </div>
+</div></main>
+<div th:if="${originalHtml != null}" th:utext="${originalHtml.body}"></div>
+<footer th:replace="components/common :: common-footer"></footer>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
+<script th:src="@{/js/script_min.js}"></script>
+<style th:if="${originalStyle != null}" th:utext="${originalStyle.body}"></style>
+</body>
+</html>
