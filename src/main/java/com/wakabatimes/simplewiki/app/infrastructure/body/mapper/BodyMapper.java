@@ -1,9 +1,5 @@
 package com.wakabatimes.simplewiki.app.infrastructure.body.mapper;
 
-import com.wakabatimes.simplewiki.app.domain.model.body.Bodies;
-import com.wakabatimes.simplewiki.app.domain.model.body.Body;
-import com.wakabatimes.simplewiki.app.domain.model.body.BodyId;
-import com.wakabatimes.simplewiki.app.domain.model.page.PageId;
 import com.wakabatimes.simplewiki.app.infrastructure.body.dto.BodyDto;
 import org.apache.ibatis.annotations.*;
 
